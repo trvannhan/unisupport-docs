@@ -2,7 +2,7 @@
 
 ## 1. Hiện Trạng Tiếp Nhận Yêu Cầu Tại Aurora University
 
-Hiện tại, sinh viên có thể gửi yêu cầu hỗ trợ qua nhiều kênh khác nhau như email, điện thoại, biểu mẫu trực tuyến, tin nhắn mạng xã hội, trao đổi trực tiếp hoặc nhờ người khác chuyển tiếp. Mỗi phòng ban có thể sử dụng cách quản lý riêng, khiến dữ liệu hỗ trợ bị phân tán và khó theo dõi thống nhất.
+Hiện tại, yêu cầu hỗ trợ sinh viên được tiếp nhận qua nhiều kênh rời rạc như email, biểu mẫu trực tuyến, tin nhắn và các hình thức trao đổi khác. Mỗi phòng ban có thể sử dụng cách quản lý riêng, khiến dữ liệu hỗ trợ bị phân tán và khó theo dõi thống nhất.
 
 ---
 
