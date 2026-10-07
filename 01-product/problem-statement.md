@@ -2,54 +2,60 @@
 
 ## 1. Hiện Trạng Tiếp Nhận Yêu Cầu Tại Aurora University
 
-Hiện tại, công tác tiếp nhận và phản hồi yêu cầu hỗ trợ sinh viên tại Aurora University đang phân tán qua nhiều kênh không chuẩn hóa:
-1. **Email cá nhân / Email phòng ban**: Sinh viên gửi email đến giảng viên, chuyên viên hoặc hòm thư chung phòng Đào tạo/CTHSSV.
-2. **Google Forms / Biểu mẫu trực tuyến lẻ tẻ**: Mỗi phòng ban tự tạo form riêng, dữ liệu không đồng bộ.
-3. **Tin nhắn mạng xã hội / Ứng dụng chat**: Zalo, Fanpage, Messenger.
-4. **Tiếp nhận trực tiếp**: Sinh viên đến nộp hồ sơ giấy tại văn phòng một cửa.
+Hiện tại, sinh viên có thể gửi yêu cầu hỗ trợ qua nhiều kênh khác nhau như email, điện thoại, biểu mẫu trực tuyến, tin nhắn mạng xã hội, trao đổi trực tiếp hoặc nhờ người khác chuyển tiếp. Mỗi phòng ban có thể sử dụng cách quản lý riêng, khiến dữ liệu hỗ trợ bị phân tán và khó theo dõi thống nhất.
 
 ---
 
 ## 2. Các Điểm Nghẽn & Khó Khăn Chính (Key Pain Points)
 
-### 2.1 Thiếu đầu mối tập trung và mất mát dữ liệu
-- Yêu cầu của sinh viên bị rải rác ở nhiều nơi, không có cơ sở dữ liệu tập trung để tra cứu lại lịch sử hỗ trợ.
-- Nguy cơ thất lạc thông tin hoặc trôi email trong các đợt cao điểm (đầu khóa học, đăng ký môn học, xét tốt nghiệp).
+### 2.1 Thiếu đầu mối tập trung
+- Yêu cầu của sinh viên nằm ở nhiều kênh khác nhau.
+- Khó tra cứu lại lịch sử hỗ trợ một cách thống nhất.
 
-### 2.2 Phản hồi chậm và nguy cơ bỏ sót yêu cầu
-- Thiếu hệ thống mã định danh (Ticket ID), khiến việc tra cứu trạng thái gặp khó khăn.
-- Không có cơ chế cảnh báo yêu cầu quá hạn hoặc phân công trách nhiệm rõ ràng, dẫn đến tình trạng "đùn đẩy" công việc giữa các bộ phận.
+### 2.2 Nguy cơ bỏ sót hoặc xử lý trùng lặp
+- Yêu cầu có thể bị bỏ sót khi nằm trong email, tin nhắn hoặc bảng theo dõi riêng.
+- Nhiều người có thể cùng xử lý một yêu cầu nếu không có cơ chế phân công rõ ràng.
 
-### 2.3 Xử lý trùng lặp và phản hồi không thống nhất
-- Nhiều nhân viên cùng phản hồi một email hoặc xử lý trùng một hồ sơ gây lãng phí nguồn lực.
-- Thông tin hướng dẫn sinh viên giữa các nhân viên trong cùng phòng ban đôi khi không nhất quán.
+### 2.3 Sinh viên khó theo dõi tiến độ
+- Sinh viên khó biết yêu cầu đang ở trạng thái nào.
+- Không phải lúc nào sinh viên cũng biết đơn vị hoặc người đang phụ trách xử lý.
 
-### 2.4 Sinh viên thiếu thông tin tiến độ
-- Sinh viên không biết yêu cầu của mình đang ở bước nào, ai đang thụ lý, khi nào có kết quả.
-- Dẫn đến việc sinh viên phải gửi lại yêu cầu nhiều lần hoặc đến trực tiếp văn phòng để hỏi, gây quá tải bộ phận một cửa.
+### 2.4 Quy trình xử lý giữa các phòng ban chưa thống nhất
+- Việc phân loại, chuyển tiếp và cập nhật kết quả có thể khác nhau giữa các đơn vị.
+- Phản hồi dành cho sinh viên có nguy cơ thiếu nhất quán.
 
-### 2.5 Ban quản lý thiếu công cụ giám sát và số liệu báo cáo
-- Trưởng phòng ban và Ban giám hiệu không có số liệu thực tế về:
-  - Tổng số yêu cầu tiếp nhận / đã giải quyết / còn tồn đọng.
-  - Thời gian xử lý trung bình của từng phòng ban/nhân viên.
-  - Các nhóm vấn đề phát sinh phổ biến nhất để cải tiến quy trình đào tạo/vận hành.
-  - Mức độ hài lòng của sinh viên đối với dịch vụ hỗ trợ.
-
----
-
-## 3. Tác Động Tiêu Cực (Impact Analysis)
-[Kênh tiếp nhận rời rạc]
-│
-├──► Thất lạc / Bỏ sót yêu cầu ───────► Sinh viên bức xúc, giảm uy tín nhà trường
-├──► Xử lý trùng lặp / Chậm trễ ──────► Lãng phí thời gian & nhân lực vận hành
-└──► Thiếu báo cáo số liệu ───────────► Quản lý không thể điều phối & cải tiến quy trình
+### 2.5 Ban quản lý thiếu số liệu tổng hợp
+Ban quản lý cần có khả năng theo dõi:
+- Số lượng yêu cầu mới, đang xử lý, sắp quá hạn hoặc đã quá hạn.
+- Khối lượng công việc theo phòng ban hoặc nhân viên.
+- Nhóm vấn đề phát sinh nhiều và xu hướng tăng/giảm.
+- Thời gian xử lý trung bình.
+- Phản hồi và mức độ hài lòng của sinh viên.
 
 ---
 
-## 4. Giải Pháp Mong Muốn Từ UniSupport
+## 3. Tác Động Nghiệp Vụ
 
-Hệ thống UniSupport giải quyết các vấn đề trên thông qua:
-1. **Chuẩn hóa đầu mối**: Mọi yêu cầu hỗ trợ phải đi qua duy nhất một Web Portal. Mỗi yêu cầu sinh ra một Mã Ticket duy nhất.
-2. **Minh bạch tiến độ**: Sinh viên xem được nhật ký chuyển trạng thái và đơn vị đang thụ lý theo thời gian thực.
-3. **Quy trình hóa vận hành**: Quy định rõ luồng Tiếp nhận -> Phân loại -> Phân công -> Yêu cầu bổ sung -> Cập nhật kết quả -> Đóng & Đánh giá.
-4. **Dashboard báo cáo trực quan**: Ban quản lý nắm bắt ngay các chỉ số KPI, ticket quá hạn và đánh giá mức độ hài lòng của sinh viên.
+```text
+Kênh tiếp nhận phân tán
+        |
+        +--> Nguy cơ bỏ sót yêu cầu
+        |
+        +--> Xử lý trùng lặp / phản hồi không thống nhất
+        |
+        +--> Sinh viên khó theo dõi tiến độ
+        |
+        +--> Quản lý thiếu dữ liệu để giám sát và điều phối
+```
+
+---
+
+## 4. Hướng Giải Quyết Của UniSupport
+
+UniSupport hướng tới giải quyết các vấn đề trên bằng cách:
+
+1. **Tập trung hóa tiếp nhận**: Cung cấp một Web Application thống nhất để sinh viên gửi yêu cầu hỗ trợ.
+2. **Quản lý bằng Ticket**: Mỗi yêu cầu được tạo thành công có mã Ticket để theo dõi.
+3. **Minh bạch tiến độ**: Sinh viên xem được trạng thái hiện tại, lịch sử cập nhật và đơn vị/người phụ trách theo thông tin hệ thống cung cấp.
+4. **Chuẩn hóa xử lý**: Hỗ trợ nhân viên phân loại, phân công/chuyển xử lý, cập nhật trạng thái, yêu cầu bổ sung và ghi nhận kết quả.
+5. **Hỗ trợ quản lý**: Cung cấp Dashboard và báo cáo phục vụ theo dõi tình hình xử lý và điều phối nguồn lực.
