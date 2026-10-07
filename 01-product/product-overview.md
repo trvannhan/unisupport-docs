@@ -8,21 +8,40 @@ Hệ thống phục vụ quy mô khoảng **3.000 sinh viên**, đồng thời h
 
 ---
 
-## 2. Bối Cảnh & Tầm Nhìn Sản Phẩm (Context & Vision)
+## 2. Bài Toán Nghiệp Vụ (Problem Statement)
 
-### 2.1 Bối cảnh
+Hiện tại, yêu cầu hỗ trợ sinh viên được tiếp nhận qua nhiều kênh rời rạc và mỗi phòng ban có thể sử dụng cách quản lý riêng. Điều này dẫn đến các vấn đề chính:
 
-Hiện nay, yêu cầu hỗ trợ sinh viên được tiếp nhận qua nhiều kênh khác nhau, khiến thông tin dễ bị phân tán, khó theo dõi tiến độ và khó tổng hợp số liệu phục vụ quản lý.
+- Yêu cầu bị phân tán, khó tra cứu lịch sử hỗ trợ thống nhất.
+- Có nguy cơ bỏ sót hoặc xử lý trùng lặp.
+- Sinh viên khó biết trạng thái và đơn vị/người đang phụ trách.
+- Quy trình phân loại, chuyển tiếp và phản hồi giữa các phòng ban chưa đồng nhất.
+- Ban quản lý thiếu số liệu tổng hợp để theo dõi và điều phối hoạt động.
 
-### 2.2 Tầm nhìn sản phẩm
-
-UniSupport đóng vai trò là đầu mối tập trung để sinh viên gửi và theo dõi yêu cầu hỗ trợ. Mỗi yêu cầu được quản lý dưới dạng Ticket, có trạng thái xử lý rõ ràng và có thể theo dõi đơn vị/người phụ trách.
-
-Đối với nhân viên, hệ thống hỗ trợ tiếp nhận, phân loại, điều phối và cập nhật kết quả xử lý. Đối với ban quản lý, hệ thống cung cấp Dashboard và báo cáo để theo dõi khối lượng công việc, tình trạng xử lý và các nhóm vấn đề thường gặp.
+UniSupport giải quyết các vấn đề này bằng cách tập trung yêu cầu trên một hệ thống Ticket, chuẩn hóa luồng xử lý và cung cấp dữ liệu phục vụ theo dõi, báo cáo.
 
 ---
 
-## 3. Các Phân Hệ Chính
+## 3. Mục Tiêu Sản Phẩm (Product Goals)
+
+### G-01: Tập trung hóa đầu mối tiếp nhận
+Cung cấp một kênh thống nhất để sinh viên gửi yêu cầu hỗ trợ và theo dõi quá trình xử lý. Mỗi yêu cầu được tạo thành công có mã Ticket để phục vụ tra cứu.
+
+### G-02: Minh bạch hóa tiến độ xử lý
+Giúp sinh viên theo dõi trạng thái hiện tại, lịch sử cập nhật và đơn vị/người phụ trách xử lý yêu cầu.
+
+### G-03: Chuẩn hóa quy trình vận hành
+Hỗ trợ nhân viên phân loại, phân công/chuyển xử lý, cập nhật trạng thái, yêu cầu bổ sung và ghi nhận kết quả theo một quy trình thống nhất.
+
+### G-04: Nâng cao năng lực giám sát
+Cung cấp Dashboard và báo cáo để ban quản lý theo dõi khối lượng công việc, tình trạng xử lý, yêu cầu quá hạn, nhóm vấn đề thường gặp, thời gian xử lý và phản hồi sinh viên.
+
+### G-05: Đảm bảo phân quyền và an toàn dữ liệu cơ bản
+Đảm bảo người dùng chỉ xem và thao tác trong phạm vi quyền được cấp; file đính kèm chỉ người liên quan được truy cập và các thao tác quan trọng được ghi nhận để tra soát.
+
+---
+
+## 4. Các Phân Hệ Chính
 
 UniSupport gồm **3 phân hệ chính**:
 
@@ -39,7 +58,19 @@ UniSupport gồm **3 phân hệ chính**:
 
 ---
 
-## 4. Hình Thức Triển Khai
+## 5. Ngoài Phạm Vi (Non-Goals)
+
+- Mobile App độc lập cho iOS/Android.
+- Tích hợp bên thứ ba ngoài phạm vi đã thống nhất.
+- Thiết lập sao lưu tự động, theo dõi vận hành máy chủ và hỗ trợ hạ tầng lâu dài.
+- Phân quyền nhiều cấp và Audit Log nâng cao.
+- Chat trực tiếp hoặc gọi thoại trong hệ thống.
+- Tối ưu chịu tải lớn vượt quá quy mô khoảng 3.000 sinh viên.
+- Chứng nhận bảo mật hoặc kiểm thử bảo mật chuyên sâu.
+
+---
+
+## 6. Hình Thức Triển Khai
 
 - **Loại hình ứng dụng**: Web Application.
 - **Thiết bị sử dụng**: Trình duyệt trên máy tính và thiết bị di động.
@@ -48,7 +79,7 @@ UniSupport gồm **3 phân hệ chính**:
 
 ---
 
-## 5. Thông Số Dự Án
+## 7. Thông Số Dự Án
 
 - **Quy mô phục vụ**: Khoảng 3.000 sinh viên.
 - **Thời gian thực hiện**: 14 tuần.
