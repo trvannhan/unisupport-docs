@@ -156,7 +156,7 @@ Sinh viên gửi nhầm thắc mắc về Học phí vào Phòng Đào tạo. Ch
 
 ---
 
-### [FR-STF-05] Yêu cầu sinh viên bổ sung thông tin / hồ sơ
+### [FR-STF-04] Yêu cầu sinh viên bổ sung thông tin / hồ sơ
 
 **Mô tả**
 Khi hồ sơ sinh viên gửi kèm bị thiếu, mờ, không hợp lệ hoặc cần làm rõ, nhân viên phát yêu cầu bổ sung thông tin tới sinh viên và hệ thống tạm dừng bộ đếm SLA.

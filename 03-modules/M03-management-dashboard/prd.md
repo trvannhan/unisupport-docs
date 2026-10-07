@@ -1,4 +1,4 @@
-﻿# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Quản Lý (PRD - M03 Management Dashboard)
+# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Quản Lý (PRD - M03 Management Dashboard)
 
 ## 1. Tổng Quan Phân Hệ & Cơ Cấu Effort Theo Bảng Chi Phí Nội Bộ
 
@@ -147,7 +147,7 @@ Quản lý thực hiện khóa tài khoản của Nhân viên B khi Nhân viên 
 #### Tích hợp: Phân quyền vai trò & Phòng ban
 
 **Mô tả**
-Cho phép Quản trị viên gán Vai trò hệ thống (`STUDENT`, `STAFF`, `MANAGER`, `MANAGER`) và gán Phòng ban chuyên trách cho tài khoản Nhân viên/Quản lý.
+Cho phép Quản trị viên gán Vai trò hệ thống (`STUDENT`, `STAFF`, `MANAGER`) và gán Phòng ban chuyên trách cho tài khoản Nhân viên/Quản lý.
 
 **Actor**
 Quản lý (Manager).
@@ -158,7 +158,7 @@ Quản lý (Manager).
 **Luồng chính**
 1. Quản lý truy cập mục **Phân quyền & Phòng ban**.
 2. Quản lý tìm kiếm và chọn tài khoản nhân viên cần cấu hình.
-3. Quản lý chọn **Vai trò (Role)** tương ứng từ danh sách: `STAFF`, `MANAGER`, `MANAGER`.
+3. Quản lý chọn **Vai trò (Role)** tương ứng từ danh sách: `STAFF`, `MANAGER`.
 4. Quản lý chọn **Phòng ban (Department)** phụ trách (Ví dụ: Phòng Đào tạo, Phòng CTHSSV...).
 5. Quản lý nhấn **Lưu phân quyền**.
 6. Hệ thống kiểm tra dữ liệu và cập nhật quyền hạn cho tài khoản.

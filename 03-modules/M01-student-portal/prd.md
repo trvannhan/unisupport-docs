@@ -1,4 +1,4 @@
-﻿# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Sinh Viên (PRD - M01 Student Portal)
+# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Sinh Viên (PRD - M01 Student Portal)
 
 ## 1. Tổng Quan Phân Hệ & Cơ Cấu Effort Baseline
 
@@ -142,10 +142,10 @@ Nhận thông báo trong hệ thống khi Ticket được tiếp nhận, yêu c�
 
 ---
 
-### [FR-STU-05] Bổ sung thông tin & phản hồi
+### [FR-STU-05] Bổ sung thông tin, xem kết quả & đánh giá CSAT
 
 **Mô tả**
-Khi Ticket ở trạng thái `WAITING_STUDENT`, sinh viên có thể nhập câu trả lời bổ sung và tải lên các file giấy tờ theo yêu cầu của nhân viên.
+Khi Ticket ở trạng thái `WAITING_STUDENT`, sinh viên có thể nhập câu trả lời bổ sung và tải lên các file giấy tờ theo yêu cầu của nhân viên. Đồng thời, cho phép sinh viên xem kết quả xử lý và đánh giá mức độ hài lòng (CSAT) sau khi Ticket hoàn tất.
 
 **Actor**
 Sinh viên đã đăng nhập vào hệ thống.
