@@ -77,19 +77,19 @@ Tài liệu này chuẩn hóa quy cách thiết kế RESTful API cho toàn bộ 
 
 | Method | Endpoint | Quyền truy cập | Mô tả |
 | --- | --- | --- | --- |
-| **GET** | `/staff/tickets` | Staff, Manager/Admin | Lấy danh sách Ticket thuộc phòng ban phụ trách |
+| **GET** | `/staff/tickets` | Staff, Manager | Lấy danh sách Ticket thuộc phòng ban phụ trách |
 | **POST** | `/staff/tickets/{id}/claim` | Staff | Nhận phụ trách (Claim) Ticket |
 | **PATCH** | `/staff/tickets/{id}/triage` | Staff | Phân loại & cập nhật độ ưu tiên Ticket |
 | **POST** | `/staff/tickets/{id}/transfer` | Staff | Chuyển Ticket sang phòng ban khác |
 | **POST** | `/staff/tickets/{id}/request-supplement` | Staff | Yêu cầu Sinh viên bổ sung giấy tờ/thông tin |
 | **POST** | `/staff/tickets/{id}/resolve` | Staff | Cập nhật kết quả giải quyết & Đóng Ticket |
 
-## 2.4. Phân hệ Quản lý & Admin (`/management`)
+## 2.4. Phân hệ Quản lý (`/management`)
 
 | Method | Endpoint | Quyền truy cập | Mô tả |
 | --- | --- | --- | --- |
-| **GET** | `/management/dashboard/overview` | Manager/Admin | Số liệu tổng quan (Ticket mới, đang xử lý, quá hạn) |
-| **GET** | `/management/dashboard/metrics` | Manager/Admin | Báo cáo SLA, thời gian xử lý trung bình, điểm đánh giá |
-| **GET** | `/management/users` | Admin | Danh sách tài khoản hệ thống |
-| **POST** | `/management/users` | Admin | Tạo tài khoản mới & phân quyền vai trò |
-| **PATCH** | `/management/users/{id}` | Admin | Cập nhật thông tin/trạng thái tài khoản |
+| **GET** | `/management/dashboard/overview` | Manager | Số liệu tổng quan (Ticket mới, đang xử lý, quá hạn) |
+| **GET** | `/management/dashboard/metrics` | Manager | Báo cáo SLA, thời gian xử lý trung bình, điểm đánh giá |
+| **GET** | `/management/users` | Manager | Danh sách tài khoản hệ thống |
+| **POST** | `/management/users` | Manager | Tạo tài khoản mới & phân quyền vai trò |
+| **PATCH** | `/management/users/{id}` | Manager | Cập nhật thông tin/trạng thái tài khoản |

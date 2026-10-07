@@ -19,7 +19,7 @@ Tài liệu này chi tiết hóa kiến trúc bảo mật của hệ thống **U
 
 Hệ thống UniSupport định nghĩa các vai trò chính với phạm vi quyền thao tác rõ ràng:
 
-| Phân hệ / Chức năng | Sinh viên (`STUDENT`) | Nhân viên (`STAFF`) | Quản lý (`MANAGER`) | Quản trị viên (`ADMIN`) |
+| Phân hệ / Chức năng | Sinh viên (`STUDENT`) | Nhân viên (`STAFF`) | Quản lý (`MANAGER`) |
 | :--- | :---: | :---: | :---: | :---: |
 | **Đăng nhập hệ thống** | Có | Có | Có | Có |
 | **Gửi Ticket & Upload file** | Có (chỉ của mình) | Không | Không | Không |

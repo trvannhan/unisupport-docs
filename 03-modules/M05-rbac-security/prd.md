@@ -10,7 +10,7 @@
 Hệ thống xử lý quá trình đăng nhập, mã hóa thông tin xác thực, khởi tạo Token phiên làm việc an toàn và quản lý đăng xuất đối với tất cả các nhóm người dùng.
 
 **Actor**  
-Tất cả người dùng hệ thống (Sinh viên, Nhân viên, Quản lý, Admin).
+Tất cả người dùng hệ thống (Sinh viên, Nhân viên, Quản lý).
 
 **Preconditions**  
 - Người dùng truy cập trang Đăng nhập hệ thống UniSupport.
@@ -76,7 +76,7 @@ Hệ thống (RBAC Middleware).
 **Acceptance Criteria**  
 - **AC-01**: Sinh viên A gửi request xem Ticket của Sinh viên B -> Hệ thống trả về lỗi `403 Forbidden`.
 - **AC-02**: Nhân viên Phòng Đào tạo thực hiện Claim Ticket của Phòng CTHSSV -> Hệ thống từ chối thao tác và báo lỗi không đúng phòng ban.
-- **AC-03**: Admin gửi request -> Hệ thống cho phép truy cập theo đúng thẩm quyền quản trị.
+- **AC-03**: Quản lý gửi request -> Hệ thống cho phép truy cập theo đúng thẩm quyền quản trị.
 
 **Ví dụ Edge Case**  
 Sinh viên cố tình thay đổi tham số ID trên URL từ `/tickets/101` thành `/tickets/102` (mã ticket của người khác).  
@@ -104,7 +104,7 @@ Tất cả người dùng có nhu cầu Tải/Xem file đính kèm.
 5. Backend kiểm tra quyền truy cập của người dùng đối với Ticket đó theo quy tắc `BR-FILE-01`:
    - Người dùng là Sinh viên tạo Ticket.
    - HOẶC Người dùng là Nhân viên/Quản lý thuộc Phòng ban thụ lý Ticket.
-   - HOẶC Người dùng là Quản trị viên (Admin).
+   - HOẶC Người dùng là Quản lý (Manager).
 6. Nếu hợp lệ, Backend đọc luồng dữ liệu file (Stream) từ thư mục lưu trữ bảo mật và trả về cho Client.
 7. Nếu không hợp lệ, Backend chặn truy cập và từ chối tải file.
 
@@ -165,5 +165,5 @@ Hệ thống (Audit Log Engine).
 - **AC-02**: Nhật ký chỉ ở dạng truy vấn xem (Read-only), không có bất kỳ lệnh sửa/xóa nào trên hệ thống.
 
 **Ví dụ Edge Case**  
-Tài khoản Admin thử gửi lệnh xóa dữ liệu bảng `audit_logs` qua giao diện.  
+Tài khoản Quản lý thử gửi lệnh xóa dữ liệu bảng `audit_logs` qua giao diện.  
 -> **Expected Result**: Hệ thống không cung cấp chức năng xóa, mọi truy cập trực tiếp bị chặn ở mức phân quyền database.

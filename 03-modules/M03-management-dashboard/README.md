@@ -1,8 +1,8 @@
-# Phân Hệ Quản Lý / Admin (M03 - Management Dashboard)
+# Phân Hệ Quản Lý (M03 - Management Dashboard)
 
 ## 1. Tổng Quan Phân Hệ
 
-Phân hệ **Quản lý / Admin (Management Dashboard)** là trung tâm điều hành dành riêng cho Ban Giám hiệu, Trưởng/Phó các Phòng ban chức năng và Quản trị viên hệ thống tại **Aurora University**.
+Phân hệ **Quản lý / Admin (Management Dashboard)** là trung tâm điều hành dành riêng cho Ban Giám hiệu và Trưởng/Phó các Phòng ban chức năng tại **Aurora University**.
 
 Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian thực về tình hình tiếp nhận và giải quyết yêu cầu hỗ trợ sinh viên, đo lường hiệu suất làm việc của từng phòng ban/nhân viên, đồng thời cung cấp công cụ quản trị tài khoản, phân quyền vai trò (RBAC) và tra soát lịch sử thao tác toàn hệ thống.
 
@@ -21,13 +21,12 @@ Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian th
 
 | Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ |
 | :--- | :--- | :--- |
-| **FR-MGT-01** | Đăng nhập tài khoản Quản lý | Đăng nhập bằng tài khoản có vai trò Quản lý (`MANAGER`). |
-| **FR-MGT-02** | Dashboard tổng quan KPI | Xem các thẻ chỉ số (KPI Cards) và biểu đồ trực quan về khối lượng công việc, tình trạng quá hạn theo phòng ban. |
-| **FR-MGT-03** | Báo cáo thời gian xử lý & Xu hướng | Báo cáo thời gian giải quyết trung bình (Average Resolution Time), xu hướng nhóm vấn đề và điểm CSAT trung bình. |
-| **FR-MGT-04** | Quản lý tài khoản người dùng | Tạo mới, cập nhật thông tin, kích hoạt hoặc khóa/mở khóa tài khoản Sinh viên, Nhân viên và Quản lý. |
-| **FR-MGT-05** | Phân quyền vai trò & Phòng ban | Gán vai trò (`STUDENT`, `STAFF`, `MANAGER`) và gán Phòng ban chuyên trách cho tài khoản. |
-| **FR-MGT-06** | Tra soát nhật ký hệ thống (Audit Log) | Xem danh sách nhật ký ghi nhận các hành động quan trọng (Đổi trạng thái, Phân công, Chuyển phòng ban, Khóa tài khoản). |
-| **FR-MGT-07** | Quản lý danh mục, lưu trữ & xuất dữ liệu | Quản lý phòng ban/danh mục Ticket, thời hạn lưu trữ và xuất dữ liệu báo cáo theo quyền. |
+| **FR-MGT-01** | Quản lý tài khoản, vai trò & RBAC | Tạo/sửa/khóa tài khoản, gán vai trò, kiểm soát quyền truy cập theo vai trò. |
+| **FR-MGT-02** | Quản lý phòng ban & danh mục | Quản lý phòng ban, nhóm vấn đề/danh mục Ticket và dữ liệu cấu hình. |
+| **FR-MGT-03** | Kiểm soát quyền truy cập & Audit Trail | Áp dụng kiểm soát truy cập, bảo vệ dữ liệu/file theo quyền và ghi nhận nhật ký thao tác. |
+| **FR-MGT-04** | Quản lý thời hạn lưu trữ | Xác định thời hạn lưu trữ dữ liệu Ticket, file đính kèm, log. |
+| **FR-MGT-05** | Dashboard & thống kê quản trị | Dashboard KPI, tổng số Ticket, Ticket đang xử lý, quá hạn. |
+| **FR-MGT-06** | Báo cáo, mức độ hài lòng & xuất dữ liệu | Báo cáo thời gian xử lý, xu hướng nhóm vấn đề, CSAT, phản hồi sinh viên. |
 
 ### Effort Theo Bảng Chi Phí Nội Bộ Đã Chốt
 
@@ -39,7 +38,7 @@ Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian th
 | Quản lý thời hạn lưu trữ | **15h** |
 | Dashboard & thống kê quản trị | **33h** |
 | Báo cáo, mức độ hài lòng & xuất dữ liệu | **37h** |
-| **Tổng M3 - Admin** | **215h** |
+| **Tổng M3 - Quản lý** | **215h** |
 
 ---
 
@@ -54,7 +53,7 @@ Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian th
 Chỉ số CSAT toàn trường)       Top xu hướng vấn đề)              ├──► [Quản lý Tài khoản FR-MGT-04]
                                                                  ├──► [Gán Quyền & Phòng ban FR-MGT-05]
                                                                  ├──► [Xem Audit Log FR-MGT-06]
-                                                                 └──► [Danh mục/Lưu trữ/Xuất dữ liệu FR-MGT-07]
+                                                                 └──► [Lưu trữ FR-MGT-07] / [Danh mục/Xuất dữ liệu FR-MGT-08]
 ```
 
 ---

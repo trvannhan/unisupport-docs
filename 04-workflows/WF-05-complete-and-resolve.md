@@ -23,7 +23,7 @@ Nhân viên phụ trách Ticket (Staff).
 
 **Business Rules**
 - Nội dung kết quả giải quyết là bắt buộc, không được để trống hoặc chỉ chứa khoảng trắng.
-- Sau khi Ticket chuyển sang trạng thái `Hoàn thành`, thông tin kết quả không được phép chỉnh sửa trừ khi có quyền Quản lý (Admin/Manager).
+- Sau khi Ticket chuyển sang trạng thái `Hoàn thành`, thông tin kết quả không được phép chỉnh sửa trừ khi có quyền Quản lý (Manager).
 - Lịch sử cập nhật và tệp kết quả được lưu trữ nguyên vẹn để tra soát.
 
 **Alternative / Error Flows**

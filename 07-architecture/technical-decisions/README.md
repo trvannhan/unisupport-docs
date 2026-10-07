@@ -8,7 +8,7 @@ Thư mục này lưu trữ các **Bản ghi Quyết định Kiến trúc (Archit
 
 | Mã ADR | Tiêu đề Quyết định | Trạng thái | Tóm tắt Giải pháp |
 | :--- | :--- | :--- | :--- |
-| **[ADR-001](./ADR-001-ticket-id-generation.md)** | Quy tắc sinh mã Ticket duy nhất | Accepted | Sinh mã hiển thị ngắn gọn `TK-YYYYMM-XXXX` cho người dùng; dùng UUID/BigInt cho Primary Key CSDL. |
+| **[ADR-001](./ADR-001-ticket-id-generation.md)** | Quy tắc sinh mã Ticket duy nhất | Accepted | Sinh mã hiển thị ngắn gọn `TK-YYYYMMDD-XXXX` cho người dùng; dùng UUID/BigInt cho Primary Key CSDL. |
 | **[ADR-002](./ADR-002-role-based-access-control.md)** | Giải pháp phân quyền 3 vai trò (RBAC) | Accepted | Sử dụng RBAC dựa trên JWT với 3 Role chính kết hợp lọc dữ liệu ở cấp độ context (`student_id`, `department_id`). |
 | **[ADR-003](./ADR-003-file-attachment-storage.md)** | Phương án lưu trữ & Phân quyền xem file | Accepted | Lưu tệp trong thư mục bảo mật trên máy chủ local, đổi tên file dạng UUID và kiểm soát truy cập qua API Stream Proxy (trả về 403 nếu sai quyền). |
 

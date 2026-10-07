@@ -2,9 +2,9 @@
 
 ## 1. Tổng Quan
 
-**RBAC & Security** là năng lực dùng chung cho 3 phân hệ chính M01 Sinh viên, M02 Nhân viên và M03 Quản lý/Admin theo proposal đã chốt. Năng lực này duy trì tính toàn vẹn, an toàn dữ liệu và kiểm soát truy cập cho toàn bộ hệ thống **UniSupport** tại **Aurora University**.
+**RBAC & Security** là năng lực dùng chung cho 3 phân hệ chính M01 Sinh viên, M02 Nhân viên và M03 Quản lý theo proposal đã chốt. Năng lực này duy trì tính toàn vẹn, an toàn dữ liệu và kiểm soát truy cập cho toàn bộ hệ thống **UniSupport** tại **Aurora University**.
 
-Năng lực này chịu trách nhiệm xác thực danh tính người dùng (Authentication), phân quyền thao tác theo vai trò (Role-Based Access Control - RBAC) đối với các vai trò chính (Sinh viên, Nhân viên, Quản lý/Admin), bảo vệ an toàn cho các tệp đính kèm (PDF, Ảnh) và lưu vết nhật ký hoạt động (Audit Log) cho các giao dịch nghiệp vụ quan trọng.
+Năng lực này chịu trách nhiệm xác thực danh tính người dùng (Authentication), phân quyền thao tác theo vai trò (Role-Based Access Control - RBAC) đối với các vai trò chính (Sinh viên, Nhân viên, Quản lý), bảo vệ an toàn cho các tệp đính kèm (PDF, Ảnh) và lưu vết nhật ký hoạt động (Audit Log) cho các giao dịch nghiệp vụ quan trọng.
 
 ---
 
@@ -22,7 +22,7 @@ Năng lực này chịu trách nhiệm xác thực danh tính người dùng (Au
 | Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ |
 | :--- | :--- | :--- |
 | **FR-SEC-01** | Xác thực & Quản lý phiên làm việc | Đăng nhập mã hóa, cấp Token xác thực (JWT/Session), tự động hết hạn phiên và cơ chế đăng xuất an toàn. |
-| **FR-SEC-02** | Phân quyền theo vai trò (RBAC) | Kiểm soát quyền truy cập API và giao diện dựa trên 3 vai trò chính (`STUDENT`, `STAFF`, `MANAGER`/`ADMIN`). |
+| **FR-SEC-02** | Phân quyền theo vai trò (RBAC) | Kiểm soát quyền truy cập API và giao diện dựa trên 3 vai trò chính (`STUDENT`, `STAFF`, `MANAGER`). |
 | **FR-SEC-03** | Bảo mật tệp đính kèm | Kiểm soát quyền tải/xem file đính kèm (PDF/Ảnh) thông qua Secured API Proxy, ngăn chặn truy cập trực tiếp URL. |
 | **FR-SEC-04** | Ghi nhận Nhật ký tra soát (Audit Log) | Tự động ghi vết các sự kiện hệ thống quan trọng (Đổi trạng thái, Phân công, Chuyển phòng ban, Khóa tài khoản) dưới dạng immutable log. |
 
@@ -48,7 +48,7 @@ Năng lực này chịu trách nhiệm xác thực danh tính người dùng (Au
 ┌────────────────────────────────────┐
 │ 2. RBAC AUTHORIZATION MIDDLEWARE   │
 │    - Kiểm tra Role (STUDENT/STAFF/ │
-│      MANAGER/ADMIN)                │
+│      MANAGER)                │
 │    - Kiểm tra Resource Ownership & │
 │      Department Scope              │
 └──────────────────┬─────────────────┘
@@ -70,7 +70,7 @@ Năng lực này chịu trách nhiệm xác thực danh tính người dùng (Au
 
 ## 5. Ma Trận Phân Quyền Dữ Liệu Chi Tiết (Data Access Control Matrix)
 
-| Phạm Vi Dữ Liệu (Resource Scope) | Sinh Viên (`STUDENT`) | Nhân Viên (`STAFF`) | Quản Lý (`MANAGER`) | Quản Trị Viên (`ADMIN`) |
+| Phạm Vi Dữ Liệu (Resource Scope) | Sinh Viên (`STUDENT`) | Nhân Viên (`STAFF`) | Quản Lý (`MANAGER`) |
 | :--- | :---: | :---: | :---: | :---: |
 | **Ticket do mình tạo** | Full (Xem, Tạo, Bổ sung, Đánh giá) | N/A | N/A | N/A |
 | **Ticket thuộc Phòng ban mình phụ trách** | ❌ Không có quyền | Full (Xem, Claim, Transfer, Resolve) | Xem & Phân công trong Phòng ban | Xem & Quản trị |

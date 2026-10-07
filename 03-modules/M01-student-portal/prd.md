@@ -19,7 +19,7 @@ Phân hệ **Sinh viên (Student Portal)** là điểm giao tiếp số duy nh�
 
 ---
 
-### [FR-STU-00] Tra cứu hướng dẫn & FAQ
+### [FR-STU-01] Tra cứu hướng dẫn & FAQ
 
 **Mô tả**
 Hệ thống cung cấp khu vực hướng dẫn/FAQ cơ bản để Sinh viên tra cứu nhóm vấn đề thường gặp, phòng ban phụ trách và yêu cầu hồ sơ trước khi tạo Ticket.
@@ -46,47 +46,9 @@ Sinh viên (Student).
 
 ---
 
-### [FR-STU-01] Đăng nhập tài khoản Sinh viên
 
-**Mô tả**
-Hệ thống cho phép Sinh viên xác thực tài khoản cá nhân do Aurora University cấp để truy cập vào Phân hệ Sinh viên.
 
-**Actor**
-Sinh viên (Student).
-
-**Preconditions**
-- Sinh viên có tài khoản được cấp trong hệ thống UniSupport.
-- Tài khoản đang ở trạng thái hoạt động (`Active`).
-
-**Luồng chính**
-1. Sinh viên truy cập vào địa chỉ trang web UniSupport.
-2. Hệ thống hiển thị màn hình Đăng nhập.
-3. Sinh viên nhập **Mã sinh viên / Email sinh viên** và **Mật khẩu**.
-4. Sinh viên nhấn nút **Đăng nhập**.
-5. Hệ thống kiểm tra thông tin xác thực.
-6. Khi xác thực thành công, hệ thống điều hướng Sinh viên vào Màn hình chính (Dashboard Sinh viên).
-
-**Business Rules**
-- Mật khẩu phải được mã hóa an toàn trên đường truyền và cơ sở dữ liệu.
-- Hệ thống khóa tài khoản tạm thời (5 phút) nếu nhập sai mật khẩu quá 5 lần liên tiếp.
-- Phiên đăng nhập (Session/Token) duy trì tối đa 24 giờ nếu không đăng xuất.
-
-**Alternative / Error Flows**
-- **Nhập sai tài khoản hoặc mật khẩu**: Hệ thống hiển thị thông báo "Tên đăng nhập hoặc mật khẩu không chính xác" (không chỉ rõ sai trường nào để bảo mật).
-- **Tài khoản bị khóa**: Hệ thống hiển thị thông báo "Tài khoản của bạn tạm thời bị khóa. Vui lòng liên hệ Admin".
-
-**Acceptance Criteria**
-- **AC-01**: Sinh viên nhập đúng tên tài khoản và mật khẩu -> Đăng nhập thành công và vào trang Dashboard.
-- **AC-02**: Sinh viên nhập sai mật khẩu -> Dừng đăng nhập, hiển thị thông báo lỗi và không tạo phiên làm việc.
-- **AC-03**: Sinh viên để trống tên tài khoản hoặc mật khẩu -> Nút Đăng nhập không hoạt động hoặc báo lỗi validation trường dữ liệu.
-
-**Ví dụ Edge Case**
-Sinh viên nhập sai mật khẩu liên tiếp 5 lần.
--> **Expected Result**: Hệ thống từ chối đăng nhập ở lần thứ 6 và hiển thị thông báo khóa tài khoản tạm thời 5 phút.
-
----
-
-### [FR-STU-02] Sinh viên gửi yêu cầu hỗ trợ
+### [FR-STU-02] Tạo & gửi yêu cầu hỗ trợ
 
 **Mô tả**
 Hệ thống cho phép sinh viên tạo một Ticket hỗ trợ bằng cách nhập thông tin mô tả vấn đề gặp phải, chọn phòng ban/nhóm vấn đề và đính kèm file minh chứng (nếu có), sau đó gửi yêu cầu đến bộ phận phụ trách.
@@ -135,7 +97,7 @@ Sinh viên nhấn nút **Gửi yêu cầu** 5 lần liên tiếp trong thời gi
 
 ---
 
-### [FR-STU-03] Xem danh sách & Theo dõi tiến độ xử lý Ticket
+### [FR-STU-03] Xem & theo dõi yêu cầu
 
 **Mô tả**
 Hệ thống hiển thị danh sách các Ticket do sinh viên tạo ra và cho phép xem chi tiết tiến độ xử lý, lịch sử phản hồi theo thời gian thực.
@@ -173,7 +135,14 @@ Sinh viên copy đường dẫn chi tiết Ticket `TK-20261004-001` gửi cho m�
 
 ---
 
-### [FR-STU-04] Phản hồi & Bổ sung thông tin / Hồ sơ theo yêu cầu
+### [FR-STU-04] Nhận thông báo trạng thái
+
+**Mô tả**
+Nhận thông báo trong hệ thống khi Ticket được tiếp nhận, yêu cầu bổ sung, chuyển trạng thái hoặc hoàn tất (liên kết với Module Notification M04).
+
+---
+
+### [FR-STU-05] Bổ sung thông tin & phản hồi
 
 **Mô tả**
 Khi Ticket ở trạng thái `WAITING_STUDENT`, sinh viên có thể nhập câu trả lời bổ sung và tải lên các file giấy tờ theo yêu cầu của nhân viên.
@@ -215,7 +184,7 @@ Sinh viên đang soạn nội dung bổ sung thì nhân viên chủ động hủ
 
 ---
 
-### [FR-STU-05] Xem kết quả giải quyết & Đánh giá mức độ hài lòng (CSAT)
+#### Tích hợp: Xem kết quả giải quyết & Đánh giá mức độ hài lòng (CSAT)
 
 **Mô tả**
 Cho phép sinh viên xem nội dung kết quả xử lý chính thức từ nhà trường, nhận file đính kèm kết quả (nếu có) và thực hiện chấm điểm hài lòng đối với dịch vụ hỗ trợ.

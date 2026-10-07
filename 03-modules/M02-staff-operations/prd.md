@@ -18,45 +18,7 @@ Phân hệ **Nhân viên (Staff Operations)** là không gian làm việc dành 
 
 ---
 
-### [FR-STF-01] Đăng nhập tài khoản Nhân viên
 
-**Mô tả**
-Hệ thống cho phép Nhân viên thuộc các phòng ban đăng nhập vào Phân hệ Nhân viên để quản lý và xử lý các Ticket hỗ trợ được phân công.
-
-**Actor**
-Nhân viên (Staff / Support Agent).
-
-**Preconditions**
-- Tài khoản nhân viên đã được Quản trị viên (Admin) khởi tạo và gán thuộc về ít nhất 01 Phòng ban chuyên trách.
-- Tài khoản ở trạng thái `Active`.
-
-**Luồng chính**
-1. Nhân viên truy cập cổng đăng nhập nội bộ UniSupport.
-2. Hệ thống hiển thị form đăng nhập.
-3. Nhân viên nhập **Email công vụ / Mã nhân viên** và **Mật khẩu**.
-4. Nhân viên nhấn nút **Đăng nhập**.
-5. Hệ thống xác thực tài khoản và kiểm tra vai trò (`Role = STAFF` hoặc `MANAGER`).
-6. Hệ thống điều hướng Nhân viên vào **Hòm thư công việc của Phòng ban** (Staff Dashboard).
-
-**Business Rules**
-- Mật khẩu mã hóa theo chuẩn an toàn.
-- Khóa tài khoản tạm thời 5 phút nếu đăng nhập sai quá 5 lần liên tiếp.
-- Sau khi đăng nhập, hệ thống chỉ nạp dữ liệu Ticket thuộc Phòng ban mà nhân viên đó được phân quyền.
-
-**Alternative / Error Flows**
-- **Sai thông tin xác thực**: Hiển thị lỗi "Thông tin đăng nhập không chính xác".
-- **Tài khoản sinh viên cố tình đăng nhập vào cổng Staff**: Hệ thống từ chối truy cập và thông báo "Tài khoản của bạn không có quyền truy cập phân hệ này".
-
-**Acceptance Criteria**
-- **AC-01**: Nhân viên đăng nhập đúng tài khoản -> Hệ thống điều hướng vào Dashboard Nhân viên và hiển thị đúng danh sách Ticket của phòng ban tương ứng.
-- **AC-02**: Tài khoản Sinh viên đăng nhập vào form Staff -> Hệ thống ngăn chặn và hiển thị thông báo không đủ quyền hạn.
-- **AC-03**: Nhập sai mật khẩu -> Dừng đăng nhập và báo lỗi validation.
-
-**Ví dụ Edge Case**
-Nhân viên thuộc Phòng Đào tạo đăng nhập thành công.
--> **Expected Result**: Dashboard chỉ hiển thị các Ticket gửi tới Phòng Đào tạo, không hiển thị Ticket của Phòng CTHSSV hay Tài chính.
-
----
 
 ### [FR-STF-02] Tiếp nhận (Claim) & Phân công xử lý (Assign)
 
@@ -149,10 +111,10 @@ Nhân viên hạ độ ưu tiên từ `High` xuống `Low` khi Ticket đã gần
 
 ---
 
-### [FR-STF-04] Chuyển phòng ban chuyên trách (Transfer Department)
+### [FR-STF-05] Chuyển xử lý, Escalation & hoàn tất
 
 **Mô tả**
-Khi phát hiện sinh viên gửi nhầm phòng ban hoặc nội dung cần sự giải quyết của đơn vị khác, nhân viên có quyền chuyển Ticket sang Phòng ban chuyên trách kèm theo lý do chuyển.
+Khi phát hiện sinh viên gửi nhầm phòng ban hoặc nội dung cần sự giải quyết của đơn vị/cấp quản lý khác, nhân viên có quyền chuyển (Transfer) hoặc leo thang (Escalate) Ticket sang Phòng ban/Người phụ trách chuyên trách kèm theo lý do.
 
 **Actor**
 Nhân viên phụ trách Ticket.
@@ -163,7 +125,7 @@ Nhân viên phụ trách Ticket.
 
 **Luồng chính**
 1. Nhân viên mở màn hình Chi tiết Ticket.
-2. Nhân viên chọn chức năng **Chuyển phòng ban**.
+2. Nhân viên chọn chức năng **Chuyển phòng ban / Escalation**.
 3. Hệ thống hiển thị danh sách các Phòng ban chức năng khác trong trường.
 4. Nhân viên chọn **Phòng ban đích** cần chuyển tới.
 5. Nhân viên nhập **Lý do chuyển phòng ban** (Bắt buộc).

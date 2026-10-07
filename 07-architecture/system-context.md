@@ -34,12 +34,12 @@ UniSupport là hệ thống **Web Application** đóng vai trò là đầu mối
   * Yêu cầu sinh viên bổ sung giấy tờ/thông tin.
   * Cập nhật tiến độ, ghi nhận kết quả giải quyết và đóng Ticket.
 
-### **2.3. Quản lý / Quản trị viên (Manager & Admin)**
+### **2.3. Quản lý (Manager)**
 * **Mô tả:** Ban quản lý đơn vị/trường và Quản trị viên hệ thống.
 * **Tương tác:**
   * Xem Dashboard báo cáo tổng quan về khối lượng công việc, tỷ lệ Ticket đúng/quá hạn SLA.
   * Phân tích xu hướng các nhóm vấn đề sinh viên thường gặp.
-  * Quản trị tài khoản, phân quyền vai trò (`STUDENT`, `STAFF`, `MANAGER`, `ADMIN`) và quản lý danh mục phòng ban.
+  * Quản trị tài khoản, phân quyền vai trò (`STUDENT`, `STAFF`, `MANAGER`) và quản lý danh mục phòng ban.
   * Tra soát nhật ký hoạt động (Audit log) cơ bản của hệ thống.
 
 ---
@@ -53,8 +53,8 @@ UniSupport là hệ thống **Web Application** đóng vai trò là đầu mối
      |                               |                               |
      v                               v                               v
 +------------------+           +-------------------+           +-------------------+
-|  Sinh viên       |           |  Nhân viên        |           |  Quản lý / Admin  |
-|  (Student)       |           |  (Staff)          |           |  (Manager/Admin)  |
+|  Sinh viên       |           |  Nhân viên        |           |  Quản lý  |
+|  (Student)       |           |  (Staff)          |           |  (Manager)  |
 +------------------+           +-------------------+           +-------------------+
 |                               |                               |
 | HTTP / HTTPS                  | HTTP / HTTPS                  | HTTP / HTTPS
