@@ -10,6 +10,7 @@ Chào mừng bạn đến với kho tài liệu chính thức của hệ thống
 docs/
 ├── README.md                          # [Tài liệu này] Tổng quan toàn bộ hệ thống tài liệu
 ├── 01-product/                        # Tổng quan sản phẩm, vai trò & phạm vi dự án
+│   ├── README.md                      # Điều hướng & hướng dẫn đọc thư mục Product
 │   ├── product-overview.md            # Bài toán, mục tiêu, phân hệ chính & non-goals
 │   ├── actors-and-roles.md            # Vai trò (Sinh viên, Nhân viên, Quản lý)
 │   └── product-scope.md               # Phạm vi sản phẩm, giả định & ràng buộc
