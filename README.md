@@ -9,12 +9,10 @@ Chào mừng bạn đến với kho tài liệu chính thức của hệ thống
 ```text
 docs/
 ├── README.md                          # [Tài liệu này] Tổng quan toàn bộ hệ thống tài liệu
-├── 01-product/                        # Tổng quan sản phẩm, mục tiêu & phạm vi dự án
-│   ├── product-overview.md            # Tổng quan dự án UniSupport
-│   ├── problem-statement.md           # Hiện trạng & Khó khăn kênh rời rạc
-│   ├── goals-and-non-goals.md         # Mục tiêu cốt lõi & Scope/Out of Scope
+├── 01-product/                        # Tổng quan sản phẩm, vai trò & phạm vi dự án
+│   ├── product-overview.md            # Bài toán, mục tiêu, phân hệ chính & non-goals
 │   ├── actors-and-roles.md            # Vai trò (Sinh viên, Nhân viên, Quản lý)
-│   └── product-scope.md               # Phạm vi sản phẩm & Các giả định (3.000 sinh viên)
+│   └── product-scope.md               # Phạm vi sản phẩm, giả định & ràng buộc
 ├── 02-domain/                         # Nghiệp vụ hỗ trợ sinh viên Aurora University
 │   ├── domain-overview.md             # Tổng quan nghiệp vụ
 │   ├── terminology.md                 # Thuật ngữ nghiệp vụ (Ticket, SLA, Department...)
@@ -58,3 +56,4 @@ docs/
     ├── milestones-and-timeline.md     # Tiến độ 6 giai đoạn, mốc nghiệm thu & bảo hành 30 ngày
     ├── open-questions.md              # Vấn đề chờ thảo luận / phê duyệt
     └── glossary.md                    # Thuật ngữ & Khái niệm dự án
+```
