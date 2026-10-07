@@ -3,37 +3,35 @@
 ## 1. Mục Tiêu Cốt Lõi (Core Goals)
 
 ### G-01: Tập trung hóa đầu mối tiếp nhận
-- **Mục tiêu**: Tập trung 100% các yêu cầu hỗ trợ trực tuyến của sinh viên Aurora University vào hệ thống UniSupport.
-- **Tiêu chí đo lường**: 100% yêu cầu khởi tạo trên hệ thống đều được cấp mã Ticket định danh duy nhất (ví dụ: `TK-20261004-001`).
+- **Mục tiêu**: Cung cấp một kênh thống nhất để sinh viên gửi yêu cầu hỗ trợ và theo dõi quá trình xử lý.
+- **Kết quả mong đợi**: Mỗi yêu cầu được tạo thành công trên hệ thống có mã Ticket để phục vụ tra cứu và theo dõi.
 
 ### G-02: Minh bạch hóa tiến độ xử lý
-- **Mục tiêu**: Giúp sinh viên dễ dàng tra cứu trạng thái xử lý và đơn vị/nhân viên đang thụ lý yêu cầu.
-- **Tiêu chí đo lường**: Sinh viên xem được tiến độ theo thời gian thực (Real-time status) ngay trên trang cá nhân mà không cần gọi điện hay gửi email truy vấn.
+- **Mục tiêu**: Giúp sinh viên theo dõi trạng thái hiện tại và đơn vị/người phụ trách xử lý yêu cầu.
+- **Kết quả mong đợi**: Sinh viên có thể xem tiến độ và lịch sử cập nhật trực tiếp trên hệ thống.
 
-### G-03: Tối ưu quy trình vận hành phòng ban
-- **Mục tiêu**: Chuẩn hóa luồng làm việc của nhân viên từ khâu tiếp nhận, phân loại, chuyển phòng ban đến cập nhật kết quả.
-- **Tiêu chí đo lường**: Giảm tỷ lệ bỏ sót yêu cầu xuống **0%**; giảm thời gian chuyển tiếp công việc giữa các phòng ban.
+### G-03: Chuẩn hóa quy trình vận hành
+- **Mục tiêu**: Hỗ trợ nhân viên phân loại, phân công/chuyển xử lý, cập nhật trạng thái, yêu cầu bổ sung và ghi nhận kết quả theo một quy trình thống nhất.
+- **Kết quả mong đợi**: Giảm nguy cơ bỏ sót, xử lý trùng lặp và phản hồi không thống nhất giữa các phòng ban.
 
-### G-04: Cung cấp năng lực giám sát cho Ban quản lý
-- **Mục tiêu**: Cung cấp Dashboard tổng quan và Báo cáo chi tiết về khối lượng công việc, tỷ lệ hoàn thành, thời gian xử lý trung bình và chỉ số hài lòng.
-- **Tiêu chí đo lường**: Xuất được báo cáo trực quan theo khoảng thời gian và theo từng phòng ban.
+### G-04: Nâng cao năng lực giám sát
+- **Mục tiêu**: Cung cấp Dashboard và báo cáo về khối lượng công việc, tình trạng xử lý, yêu cầu quá hạn, nhóm vấn đề thường gặp, thời gian xử lý và phản hồi sinh viên.
+- **Kết quả mong đợi**: Ban quản lý có dữ liệu để theo dõi và hỗ trợ điều phối hoạt động.
 
-### G-05: Bảo mật và Phân quyền truy cập
-- **Mục tiêu**: Đảm bảo đúng người đúng việc, file đính kèm chỉ người có thẩm quyền mới được truy cập.
-- **Tiêu chí đo lường**: Áp dụng mô hình RBAC cho 3 vai trò, tra soát log thao tác cho các hành động quan trọng.
+### G-05: Đảm bảo phân quyền và an toàn dữ liệu cơ bản
+- **Mục tiêu**: Đảm bảo người dùng chỉ xem và thao tác trong phạm vi quyền được cấp.
+- **Kết quả mong đợi**: File đính kèm chỉ người liên quan được truy cập và các thao tác quan trọng được ghi nhận để tra soát.
 
 ---
 
 ## 2. Các Mục Nằm Ngoài Phạm Vi Hiện Tại (Out of Scope / Non-Goals)
 
-Để đảm bảo dự án hoàn thành đúng tiến độ **14 tuần** và ngân sách **300 triệu VNĐ**, các hạng mục sau **KHÔNG** thuộc phạm vi triển khai của hợp đồng này:
-
-| STT | Hạng Mục Nằm Ngoài Phạm Vi | Lý Do / Giải Thích |
+| STT | Hạng mục ngoài phạm vi | Giải thích |
 | :---: | :--- | :--- |
-| **NG-01** | **Mobile App độc lập (iOS / Android)** | Hệ thống chỉ phát triển dạng **Web Application** (Responsive giao diện trên di động). Không phát triển app native trên App Store / Google Play. |
-| **NG-02** | **Tích hợp hệ thống bên thứ ba nâng cao** | Không tích hợp với hệ thống quản lý đào tạo (ERP), phần mềm kế toán, hay hệ thống SSO phức tạp ngoài phạm vi thống nhất. |
-| **NG-03** | **Quản trị hạ tầng máy chủ & Backup tự động** | Đơn vị phát triển bàn giao script/tài liệu cài đặt. Việc thiết lập tự động sao lưu, giám sát hạ tầng máy chủ lâu dài do Aurora University tự đảm nhận. |
-| **NG-04** | **Phân quyền nhiều cấp & Audit Log nâng cao** | Chỉ hỗ trợ mô hình phân quyền 3 vai trò chính (Sinh viên, Nhân viên, Quản lý) và lưu log thao tác cơ bản. Không hỗ trợ phân quyền ma trận đa cấp độ hoặc ghi log chi tiết mức dữ liệu sâu. |
-| **NG-05** | **Chat trực tiếp (Livechat) / Gọi thoại (VoIP)** | Không tích hợp khung chat real-time hoặc gọi điện trực tiếp trong hệ thống. Mọi trao đổi diễn ra qua tính năng nhắn/gửi yêu cầu bổ sung thông tin trên Ticket. |
-| **NG-06** | **Tối ưu chịu tải lớn (> 3.000 sinh viên)** | Hệ thống được thiết kế tối ưu cho quy mô 3.000 sinh viên của Aurora University, không chịu trách nhiệm tối ưu kiến trúc Microservices/Load Balancing phức tạp cho hàng trăm nghìn truy cập đồng thời. |
-| **NG-07** | **Kiểm thử thâm nhập (Pentest) & Chứng nhận bảo mật** | Không bao gồm chi phí thuê bên thứ ba đánh giá an toàn thông tin chuyên sâu hoặc cấp chứng chỉ bảo mật quốc tế (ISO/IEC 27001, SOC2...). |
+| **NG-01** | **Mobile App độc lập (iOS / Android)** | Hệ thống được triển khai dưới dạng Web Application, không xây dựng ứng dụng native riêng. |
+| **NG-02** | **Tích hợp bên thứ ba ngoài phạm vi đã thống nhất** | Không triển khai các tích hợp với hệ thống bên ngoài nếu chưa nằm trong phạm vi đã xác nhận. |
+| **NG-03** | **Sao lưu tự động và vận hành hạ tầng dài hạn** | Không bao gồm thiết lập backup tự động, theo dõi vận hành máy chủ và hỗ trợ hạ tầng lâu dài. |
+| **NG-04** | **Phân quyền nhiều cấp và Audit Log nâng cao** | Chỉ triển khai phân quyền và ghi nhận thao tác ở mức cần thiết cho phạm vi hiện tại; không bao gồm mô hình phân quyền nhiều cấp phức tạp hoặc audit chi tiết nâng cao. |
+| **NG-05** | **Chat trực tiếp / Gọi thoại** | Không triển khai live chat hoặc voice call trong hệ thống. |
+| **NG-06** | **Tối ưu chịu tải lớn vượt quy mô dự án** | Hệ thống hướng tới quy mô khoảng 3.000 sinh viên, không bao gồm yêu cầu tối ưu cho quy mô lớn hơn đáng kể. |
+| **NG-07** | **Chứng nhận hoặc kiểm thử bảo mật chuyên sâu** | Không bao gồm chứng nhận bảo mật hoặc kiểm thử bảo mật chuyên sâu bởi bên thứ ba. |
