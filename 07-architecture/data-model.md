@@ -71,7 +71,7 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 | **email** | VARCHAR(100) | Unique, Not Null | Email cá nhân/trường |
 | **password_hash** | VARCHAR(255) | Not Null | Mật khẩu mã hóa (Bcrypt) |
 | **full_name** | VARCHAR(100) | Not Null | Họ và tên |
-| **role** | ENUM | Not Null | Vai trò: `'STUDENT'`, `'STAFF'`, `'MANAGER'`, `'ADMIN'` |
+| **role** | ENUM | Not Null | Vai trò: `'STUDENT'`, `'STAFF'`, `'MANAGER'` |
 | **status** | VARCHAR(20) | Default `'ACTIVE'` | Trạng thái tài khoản (ACTIVE, INACTIVE) |
 | **created_at** | TIMESTAMP | Default NOW() | Thời gian khởi tạo |
 

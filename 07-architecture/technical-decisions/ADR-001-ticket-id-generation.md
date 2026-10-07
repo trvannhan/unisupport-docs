@@ -25,7 +25,7 @@ Hệ thống UniSupport yêu cầu mỗi phiếu hỗ trợ (Ticket) phải có 
 
 ## 3. Quyết định (Decision)
 Lựa chọn **Phương án 3**. Cấu trúc mã Ticket hiển thị cho người dùng sẽ bao gồm:
-$$\text{Ticket Code} = \text{TK} + \text{[YYYYMM]} + \text{[4 Ký tự ngẫu nhiên AlphaNumeric/Sequence]}$$
+$$\text{Ticket Code} = \text{TK} + \text{[YYYYMMDD]} + \text{[4 Ký tự ngẫu nhiên AlphaNumeric/Sequence]}$$
 *(Ví dụ: `TK-20261004-8F3A`)*
 
 - Khóa chính CSDL (Primary Key) vẫn lưu bằng `UUID` hoặc `BigInt` để đảm bảo hiệu năng liên kết bảng.
