@@ -12,7 +12,7 @@ Tài liệu này định nghĩa toàn bộ các thuật ngữ, khái niệm và 
 | **Department** | Phòng ban chuyên trách | Đơn vị hành chính trong Aurora University có thẩm quyền xử lý Ticket (Ví dụ: Phòng Đào tạo, Phòng CTHSSV...). |
 | **Student** | Sinh viên | Người dùng khởi tạo Ticket và là người thụ hưởng kết quả xử lý. |
 | **Agent / Staff** | Nhân viên xử lý | Chuyên viên thuộc Phòng ban chức năng có nhiệm vụ tiếp nhận, xử lý và phản hồi Ticket. |
-| **Manager / Admin** | Quản lý / Quản trị viên | Trưởng phòng ban hoặc Ban Giám hiệu theo dõi chỉ số KPI, hiệu suất và quản trị phân quyền hệ thống. |
+| **Manager** | Quản lý | Trưởng phòng ban hoặc Ban Giám hiệu theo dõi chỉ số KPI, hiệu suất và quản trị phân quyền hệ thống. |
 | **Triage** | Phân loại & Điều phối | Quá trình kiểm tra nội dung Ticket mới để xác định đúng nhóm vấn đề, độ ưu tiên và gán cho nhân viên/phòng ban phù hợp. |
 | **Claim** | Tiếp nhận | Hành động nhân viên tự nhận một Ticket chưa có người phụ trách về cho chính mình xử lý. |
 | **Assign** | Phân công | Hành động gán trách nhiệm xử lý Ticket cho một nhân viên cụ thể trong cùng phòng ban. |

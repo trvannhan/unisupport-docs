@@ -64,5 +64,5 @@ Tài liệu này tổng hợp toàn bộ các Quy tắc nghiệp vụ (Business 
 - **Nội dung**: Đảm bảo tính toàn vẹn của lịch sử thao tác phục vụ tra soát khi có khiếu nại.
 - **Quy tắc**:
   - Toàn bộ các bản ghi trong Bảng Nhật ký (`Activity Log / Audit Log`) là **chỉ ghi (Append-only)**.
-  - Nghiêm cấm mọi hành vi sửa (UPDATE) hoặc xóa (DELETE) dữ liệu nhật ký, kể cả tài khoản Quản trị viên (Admin).
+  - Nghiêm cấm mọi hành vi sửa (UPDATE) hoặc xóa (DELETE) dữ liệu nhật ký, kể cả tài khoản Quản lý (Manager).
   - Tất cả các mốc thời gian ghi nhận trong log bắt buộc lưu trữ dưới chuẩn **UTC / ISO-8601** và quy đổi hiển thị theo múi giờ local (`GMT+7`).

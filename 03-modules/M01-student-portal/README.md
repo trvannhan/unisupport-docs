@@ -34,24 +34,27 @@ Ghi chú: Đăng nhập, xem kết quả và đánh giá CSAT vẫn thuộc ph�
 
 ## 4. Sơ Đồ Luồng Tương Tác Của Sinh Viên (User Journey)
 ```
-[Đăng nhập FR-STU-01] ──► [Tạo Ticket FR-STU-02] ──► [Nhận Mã Ticket]
-                                                        │
-                                                        ▼
-                                      [Theo dõi tiến độ FR-STU-03]
-                                                        │
-                              ┌─────────────────────────┤
-                              │                         │
-                              │ (Nếu Nhân viên yêu cầu) │
-                              ▼                         ▼
-                   [Bổ sung giấy tờ FR-STU-04]   [Nhận kết quả giải quyết]
-                              │                         ▲
-                              └─────────────────────────┘
-                                                        │
-                                                        ▼
-                                      [Đánh giá CSAT FR-STU-05]
-                                                        │
-                                                        ▼
-                                          [Đóng Ticket hoàn tất]
+[Đăng nhập (M05-Security)] ──► [Tra cứu FAQ FR-STU-01]
+                                        │
+                                        ▼
+                              [Tạo Ticket FR-STU-02] ──► [Nhận Mã Ticket]
+                                                         │
+                                                         ▼
+                                       [Theo dõi tiến độ FR-STU-03]
+                                                         │
+                               ┌─────────────────────────┤
+                               │                         │
+                               │ (Nhận thông báo FR-STU-04)
+                               ▼                         ▼
+                    [Bổ sung thông tin FR-STU-05]  [Nhận kết quả giải quyết]
+                               │                         ▲
+                               └─────────────────────────┘
+                                                         │
+                                                         ▼
+                                       [Đánh giá CSAT (FR-STU-05)]
+                                                         │
+                                                         ▼
+                                           [Đóng Ticket hoàn tất]
 ```
 
 ---

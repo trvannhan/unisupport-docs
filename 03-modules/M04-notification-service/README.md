@@ -2,7 +2,7 @@
 
 ## 1. Tổng Quan
 
-**Notification Service** là năng lực dùng chung cho 3 phân hệ chính M01 Sinh viên, M02 Nhân viên và M03 Quản lý/Admin theo proposal đã chốt. Service chịu trách nhiệm tự động phát sinh, quản lý và hiển thị các thông báo nội bộ hệ thống (In-app Notification) tới đúng đối tượng người dùng mỗi khi có sự kiện quan trọng phát sinh trên Ticket hỗ trợ.
+**Notification Service** là năng lực dùng chung cho 3 phân hệ chính M01 Sinh viên, M02 Nhân viên và M03 Quản lý theo proposal đã chốt. Service chịu trách nhiệm tự động phát sinh, quản lý và hiển thị các thông báo nội bộ hệ thống (In-app Notification) tới đúng đối tượng người dùng mỗi khi có sự kiện quan trọng phát sinh trên Ticket hỗ trợ.
 
 ---
 

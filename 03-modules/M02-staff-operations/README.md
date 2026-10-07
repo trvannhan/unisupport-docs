@@ -21,12 +21,12 @@ Phân hệ này cung cấp các công cụ vận hành giúp nhân viên tiếp 
 
 | Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ |
 | :--- | :--- | :--- |
-| **FR-STF-01** | Đăng nhập tài khoản Nhân viên | Đăng nhập bằng tài khoản nhân viên được gán quyền thuộc một hoặc nhiều Phòng ban. |
-| **FR-STF-02** | Tiếp nhận (Claim) & Phân công (Assign) | Nhân viên tự nhận Ticket chưa có chủ (`Claim`) hoặc Trưởng phòng phân công (`Assign`) cho chuyên viên. |
-| **FR-STF-03** | Phân loại (Triage) & Mức độ ưu tiên | Kiểm tra nội dung, chuẩn hóa nhóm vấn đề và gán mức độ ưu tiên (`Low`, `Medium`, `High`, `Urgent`). |
-| **FR-STF-04** | Chuyển phòng ban chuyên trách | Điều chuyển Ticket sang Phòng ban khác khi sinh viên gửi nhầm địa chỉ, kèm lý do bắt buộc. |
-| **FR-STF-05** | Yêu cầu sinh viên bổ sung thông tin | Yêu cầu sinh viên cung cấp thêm thông tin/giấy tờ, tạm dừng đếm thời gian SLA xử lý. |
-| **FR-STF-06** | Cập nhật tiến độ & Đóng Ticket | Cập nhật ghi chú giải quyết, đính kèm file kết quả, chuyển trạng thái `RESOLVED` / `CLOSED`. |
+| **FR-STF-01** | Tiếp nhận, tìm kiếm & lọc yêu cầu | Xem danh sách yêu cầu mới/được giao, tìm kiếm, lọc theo trạng thái, phòng ban, mức ưu tiên. |
+| **FR-STF-02** | Phân loại & phân công xử lý | Claim Ticket chưa có chủ hoặc Assign cho nhân viên, chuẩn hóa nhóm vấn đề. |
+| **FR-STF-03** | Quản lý ưu tiên & thời hạn | Thiết lập mức ưu tiên, tính/hiển thị SLA, cảnh báo quá hạn. |
+| **FR-STF-04** | Xử lý & cập nhật yêu cầu | Ghi nhận tiến độ, trao đổi với sinh viên, yêu cầu bổ sung thông tin/hồ sơ. |
+| **FR-STF-05** | Chuyển xử lý, Escalation & hoàn tất | Chuyển phòng ban/người phụ trách khi cần, escalation các trường hợp khó. |
+| **FR-STF-06** | Đóng & mở lại yêu cầu | Đóng yêu cầu sau khi hoàn tất hoặc mở lại khi sinh viên phản hồi/chưa hài lòng. |
 
 ### Effort Theo Bảng Chi Phí Nội Bộ Đã Chốt
 
@@ -44,24 +44,27 @@ Phân hệ này cung cấp các công cụ vận hành giúp nhân viên tiếp 
 
 ## 4. Sơ Đồ Luồng Tương Tác Của Nhân Viên (Staff Workflow)
 ```
-[Đăng nhập FR-STF-01] ──► [Hòm thư Phòng ban / Inbox]
+[Đăng nhập (M05-Security)] ──► [Hòm thư Phòng ban / Inbox]
                                  │
                                  ▼
-                [Tiếp nhận / Phân công FR-STF-02]
+                [Tiếp nhận & Lọc FR-STF-01]
                                  │
                                  ▼
-                    [Phân loại & SLA FR-STF-03]
+                [Phân loại & Phân công FR-STF-02]
+                                 │
+                                 ▼
+                    [Ưu tiên & SLA FR-STF-03]
                                  │
 ┌────────────────────────────────┼────────────────────────────────┐
 ▼                                ▼                                ▼
-[Chuyển phòng ban FR-STF-04] [Yêu cầu bổ sung FR-STF-05] [Xử lý nghiệp vụ]
+[Chuyển PB/Escalation FR-STF-05] [Xử lý & Bổ sung FR-STF-04] [Xử lý nghiệp vụ]
 │                                │                                │
 ▼                                ▼                                │
 (Chờ PB mới Claim)      (Tạm dừng đếm SLA)                        │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┤
                                                                   ▼
-                                                    [Cập nhật kết quả FR-STF-06]
+                                                    [Đóng & mở lại FR-STF-06]
                                                                   │
                                                                   ▼
                                                     [Chuyển trạng thái RESOLVED]

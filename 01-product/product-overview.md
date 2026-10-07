@@ -25,7 +25,7 @@ Theo proposal và bảng chi phí nội bộ đã chốt, phạm vi bàn giao ch
 | :--- | :--- | :--- | :---: |
 | **M01** | **Sinh viên (Student Portal)** | Đăng nhập, gửi yêu cầu hỗ trợ, đính kèm file ảnh/PDF, nhận mã Ticket, theo dõi tiến độ, bổ sung hồ sơ, nhận thông báo trạng thái, xem kết quả và đánh giá mức độ hài lòng. | **128h** |
 | **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, xem danh sách yêu cầu mới/được giao, tìm kiếm/lọc Ticket, tiếp nhận, phân loại, phân công, quản lý ưu tiên/SLA, yêu cầu bổ sung hồ sơ, chuyển xử lý, cập nhật tiến độ, hoàn tất/đóng/mở lại yêu cầu. | **197h** |
-| **M03** | **Quản lý / Admin (Management Dashboard)** | Dashboard tổng quan, báo cáo xu hướng và CSAT, quản lý tài khoản, vai trò, RBAC, phòng ban/danh mục, audit trail, thời hạn lưu trữ và xuất dữ liệu. | **215h** |
+| **M03** | **Quản lý (Management Dashboard)** | Dashboard tổng quan, báo cáo xu hướng và CSAT, quản lý tài khoản, vai trò, RBAC, phòng ban/danh mục, audit trail, thời hạn lưu trữ và xuất dữ liệu. | **215h** |
 
 ### Năng lực xuyên suốt
 - **Thông báo nội bộ hệ thống**: In-app notification khi Ticket được tạo, chuyển trạng thái, chuyển phòng ban, yêu cầu bổ sung, hoàn tất hoặc có cảnh báo SLA.

@@ -1,4 +1,4 @@
-﻿# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Nhân Viên (PRD - M02 Staff Operations)
+# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Nhân Viên (PRD - M02 Staff Operations)
 
 ## 1. Tổng Quan Phân Hệ & Cơ Cấu Effort Theo Bảng Chi Phí Nội Bộ
 
@@ -52,7 +52,7 @@ Nhân viên phòng ban / Trưởng phòng / Quản lý được phân quyền.
 
 **Business Rules**
 - Một Ticket tại một thời điểm chỉ có **01 nhân viên phụ trách chính**.
-- Không cho phép Claim Ticket đã có người phụ trách, trừ khi người có quyền Manager/Admin thực hiện phân công lại.
+- Không cho phép Claim Ticket đã có người phụ trách, trừ khi người có quyền Manager thực hiện phân công lại.
 - Phân công chỉ được thực hiện cho nhân viên thuộc cùng phòng ban với Ticket.
 - Khi chuyển phòng ban, hệ thống phải xóa `assigned_staff_id` để phòng ban mới Claim/Assign lại.
 

@@ -2,7 +2,7 @@
 
 ## 1. Tổng Quan Phân Hệ
 
-Phân hệ **Quản lý / Admin (Management Dashboard)** là trung tâm điều hành dành riêng cho Ban Giám hiệu và Trưởng/Phó các Phòng ban chức năng tại **Aurora University**.
+Phân hệ **Quản lý (Management Dashboard)** là trung tâm điều hành dành riêng cho Ban Giám hiệu và Trưởng/Phó các Phòng ban chức năng tại **Aurora University**.
 
 Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian thực về tình hình tiếp nhận và giải quyết yêu cầu hỗ trợ sinh viên, đo lường hiệu suất làm việc của từng phòng ban/nhân viên, đồng thời cung cấp công cụ quản trị tài khoản, phân quyền vai trò (RBAC) và tra soát lịch sử thao tác toàn hệ thống.
 
@@ -44,16 +44,16 @@ Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian th
 
 ## 4. Sơ Đồ Luồng Tương Tác Của Quản Lý (Management Workflow)
 ```
-[Đăng nhập FR-MGT-01]
+[Đăng nhập (M05-Security)]
 │
 ├───────────────────────────────┬───────────────────────────────┐
 ▼                               ▼                               ▼
-[Dashboard KPI FR-MGT-02]     [Báo cáo Phân tích FR-MGT-03]   [Quản trị Hệ thống]
+[Dashboard KPI FR-MGT-05]     [Báo cáo & Xuất DL FR-MGT-06]   [Quản trị Hệ thống]
 (Tổng Ticket, Overdue,         (Thời gian xử lý trung bình,      │
-Chỉ số CSAT toàn trường)       Top xu hướng vấn đề)              ├──► [Quản lý Tài khoản FR-MGT-04]
-                                                                 ├──► [Gán Quyền & Phòng ban FR-MGT-05]
-                                                                 ├──► [Xem Audit Log FR-MGT-06]
-                                                                 └──► [Lưu trữ FR-MGT-07] / [Danh mục/Xuất dữ liệu FR-MGT-08]
+Chỉ số CSAT toàn trường)       Top xu hướng vấn đề)              ├──► [Tài khoản & RBAC FR-MGT-01]
+                                                                 ├──► [Phòng ban & Danh mục FR-MGT-02]
+                                                                 ├──► [Audit Trail FR-MGT-03]
+                                                                 └──► [Thời hạn lưu trữ FR-MGT-04]
 ```
 
 ---

@@ -30,7 +30,7 @@ Tất cả người dùng hệ thống (Sinh viên, Nhân viên, Quản lý).
 
 **Alternative / Error Flows**  
 - **Mật khẩu không chính xác**: Hệ thống hiển thị thông báo lỗi chung "Tên đăng nhập hoặc mật khẩu không đúng".
-- **Tài khoản đang bị khóa (`INACTIVE`)**: Hệ thống hiển thị lỗi "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ Admin".
+- **Tài khoản đang bị khóa (`INACTIVE`)**: Hệ thống hiển thị lỗi "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ Quản lý".
 - **Token hết hạn (Expired Token)**: Khi người dùng thao tác, hệ thống trả về mã lỗi HTTP `401 Unauthorized` và điều hướng người dùng về màn hình Đăng nhập.
 
 **Acceptance Criteria**  

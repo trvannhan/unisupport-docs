@@ -1,6 +1,6 @@
 # [WF-02] Tiếp nhận & Phân loại yêu cầu (Claim and Triage)
 
-### [FR-STF-01] Nhân viên tiếp nhận và phân loại yêu cầu
+### [FR-STF-02] Nhân viên tiếp nhận và phân loại yêu cầu
 
 **Mô tả**
 Hệ thống cho phép nhân viên phụ trách xem danh sách yêu cầu mới gửi đến, tiếp nhận yêu cầu (claim), phân loại theo từng nhóm vấn đề và đánh giá mức độ ưu tiên để chuẩn bị cho quá trình xử lý.

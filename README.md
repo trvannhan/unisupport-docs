@@ -25,7 +25,7 @@ docs/
 ├── 03-modules/                        # Mô tả yêu cầu chi tiết 3 phân hệ bàn giao + đặc tả xuyên suốt
 │   ├── M01-student-portal/            # PRD Phân hệ Sinh viên
 │   ├── M02-staff-operations/          # PRD Phân hệ Nhân viên
-│   ├── M03-management-dashboard/      # PRD Phân hệ Quản lý/Admin
+│   ├── M03-management-dashboard/      # PRD Phân hệ Quản lý
 │   ├── M04-notification-service/      # Đặc tả thông báo nội bộ dùng chung cho M01-M03
 │   └── M05-rbac-security/             # Đặc tả phân quyền, bảo mật file & Audit Log dùng chung
 ├── 04-workflows/                      # Quy trình thao tác nghiệp vụ (Workflows)

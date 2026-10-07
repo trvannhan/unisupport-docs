@@ -12,7 +12,7 @@ Hệ thống UniSupport xác định **3 vai trò chính (Actors)** tham gia và
        ▼               ▼               ▼
 ┌──────────────┐┌──────────────┐┌───────────────┐
 │ 1. SINH VIÊN ││ 2. NHÂN VIÊN ││ 3. QUẢN LÝ    │
-│   (Student)  ││ (Staff Agent)││(Manager/Admin)│
+│   (Student)  ││ (Staff Agent)││  (Manager)    │
 └──────────────┘└──────────────┘└───────────────┘
 ```
 
@@ -44,7 +44,7 @@ Hệ thống UniSupport xác định **3 vai trò chính (Actors)** tham gia và
   - Cập nhật tiến độ, ghi nhận kết quả xử lý và **Đóng Ticket (Resolve/Close)**.
 - **Ràng buộc dữ liệu**: Nhân viên **chỉ nhìn thấy và xử lý** các Ticket thuộc Phòng ban mà mình được gán quyền, hoặc Ticket do chính mình phụ trách.
 
-### 2.3 Quản lý / Quản trị viên (Manager / Admin)
+### 2.3 Quản lý (Manager)
 - **Mô tả**: Ban Giám hiệu, Trưởng/Phó các Phòng ban hoặc Quản trị viên kỹ thuật của Aurora University.
 - **Quyền hạn chính**:
   - Xem Dashboard tổng quan chỉ số vận hành toàn trường hoặc theo từng phòng ban.
