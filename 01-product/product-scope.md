@@ -9,7 +9,7 @@ UniSupport gồm **3 phân hệ chính** và một số năng lực dùng chung 
 - Đăng nhập hệ thống.
 - Gửi yêu cầu hỗ trợ.
 - Chọn nhóm vấn đề và nhập nội dung yêu cầu.
-- Đính kèm file khi cần; phạm vi Proposal xác định loại file là ảnh/PDF.
+- Đính kèm file ảnh/PDF khi cần.
 - Nhận mã Ticket sau khi gửi thành công.
 - Xem tiến độ xử lý và lịch sử cập nhật.
 - Xem đơn vị/người phụ trách theo thông tin hệ thống cung cấp.
