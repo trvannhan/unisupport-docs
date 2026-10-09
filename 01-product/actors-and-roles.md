@@ -52,8 +52,8 @@ Nhân viên thuộc các phòng ban chịu trách nhiệm tiếp nhận và xử
 - Xác định mức độ ưu tiên và theo dõi thời hạn xử lý.
 - Cập nhật trạng thái và ghi nhận hoạt động xử lý.
 - Yêu cầu sinh viên bổ sung thông tin hoặc giấy tờ.
-- Phân công hoặc chuyển Ticket sang người/phòng ban phù hợp khi được cấp quyền.
-- Thực hiện escalation khi cần thiết.
+- Phân công/phân công lại người phụ trách trong cùng phòng ban khi được cấp quyền.
+- Chuyển Ticket sang phòng ban phù hợp hoặc thực hiện chuyển cấp xử lý khi cần thiết và được cấp quyền.
 - Ghi nhận kết quả xử lý và chuyển Ticket sang `RESOLVED`.
 - Tiếp tục xử lý Ticket khi sinh viên mở lại hợp lệ về `IN_PROGRESS`.
 
