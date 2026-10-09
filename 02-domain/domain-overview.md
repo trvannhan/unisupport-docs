@@ -83,6 +83,6 @@ flowchart TD
     T --> U[Sinh viên xem kết quả và đánh giá]
 ```
 
-Trong luồng trên, **RESOLVED** thể hiện Ticket đã có kết quả xử lý nhưng vẫn còn thời gian để sinh viên phản hồi. Nếu sinh viên cho rằng vấn đề chưa được giải quyết trong thời hạn cho phép, Ticket được mở lại và quay về quá trình xử lý. Nếu sinh viên chấp nhận kết quả hoặc hết thời hạn phản hồi, Ticket chuyển sang **CLOSED** và kết thúc vòng đời xử lý.
+Trạng thái **RESOLVED** được sử dụng khi Ticket đã có kết quả xử lý nhưng vẫn còn trong thời hạn phản hồi của sinh viên. Trong thời hạn này, nếu sinh viên xác nhận vấn đề chưa được giải quyết, Ticket được mở lại và quay về trạng thái xử lý. Nếu sinh viên chấp nhận kết quả hoặc hết thời hạn phản hồi, Ticket chuyển sang trạng thái **CLOSED** và kết thúc vòng đời xử lý.
 
-Dữ liệu phát sinh từ các Ticket được sử dụng cho Dashboard và báo cáo quản lý, bao gồm tình trạng xử lý, Ticket sắp/quá hạn, khối lượng công việc, thời gian xử lý và mức độ hài lòng.
+Dữ liệu Ticket được tổng hợp phục vụ Dashboard và báo cáo quản lý, bao gồm trạng thái xử lý, Ticket sắp hoặc đã quá hạn, khối lượng công việc, thời gian xử lý và mức độ hài lòng của sinh viên.
