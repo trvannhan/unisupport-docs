@@ -20,4 +20,4 @@ flowchart LR
 
 ## 3. Hệ Thống Bên Ngoài
 
-Baseline không yêu cầu tích hợp hệ thống bên thứ ba. Hạ tầng máy chủ, tên miền và điều kiện mạng do Aurora University cung cấp theo Proposal.
+UniSupport không phụ thuộc vào tích hợp hệ thống bên thứ ba trong phạm vi hiện tại. Hạ tầng máy chủ, tên miền và điều kiện mạng do Aurora University cung cấp.
