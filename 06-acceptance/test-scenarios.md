@@ -1,6 +1,6 @@
 # Kịch Bản UAT Chính
 
-Tài liệu này liệt kê các kịch bản nghiệm thu đại diện theo đúng phạm vi Resource/PRD. Chi tiết validation được kiểm tra thêm theo Acceptance Criteria trong từng FR.
+Tài liệu này liệt kê các kịch bản nghiệm thu đại diện cho phạm vi chức năng của UniSupport. Các điều kiện kiểm tra chi tiết được kế thừa từ tiêu chí nghiệm thu của từng FR.
 
 ## 1. M01 - Sinh Viên
 
