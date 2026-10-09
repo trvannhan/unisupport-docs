@@ -27,9 +27,9 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Xác định mức độ ưu tiên và theo dõi thời hạn xử lý.
 - Cập nhật tiến độ và trạng thái Ticket.
 - Yêu cầu sinh viên bổ sung thông tin hoặc giấy tờ.
-- Chuyển xử lý sang đúng người/phòng ban và thực hiện escalation khi cần.
-- Ghi nhận kết quả xử lý.
-- Đóng và mở lại Ticket theo quy định về vòng đời Ticket.
+- Phân công lại người phụ trách trong cùng phòng ban, chuyển xử lý sang phòng ban phù hợp và thực hiện chuyển cấp khi cần.
+- Ghi nhận kết quả xử lý và chuyển Ticket sang `RESOLVED`.
+- Tiếp tục xử lý khi Ticket được sinh viên mở lại hợp lệ về `IN_PROGRESS`.
 
 ### 1.3 Module Quản lý (Management Dashboard)
 
