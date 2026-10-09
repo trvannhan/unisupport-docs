@@ -1,95 +1,30 @@
-# [ARC-04] Thiết kế RESTful API (API Design Standard)
+# ARC-03 - Nguyên Tắc Thiết Kế API
 
-Tài liệu này chuẩn hóa quy cách thiết kế RESTful API cho toàn bộ các phân hệ trong hệ thống **UniSupport**, bao gồm chuẩn HTTP Status Codes, định dạng Request/Response và danh sách Endpoints chính.
+## 1. Mục Đích
 
----
+Tài liệu này quy định cách Frontend và Backend giao tiếp ở mức nguyên tắc. Tên endpoint, framework và cơ chế token cụ thể là quyết định triển khai.
 
-## 🌐 1. Quy chuẩn API Tổng quan
+## 2. Nguyên Tắc Chung
 
-* **Giao thức:** HTTPS
-* **Đường dẫn cơ sở (Base URL):** `https://unisupport.aurora.edu.vn/api/v1`
-* **Định dạng dữ liệu:** `application/json`
-* **Mã hóa:** UTF-8
+- API phải phản ánh đúng quyền và Business Rules trong PRD/Domain.
+- Không tin cậy dữ liệu quyền/phạm vi chỉ từ giao diện; Backend phải kiểm tra lại.
+- Một thao tác nghiệp vụ phải trả kết quả rõ thành công/thất bại và không tạo dữ liệu dở dang.
+- Các thao tác thay đổi Ticket phải sử dụng trạng thái hiện tại để kiểm tra tính hợp lệ.
+- Dữ liệu trả về phải giới hạn theo actor và phạm vi quyền.
 
-### **1.1. Cấu trúc Response Chuẩn (Standard Response Format)**
+## 3. Nhóm Chức Năng
 
-#### Response Thành công (`200 OK`, `201 Created`):
-```json
-{
-  "success": true,
-  "code": 200,
-  "message": "Thao tác thành công",
-  "data": { ... }
-}
-```
+API có thể được tổ chức theo:
+- xác thực/tài khoản;
+- Student Ticket/FAQ/notification;
+- Staff queue/assignment/processing/Transfer/Escalation;
+- Management account/configuration/dashboard/report/audit;
+- attachment.
 
-#### Response Phân trang (Pagination Response):
-```json
-{
-  "success": true,
-  "code": 200,
-  "data": [ ... ],
-  "pagination": {
-    "page": 1,
-    "limit": 10,
-    "total_items": 45,
-    "total_pages": 5
-  }
-}
-```
+Cấu trúc route cụ thể không phải baseline nghiệp vụ và có thể thay đổi khi triển khai.
 
-#### Response Lỗi (`400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `500 Internal Error`):
-```json
-{
-  "success": false,
-  "code": 400,
-  "error_code": "INVALID_INPUT",
-  "message": "Nội dung mô tả là bắt buộc.",
-  "errors": [
-    {
-      "field": "description",
-      "message": "Mô tả không được để trống"
-    }
-  ]
-}
-```
-# 📌 2. Danh sách API Endpoints Chính
+## 4. Lỗi Và Validation
 
-## 2.1. Authentication & System (`/auth`)
-
-| Method | Endpoint | Quyền truy cập | Mô tả |
-| --- | --- | --- | --- |
-| **POST** | `/auth/login` | Public | Đăng nhập hệ thống & lấy JWT Token |
-| **GET** | `/auth/me` | Authenticated | Lấy thông tin tài khoản đang đăng nhập |
-| **POST** | `/auth/logout` | Authenticated | Đăng xuất |
-
-## 2.2. Phân hệ Sinh viên (`/student`)
-
-| Method | Endpoint | Quyền truy cập | Mô tả |
-| --- | --- | --- | --- |
-| **POST** | `/student/tickets` | Student | Tạo mới Ticket hỗ trợ (kèm upload file) |
-| **GET** | `/student/tickets` | Student | Xem danh sách Ticket cá nhân đã gửi |
-| **GET** | `/student/tickets/{ticket_code}` | Student | Xem chi tiết tiến độ Ticket & lịch sử phản hồi |
-| **POST** | `/student/tickets/{id}/supplement` | Student | Bổ sung thông tin/giấy tờ theo yêu cầu Nhân viên |
-| **POST** | `/student/tickets/{id}/rating` | Student | Đánh giá mức độ hài lòng (1-5 sao) khi hoàn tất |
-
-## 2.3. Phân hệ Nhân viên (`/staff`)
-
-| Method | Endpoint | Quyền truy cập | Mô tả |
-| --- | --- | --- | --- |
-| **GET** | `/staff/tickets` | Staff, Manager | Lấy danh sách Ticket thuộc phòng ban phụ trách |
-| **POST** | `/staff/tickets/{id}/claim` | Staff | Nhận phụ trách (Claim) Ticket |
-| **PATCH** | `/staff/tickets/{id}/triage` | Staff | Phân loại & cập nhật độ ưu tiên Ticket |
-| **POST** | `/staff/tickets/{id}/transfer` | Staff | Chuyển Ticket sang phòng ban khác |
-| **POST** | `/staff/tickets/{id}/request-supplement` | Staff | Yêu cầu Sinh viên bổ sung giấy tờ/thông tin |
-| **POST** | `/staff/tickets/{id}/resolve` | Staff | Cập nhật kết quả giải quyết & Đóng Ticket |
-
-## 2.4. Phân hệ Quản lý (`/management`)
-
-| Method | Endpoint | Quyền truy cập | Mô tả |
-| --- | --- | --- | --- |
-| **GET** | `/management/dashboard/overview` | Manager | Số liệu tổng quan (Ticket mới, đang xử lý, quá hạn) |
-| **GET** | `/management/dashboard/metrics` | Manager | Báo cáo SLA, thời gian xử lý trung bình, điểm đánh giá |
-| **GET** | `/management/users` | Manager | Danh sách tài khoản hệ thống |
-| **POST** | `/management/users` | Manager | Tạo tài khoản mới & phân quyền vai trò |
-| **PATCH** | `/management/users/{id}` | Manager | Cập nhật thông tin/trạng thái tài khoản |
+- Dữ liệu không hợp lệ phải trả thông tin đủ để giao diện hiển thị lỗi phù hợp.
+- Không tiết lộ dữ liệu của người dùng khác trong nội dung lỗi.
+- Xung đột do Ticket đã thay đổi phải yêu cầu người dùng tải trạng thái mới nhất trước khi thao tác lại.
