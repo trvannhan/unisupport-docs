@@ -2,7 +2,7 @@
 
 ## 1. Phạm Vi
 
-UniSupport áp dụng mức bảo mật phù hợp phạm vi dự án. Proposal không yêu cầu chứng nhận bảo mật hoặc kiểm thử bảo mật chuyên sâu.
+UniSupport áp dụng các kiểm soát bảo mật cần thiết cho xác thực, phân quyền, dữ liệu Ticket, file đính kèm và Audit trong phạm vi dự án.
 
 ## 2. Yêu Cầu
 
@@ -19,7 +19,7 @@ UniSupport áp dụng mức bảo mật phù hợp phạm vi dự án. Proposal 
 ## 3. Giới Hạn Phạm Vi
 
 - Không bao gồm penetration testing chuyên sâu hoặc chứng nhận bảo mật quốc tế.
-- Cơ chế token/session, thuật toán hash và middleware cụ thể là quyết định kỹ thuật tại `07-architecture`.
+- Cơ chế phiên đăng nhập, thuật toán băm mật khẩu và lớp kiểm soát truy cập cụ thể được xác định trong thiết kế kiến trúc.
 
 ## 4. Nghiệm Thu
 
