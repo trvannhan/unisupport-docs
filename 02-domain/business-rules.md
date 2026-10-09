@@ -16,7 +16,7 @@ Tài liệu này quy định các Business Rules dùng chung cho **UniSupport**.
 
 - Định dạng được chấp nhận: **PDF, PNG, JPG/JPEG**.
 - Dung lượng tối đa: **10 MB cho mỗi file**.
-- Tối đa **03 file** cho mỗi lần tạo Ticket hoặc mỗi lần bổ sung thông tin.
+- Tối đa **03 file** cho mỗi lần tạo Ticket, mỗi lần bổ sung thông tin hoặc mỗi lần ghi nhận tài liệu kết quả.
 - File không đáp ứng định dạng hoặc dung lượng cho phép phải bị từ chối trước khi được gắn vào Ticket.
 
 ---
