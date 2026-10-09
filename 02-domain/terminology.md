@@ -16,8 +16,8 @@ Tài liệu này chuẩn hóa các thuật ngữ nghiệp vụ được sử d�
 | **Assignee** | Người phụ trách | Nhân viên được giao trách nhiệm chính để xử lý một Ticket tại một thời điểm. |
 | **Triage** | Phân loại và điều phối | Quá trình kiểm tra Ticket để xác định nhóm vấn đề, mức độ ưu tiên và đơn vị/người phụ trách phù hợp. |
 | **Assign** | Phân công | Hành động giao Ticket cho một nhân viên hoặc người phụ trách cụ thể theo phạm vi quyền được cấp. |
-| **Transfer** | Chuyển xử lý | Hành động chuyển trách nhiệm xử lý Ticket sang người phụ trách hoặc phòng ban phù hợp khác khi cần thiết. |
-| **Escalation** | Chuyển cấp xử lý | Hành động chuyển Ticket lên cấp hoặc phạm vi xử lý phù hợp hơn khi Ticket cần được ưu tiên, hỗ trợ hoặc xử lý vượt quá thẩm quyền hiện tại. |
+| **Transfer** | Chuyển xử lý | Hành động chuyển Ticket sang **phòng ban khác** chịu trách nhiệm xử lý. Khi Transfer, Nhóm vấn đề và phòng ban được cập nhật nhất quán theo cấu hình, người phụ trách hiện tại được gỡ khỏi Ticket và phòng ban mới thực hiện tiếp nhận/phân công lại. |
+| **Escalation** | Chuyển cấp xử lý | Hành động gửi yêu cầu hỗ trợ lên tài khoản Quản lý phù hợp khi Ticket vượt thẩm quyền, cần hỗ trợ hoặc có nguy cơ trễ hạn. Escalation không tự thay đổi Nhóm vấn đề, phòng ban, người phụ trách hoặc trạng thái Ticket. |
 | **Supplement Request** | Yêu cầu bổ sung | Yêu cầu do nhân viên gửi cho sinh viên để bổ sung thông tin hoặc tài liệu còn thiếu trước khi tiếp tục xử lý Ticket. |
 | **Priority** | Mức độ ưu tiên | Mức thể hiện độ ưu tiên xử lý của Ticket, gồm **Thấp, Trung bình, Cao và Khẩn cấp**. |
 | **Processing Deadline** | Thời hạn xử lý | Mốc thời gian được sử dụng để theo dõi tiến độ xử lý Ticket và xác định tình trạng sắp quá hạn hoặc quá hạn. |
@@ -41,6 +41,7 @@ Tài liệu này chuẩn hóa các thuật ngữ nghiệp vụ được sử d�
 - **Staff** và **Management** là hai nhóm người dùng độc lập về phạm vi chức năng; các chức năng quản trị hệ thống thuộc phạm vi Management và được kiểm soát theo quyền.
 - Bộ trạng thái nghiệp vụ thống nhất gồm `NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED` và `CLOSED`.
 - **Transfer** và **Escalation** là hành động nghiệp vụ, không phải trạng thái Ticket.
-- **Transfer** thay đổi người/phòng ban xử lý; **Escalation** chuyển Ticket lên phạm vi xử lý phù hợp hơn khi cần hỗ trợ hoặc vượt thẩm quyền hiện tại.
+- **Transfer** là chuyển sang phòng ban khác; đổi người phụ trách trong cùng phòng ban được thực hiện bằng phân công lại.
+- **Escalation** là yêu cầu hỗ trợ từ Quản lý phù hợp và không tự thay đổi phòng ban, người phụ trách hoặc trạng thái Ticket.
 - Các trạng thái và điều kiện chuyển trạng thái được quy định chi tiết tại `ticket-lifecycle.md` và `state-transition.md`.
 - Các giá trị và điều kiện nghiệp vụ chi tiết như thời hạn xử lý, giới hạn file, điều kiện mở lại Ticket và quy tắc đánh giá được quy định tại `business-rules.md`.
