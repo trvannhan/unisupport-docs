@@ -348,6 +348,8 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 - Chỉ Ticket ở `IN_PROGRESS` mới được chuyển sang `RESOLVED` theo luồng này.
 
 #### 4. Luồng xử lý chi tiết
+
+**Luồng A — Ghi nhận kết quả**
 1. Nhân viên mở Ticket đang xử lý.
 2. Nhân viên chọn **Ghi nhận kết quả**.
 3. Nhân viên nhập nội dung kết quả và đính kèm tài liệu nếu có.
@@ -357,6 +359,17 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 7. Hệ thống ghi nhận thời điểm giải quyết.
 8. Kết quả và sự kiện thay đổi trạng thái được ghi vào lịch sử Ticket.
 9. Hệ thống gửi thông báo trong hệ thống cho sinh viên.
+
+**Luồng B — Tiếp tục xử lý Ticket được mở lại**
+1. Sinh viên yêu cầu mở lại hợp lệ theo M01; Ticket chuyển từ `RESOLVED` về `IN_PROGRESS`.
+2. Hệ thống kiểm tra người phụ trách của vòng xử lý trước.
+3. Nếu người phụ trách đó vẫn đang hoạt động và còn thuộc phòng ban phụ trách Ticket, Ticket tiếp tục được giao cho người đó.
+4. Nếu người phụ trách cũ không còn hợp lệ, hệ thống gỡ người phụ trách và đưa Ticket về hàng chờ chưa có người phụ trách của phòng ban hiện tại.
+5. Ticket xuất hiện lại trong danh sách xử lý phù hợp tại Staff Operations.
+6. Nếu Ticket có người phụ trách hợp lệ, hệ thống gửi thông báo trong hệ thống cho người phụ trách đó.
+7. Nhân viên tiếp tục xử lý Ticket theo các luồng nghiệp vụ hiện có của M02.
+8. Khi có kết quả mới, nhân viên thực hiện lại Luồng A để ghi nhận kết quả và đưa Ticket về `RESOLVED`.
+9. Toàn bộ kết quả và lịch sử của vòng xử lý trước được giữ nguyên.
 
 #### 5. Luồng ngoại lệ
 - Thiếu nội dung kết quả hoặc nội dung không hợp lệ: không cho phép hoàn tất.
@@ -378,6 +391,8 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 - **AC-06-03:** Thiếu nội dung kết quả không làm Ticket chuyển trạng thái.
 - **AC-06-04:** Ghi nhận kết quả không làm mất lịch sử xử lý trước đó.
 - **AC-06-05:** Ticket được mở lại hợp lệ quay về `IN_PROGRESS`; hệ thống giữ người phụ trách cũ nếu vẫn hợp lệ, nếu không Ticket quay về hàng chờ chưa có người phụ trách của phòng ban hiện tại.
+- **AC-06-06:** Ticket mở lại có người phụ trách cũ còn hợp lệ xuất hiện lại trong danh sách xử lý của người đó và người phụ trách nhận thông báo trong hệ thống.
+- **AC-06-07:** Ticket mở lại không còn người phụ trách hợp lệ xuất hiện trong hàng chờ chưa có người phụ trách của phòng ban hiện tại để được tiếp nhận hoặc phân công lại.
 
 ---
 
