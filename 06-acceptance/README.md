@@ -23,4 +23,4 @@ Thư mục này quản lý tiêu chí nghiệm thu, kịch bản UAT và khả n
 - Effort kế hoạch được quản lý theo từng gói công việc.
 - Một gói công việc có thể ánh xạ tới nhiều FR hoặc Flow.
 - Xác thực là năng lực dùng chung; effort không được nhân đôi chỉ vì nhiều phân hệ cùng sử dụng.
-- Trong kế hoạch nguồn lực, nhóm công việc M3 sử dụng nhãn **Admin**; trong mô hình sản phẩm, các chức năng này thuộc phạm vi **Management**.
+- **Quy ước ánh xạ M3:** nhãn `Admin` trong kế hoạch nguồn lực tương ứng với phạm vi chức năng **Management** trong mô hình sản phẩm.
