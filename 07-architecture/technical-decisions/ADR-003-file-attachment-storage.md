@@ -2,14 +2,14 @@
 
 ## Bối Cảnh
 
-Proposal yêu cầu file chỉ người liên quan mới xem được. File có thể chứa tài liệu của sinh viên nên không được bỏ qua kiểm tra quyền.
+File đính kèm có thể chứa tài liệu của sinh viên và chỉ được cung cấp cho người dùng có quyền đối với Ticket liên quan.
 
-## Quyết Định Baseline
+## Quyết Định
 
 - Mỗi file phải liên kết với Ticket và ngữ cảnh nghiệp vụ tương ứng.
 - Trước khi cho phép xem/tải file, Backend phải xác định người dùng có quyền đối với Ticket/file.
-- Cách lưu file vật lý có thể là local storage hoặc phương án phù hợp hạ tầng Client; lựa chọn này không thay đổi quy tắc quyền.
-- Không yêu cầu tích hợp dịch vụ lưu trữ bên thứ ba trong baseline.
+- Cách lưu file vật lý có thể là local storage hoặc phương án phù hợp hạ tầng Aurora University; lựa chọn này không thay đổi quy tắc quyền.
+- Không yêu cầu tích hợp dịch vụ lưu trữ bên thứ ba trong phạm vi hiện tại.
 
 ## Hệ Quả
 
