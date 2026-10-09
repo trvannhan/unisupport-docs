@@ -2,11 +2,11 @@
 
 ## 1. Mục Đích
 
-RTM liên kết **Resource WP → Functional Requirement/Flow → Workflow → UAT** để bảo đảm PRD và kế hoạch triển khai không vượt hoặc bỏ sót phạm vi đã chốt.
+RTM liên kết **Gói công việc → Functional Requirement/Flow → Workflow → UAT** để duy trì khả năng truy xuất giữa kế hoạch nguồn lực, yêu cầu và nghiệm thu.
 
 ## 2. M01 - Student
 
-| Resource WP | Effort | FR / Flow | Workflow | UAT |
+| Gói công việc | Effort | FR / Flow | Workflow | UAT |
 | :--- | ---: | :--- | :--- | :--- |
 | WP-STU-01 - Tra cứu hướng dẫn & FAQ | 14h | FR-STU-01 | - | TS-STU-01 |
 | WP-STU-02 - Tạo & gửi yêu cầu hỗ trợ | 37h | FR-STU-02 | WF-01 | TS-STU-02 |
@@ -18,7 +18,7 @@ RTM liên kết **Resource WP → Functional Requirement/Flow → Workflow → U
 
 ## 3. M02 - Staff
 
-| Resource WP | Effort | FR / Flow | Workflow | UAT |
+| Gói công việc | Effort | FR / Flow | Workflow | UAT |
 | :--- | ---: | :--- | :--- | :--- |
 | WP-STF-01 - Tiếp nhận, tìm kiếm & lọc | 33h | FR-STF-01 | WF-02, WF-06 | TS-STF-01, TS-STF-08 |
 | WP-STF-02 - Phân loại & phân công | 38h | FR-STF-02 | WF-02 | TS-STF-02 |
@@ -29,11 +29,11 @@ RTM liên kết **Resource WP → Functional Requirement/Flow → Workflow → U
 
 **Tổng M02: 197h.**
 
-> WP-STF-06 không tạo quyền Staff tự đóng/mở lại. Việc chuyển `RESOLVED → IN_PROGRESS/CLOSED` tuân theo lifecycle; phần Staff là nhận lại và tiếp tục xử lý Ticket được mở lại.
+> WP-STF-06 bao gồm phần tiếp nhận và xử lý lại Ticket sau khi được mở lại. Quyền chuyển trạng thái vẫn tuân theo Ticket Lifecycle.
 
 ## 4. M03 - Management
 
-| Resource WP | Effort | FR / Flow | Workflow | UAT |
+| Gói công việc | Effort | FR / Flow | Workflow | UAT |
 | :--- | ---: | :--- | :--- | :--- |
 | WP-MGT-01 - Tài khoản, vai trò & RBAC | 64h | FR-MGT-00, FR-MGT-01 + xác thực dùng chung | - | TS-MGT-01 |
 | WP-MGT-02 - Phòng ban & danh mục | 26h | FR-MGT-02 | WF-01, WF-02, WF-04 | TS-MGT-02 |
@@ -44,11 +44,11 @@ RTM liên kết **Resource WP → Functional Requirement/Flow → Workflow → U
 
 **Tổng M03: 215h.**
 
-> Nhãn **M3 - Admin** trong bảng Resource chỉ là tên nhóm công việc quản trị. Product/PRD vẫn sử dụng vai trò **Management** và hệ thống không có role `ADMIN` độc lập.
+> Trong kế hoạch nguồn lực, nhóm công việc M3 sử dụng nhãn **Admin**. Trong mô hình sản phẩm và phân quyền, các chức năng này thuộc phạm vi **Management**.
 
 ## 5. Năng Lực Dùng Chung Và Hoạt Động Cấp Dự Án
 
 - FR-STU-00 và FR-STF-00 mô tả hành vi truy cập của từng phân hệ nhưng cơ chế xác thực dùng chung được truy xuất về WP-MGT-01, không cộng effort riêng.
 - Thông báo cho Staff/Management trong các workflow vận hành là thông báo tối thiểu của nghiệp vụ liên quan; không tạo một module Notification riêng.
-- Resource còn **100h hoạt động cấp dự án**: 70h quản lý dự án & điều phối + 30h môi trường, CI/CD, triển khai & bàn giao. Phần này không được phân bổ lại vào effort chức năng M01-M03.
-- Tổng effort kế hoạch theo Resource: **640h**.
+- Hoạt động cấp dự án gồm **100h**: 70h quản lý dự án & điều phối + 30h môi trường, CI/CD, triển khai & bàn giao.
+- Tổng effort kế hoạch: **640h**.
