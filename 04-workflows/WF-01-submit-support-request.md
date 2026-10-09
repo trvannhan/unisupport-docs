@@ -1,51 +1,51 @@
-# [WF-01] Sinh viên gửi yêu cầu hỗ trợ (Submit Support Request)
+# WF-01 - Gửi Yêu Cầu Hỗ Trợ
 
-### [FR-STU-02] Sinh viên gửi yêu cầu hỗ trợ
+## 1. Mục Đích Và Phạm Vi
 
-**Mô tả**
-Hệ thống cho phép sinh viên tạo một Ticket hỗ trợ bằng cách chọn nhóm vấn đề, nhập nội dung mô tả tình huống, đính kèm tệp tài liệu (ảnh hoặc PDF nếu cần) và gửi yêu cầu đến bộ phận phụ trách của Aurora University.
+Mô tả luồng từ khi sinh viên tạo yêu cầu đến khi hệ thống tạo Ticket thành công, xác định phòng ban tiếp nhận và trả mã Ticket cho sinh viên.
 
-**Actor**
-Sinh viên đã đăng nhập vào hệ thống.
+## 2. Vai Trò Và Điều Kiện Bắt Đầu
 
-**Preconditions**
-- Sinh viên đã đăng nhập thành công vào hệ thống UniSupport.
-- Sinh viên có quyền tạo Ticket hỗ trợ.
+- **Vai trò chính:** Sinh viên.
+- Sinh viên đã đăng nhập bằng tài khoản hợp lệ.
+- Danh mục **Nhóm vấn đề (Category)** đang hoạt động và mỗi Category có phòng ban tiếp nhận được cấu hình.
 
-**Luồng chính**
-1. Sinh viên mở chức năng **Tạo Ticket**.
-2. Hệ thống hiển thị form tạo Ticket.
-3. Sinh viên chọn **Nhóm vấn đề** (Category/Department).
-4. Sinh viên nhập các thông tin bắt buộc, bao gồm tiêu đề và **Mô tả vấn đề**.
-5. Sinh viên đính kèm tệp tài liệu (ảnh JPG/PNG hoặc tệp PDF) nếu cần.
-6. Sinh viên chọn **Gửi yêu cầu**.
-7. Hệ thống kiểm tra tính hợp lệ của dữ liệu đầu vào và tệp đính kèm.
-8. Nếu dữ liệu hợp lệ, hệ thống khởi tạo Ticket mới, tự động sinh mã Ticket duy nhất và gán trạng thái ban đầu là `Mới` (New).
-9. Hệ thống hiển thị thông báo tạo Ticket thành công, cung cấp mã Ticket cho sinh viên và gửi thông báo nội bộ hệ thống.
+## 3. Luồng Nghiệp Vụ Chính
 
-**Business Rules**
-- Nhóm vấn đề và Mô tả vấn đề là các thông tin bắt buộc.
-- Nội dung mô tả chỉ chứa khoảng trắng được xem là không hợp lệ.
-- Tệp đính kèm chỉ hỗ trợ định dạng ảnh (JPG, PNG) hoặc PDF; dung lượng tối đa quy định cho mỗi tệp.
-- Một thao tác gửi của sinh viên chỉ được tạo tối đa **một Ticket**, kể cả khi yêu cầu bị gửi nhiều lần do double-click, retry hoặc vấn đề mạng.
-- Ticket sau khi được tạo phải được liên kết chính xác với tài khoản sinh viên đã gửi yêu cầu.
+1. Sinh viên mở chức năng **Tạo yêu cầu**.
+2. Hệ thống hiển thị danh sách Nhóm vấn đề đang hoạt động.
+3. Sinh viên chọn một Nhóm vấn đề và nhập nội dung mô tả yêu cầu.
+4. Sinh viên đính kèm tài liệu minh chứng nếu cần.
+5. Sinh viên xác nhận gửi.
+6. Hệ thống kiểm tra dữ liệu bắt buộc và file đính kèm.
+7. Hệ thống xác định phòng ban tiếp nhận từ cấu hình của Nhóm vấn đề đã chọn.
+8. Hệ thống tạo một Ticket, cấp mã Ticket duy nhất, đặt trạng thái `NEW`, mức độ ưu tiên mặc định `MEDIUM` và xác định thời hạn xử lý.
+9. Hệ thống ghi nhận sự kiện tạo Ticket vào lịch sử.
+10. Sinh viên nhận thông báo tạo thành công và xem được mã Ticket.
 
-**Alternative / Error Flows**
-- **Thiếu thông tin bắt buộc:** Hệ thống không tạo Ticket, hiển thị thông báo lỗi validation chi tiết tại từng trường thông tin.
-- **Tệp đính kèm không hợp lệ (sai định dạng hoặc vượt dung lượng):** Hệ thống chặn gửi, báo lỗi tệp không hợp lệ và yêu cầu chọn lại.
-- **Lỗi hệ thống trong quá trình tạo:** Hệ thống thông báo lỗi và không tạo Ticket ở trạng thái dữ liệu không hoàn chỉnh (rollback).
-- **Trùng lặp request do kết nối:** Nếu cùng một request được gửi lại do retry/network retry, hệ thống không tạo thêm Ticket trùng lặp.
+## 4. Luồng Ngoại Lệ
 
-**Acceptance Criteria**
-- **AC-01:** Sinh viên chọn nhóm vấn đề, nhập đầy đủ thông tin hợp lệ và chọn **Gửi yêu cầu** -> Hệ thống tạo đúng một Ticket, sinh mã Ticket duy nhất và hiển thị thông báo thành công.
-- **AC-02:** Sinh viên để trống trường mô tả hoặc nhóm vấn đề -> Hệ thống không tạo Ticket và hiển thị lỗi validation.
-- **AC-03:** Sinh viên nhập nội dung chỉ gồm khoảng trắng -> Hệ thống không tạo Ticket.
-- **AC-04:** Sinh viên tải lên tệp đính kèm đúng chuẩn (.pdf, .jpg, .png) -> Hệ thống lưu trữ tệp và gắn liên kết vào Ticket.
-- **AC-05:** Sinh viên tải lên tệp sai định dạng (ví dụ .docx, .zip) -> Hệ thống từ chối tệp và báo lỗi.
-- **AC-06:** Sinh viên nhấn nút **Gửi yêu cầu** nhiều lần liên tiếp -> Hệ thống chỉ tạo một Ticket duy nhất.
-- **AC-07:** Ticket được tạo phải lưu đúng thông tin sinh viên gửi yêu cầu và gửi thông báo xác nhận.
+- Thiếu Nhóm vấn đề hoặc nội dung yêu cầu: không tạo Ticket.
+- Nhóm vấn đề đã bị vô hiệu hóa trước thời điểm gửi: yêu cầu sinh viên chọn lại.
+- File sai định dạng, vượt dung lượng hoặc vượt số lượng cho phép: từ chối file không hợp lệ.
+- Thao tác gửi lặp từ cùng một lần xác nhận: không được tạo nhiều Ticket trùng nhau.
 
-**Ví dụ Edge Case**
-Sinh viên nhấn nút **Gửi yêu cầu** 5 lần liên tiếp trong thời gian ngắn do mạng giật lag.
+## 5. Quy Tắc Nghiệp Vụ
 
-**Expected Result:** Hệ thống chỉ ghi nhận **một Ticket duy nhất** cho thao tác gửi đó, loại bỏ 4 request trùng lặp còn lại.
+- Sinh viên chỉ chọn Category có sẵn, không tự nhập hoặc tạo Category mới.
+- Nội dung yêu cầu từ 20 đến 2.000 ký tự và không được chỉ chứa khoảng trắng.
+- Tối đa 03 file/lần, tối đa 10 MB/file, định dạng PDF/PNG/JPG/JPEG.
+- Phòng ban tiếp nhận được xác định từ Category, sinh viên không tự chọn người phụ trách.
+- Đồng hồ thời hạn bắt đầu khi Ticket được tạo thành công.
+
+## 6. Tiêu Chí Nghiệm Thu
+
+- Dữ liệu hợp lệ tạo đúng một Ticket ở `NEW`.
+- Ticket có đúng sinh viên, Category, phòng ban tiếp nhận, mức `MEDIUM` và mã Ticket duy nhất.
+- Dữ liệu hoặc file không hợp lệ không làm phát sinh Ticket.
+- Sinh viên nhận được xác nhận và mã Ticket sau khi tạo thành công.
+
+## 7. Tài Liệu Liên Quan
+
+- M01: `FR-STU-02`, `FR-STU-04`.
+- Domain: `BR-FILE-01`, `BR-FILE-02`, `BR-DUE-01`.
