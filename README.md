@@ -76,20 +76,11 @@ UniSupport có đúng **03 phân hệ nghiệp vụ**:
 
 Thông báo, xác thực, phân quyền, bảo mật file và Audit được triển khai như **các năng lực dùng chung** xuyên suốt ba phân hệ nghiệp vụ.
 
-## Tài Liệu Nền Tảng
-
-| Tài liệu | Vai trò |
-| :--- | :--- |
-| **Đề xuất dự án UniSupport** | Xác định mục tiêu, phạm vi bàn giao, giả định, ràng buộc và tiêu chí nghiệm thu cấp dự án. |
-| **Kế hoạch nguồn lực và chi phí** | Xác định gói công việc, effort kế hoạch và cơ sở lập tiến độ nguồn lực. |
-
-Việc phân rã một gói công việc thành nhiều yêu cầu chức năng hoặc workflow không làm thay đổi effort kế hoạch của gói công việc. Quan hệ truy xuất được quản lý tại [Ma trận truy xuất yêu cầu](./06-acceptance/traceability-matrix.md).
-
 ## Quy Ước Tài Liệu
 
 - **Product, Domain và PRD** mô tả hành vi nghiệp vụ và không phụ thuộc vào công nghệ triển khai.
 - **Workflows** thể hiện luồng phối hợp giữa các chức năng và phân hệ bằng Mermaid.
 - **Yêu cầu phi chức năng** xác định các thuộc tính chất lượng áp dụng toàn hệ thống.
 - **Kiến trúc** mô tả giải pháp kỹ thuật phục vụ các yêu cầu đã xác định và không làm thay đổi quy tắc nghiệp vụ.
-- **Nghiệm thu và RTM** duy trì truy xuất từ gói công việc đến yêu cầu, workflow và kịch bản UAT.
+- **Nghiệm thu và RTM** duy trì truy xuất giữa yêu cầu, workflow và kịch bản UAT.
 - **Tài liệu dự án** quản lý các giả định, ràng buộc, tiến độ và quyết định cấp dự án.
