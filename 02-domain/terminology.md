@@ -1,26 +1,40 @@
 # Thuật Ngữ Nghiệp Vụ (Domain Terminology)
 
-Tài liệu này định nghĩa toàn bộ các thuật ngữ, khái niệm và từ viết tắt được sử dụng nhất quán trong tài liệu thiết kế, mã nguồn và quy trình vận hành của hệ thống **UniSupport**.
+Tài liệu này chuẩn hóa các thuật ngữ nghiệp vụ được sử dụng xuyên suốt **UniSupport** nhằm bảo đảm các tài liệu yêu cầu, quy trình nghiệp vụ, kiểm thử và thiết kế hệ thống sử dụng cùng một cách hiểu.
 
 ## 1. Danh Mục Thuật Ngữ Cốt Lõi
 
-| Thuật Ngữ (English) | Thuật Ngữ (Tiếng Việt) | Định Nghĩa & Giải Thích Chi Tiết |
+| Thuật ngữ (English) | Thuật ngữ (Tiếng Việt) | Định nghĩa |
 | :--- | :--- | :--- |
-| **Ticket** | Phiếu hỗ trợ / Yêu cầu | Đơn vị dữ liệu trung tâm đại diện cho 01 yêu cầu, thắc mắc hoặc đề nghị giải quyết thủ tục của sinh viên gửi tới nhà trường. |
-| **Ticket ID** | Mã phiếu hỗ trợ | Chuỗi ký tự định danh duy nhất được hệ thống tự động sinh ra khi sinh viên gửi yêu cầu thành công (Ví dụ: `TK-20261004-001`). |
-| **Category / Sub-category** | Nhóm vấn đề / Phân loại chi tiết | Cấu trúc phân loại yêu cầu theo lĩnh vực (Ví dụ: Nhóm *Đào tạo* $\rightarrow$ Loại *Cấp bảng điểm*). |
-| **Department** | Phòng ban chuyên trách | Đơn vị hành chính trong Aurora University có thẩm quyền xử lý Ticket (Ví dụ: Phòng Đào tạo, Phòng CTHSSV...). |
-| **Student** | Sinh viên | Người dùng khởi tạo Ticket và là người thụ hưởng kết quả xử lý. |
-| **Agent / Staff** | Nhân viên xử lý | Chuyên viên thuộc Phòng ban chức năng có nhiệm vụ tiếp nhận, xử lý và phản hồi Ticket. |
-| **Manager** | Quản lý | Trưởng phòng ban hoặc Ban Giám hiệu theo dõi chỉ số KPI, hiệu suất và quản trị phân quyền hệ thống. |
-| **Triage** | Phân loại & Điều phối | Quá trình kiểm tra nội dung Ticket mới để xác định đúng nhóm vấn đề, độ ưu tiên và gán cho nhân viên/phòng ban phù hợp. |
-| **Claim** | Tiếp nhận | Hành động nhân viên tự nhận một Ticket chưa có người phụ trách về cho chính mình xử lý. |
-| **Assign** | Phân công | Hành động gán trách nhiệm xử lý Ticket cho một nhân viên cụ thể trong cùng phòng ban. |
-| **Transfer** | Chuyển phòng ban | Hành động điều chuyển Ticket từ phòng ban hiện tại sang một phòng ban khác do gửi nhầm hoặc cần phối hợp. |
-| **Supplement Request** | Yêu cầu bổ sung | Yêu cầu từ nhân viên đề nghị sinh viên cung cấp thêm thông tin hoặc upload thêm giấy tờ minh chứng. |
-| **SLA (Service Level Agreement)** | Cam kết thời gian xử lý | Mốc thời gian dùng để theo dõi hạn xử lý Ticket theo quy tắc    nghiệp vụ được xác định cho từng loại yêu cầu. Chi tiết cách tính được xác nhận trong Business Rules. |
-| **Priority** | Mức độ ưu tiên | Tầm quan trọng/mức độ khẩn cấp của Ticket (Bao gồm 4 mức: *Thấp, Trung bình, Cao, Khẩn cấp*). |
-| **Resolution** | Kết quả giải quyết | Nội dung trả lời, quyết định hoặc tài liệu đính kèm do nhân viên cung cấp để hoàn thành yêu cầu của sinh viên. |
-| **CSAT (Customer Satisfaction)** | Mức độ hài lòng | Chỉ số đánh giá chất lượng dịch vụ do sinh viên chấm điểm (từ 1 đến 5 sao) sau khi Ticket đóng. |
-| **Audit Log / Activity Log** | Nhật ký tra soát | Bản ghi lịch sử ghi nhận lại từng hành động làm thay đổi dữ liệu hoặc trạng thái của Ticket. |
-| **UAT (User Acceptance Testing)** | Kiểm thử chấp nhận người dùng | Giai đoạn người dùng thực tế (sinh viên, nhân viên Aurora University) kiểm thử hệ thống trước khi vận hành chính thức. |
+| **Ticket** | Phiếu hỗ trợ / Yêu cầu hỗ trợ | Đơn vị nghiệp vụ đại diện cho một yêu cầu hỗ trợ do sinh viên gửi đến nhà trường và được theo dõi xuyên suốt quá trình xử lý. |
+| **Ticket Code** | Mã Ticket | Mã định danh duy nhất do hệ thống tạo khi Ticket được gửi thành công, dùng để tra cứu và theo dõi yêu cầu. |
+| **Category** | Nhóm vấn đề | Nhóm phân loại nội dung Ticket, dùng để hỗ trợ xác định phạm vi xử lý và điều phối đến đơn vị phù hợp. |
+| **Department** | Phòng ban | Đơn vị thuộc Aurora University chịu trách nhiệm tiếp nhận hoặc xử lý Ticket trong phạm vi chức năng được giao. |
+| **Student** | Sinh viên | Người dùng tạo Ticket, theo dõi tiến độ, bổ sung thông tin, nhận kết quả và đánh giá mức độ hài lòng. |
+| **Staff** | Nhân viên | Người dùng thuộc các phòng ban thực hiện tiếp nhận, phân loại, xử lý, cập nhật tiến độ và ghi nhận kết quả Ticket. |
+| **Management** | Quản lý | Nhóm người dùng thực hiện giám sát hoạt động hỗ trợ, theo dõi Dashboard/báo cáo và sử dụng các chức năng quản trị được phân quyền. |
+| **Assignee** | Người phụ trách | Nhân viên được giao trách nhiệm chính để xử lý một Ticket tại một thời điểm. |
+| **Triage** | Phân loại và điều phối | Quá trình kiểm tra Ticket để xác định nhóm vấn đề, mức độ ưu tiên và đơn vị/người phụ trách phù hợp. |
+| **Assign** | Phân công | Hành động giao Ticket cho một nhân viên hoặc người phụ trách cụ thể theo phạm vi quyền được cấp. |
+| **Transfer** | Chuyển xử lý | Hành động chuyển trách nhiệm xử lý Ticket sang người phụ trách hoặc phòng ban phù hợp khác khi cần thiết. |
+| **Escalation** | Chuyển cấp xử lý | Hành động chuyển Ticket lên cấp hoặc phạm vi xử lý phù hợp hơn khi Ticket cần được ưu tiên, hỗ trợ hoặc xử lý vượt quá thẩm quyền hiện tại. |
+| **Supplement Request** | Yêu cầu bổ sung | Yêu cầu do nhân viên gửi cho sinh viên để bổ sung thông tin hoặc tài liệu còn thiếu trước khi tiếp tục xử lý Ticket. |
+| **Priority** | Mức độ ưu tiên | Mức thể hiện độ ưu tiên xử lý của Ticket, gồm **Thấp, Trung bình, Cao và Khẩn cấp**. |
+| **Processing Deadline** | Thời hạn xử lý | Mốc thời gian được sử dụng để theo dõi tiến độ xử lý Ticket và xác định tình trạng sắp quá hạn hoặc quá hạn. |
+| **Overdue** | Quá hạn | Tình trạng Ticket chưa hoàn tất xử lý khi đã vượt quá thời hạn xử lý được xác định cho Ticket đó. |
+| **Resolution** | Kết quả xử lý | Nội dung hoặc tài liệu phản hồi được ghi nhận sau khi nhân viên hoàn tất phần xử lý nghiệp vụ của Ticket. |
+| **RESOLVED** | Đã giải quyết | Trạng thái cho biết Ticket đã có kết quả xử lý và đang trong thời hạn để sinh viên xem, phản hồi hoặc xác nhận kết quả. |
+| **CLOSED** | Đã đóng | Trạng thái kết thúc vòng đời xử lý khi sinh viên chấp nhận kết quả hoặc hết thời hạn phản hồi theo quy định. |
+| **Reopen** | Mở lại Ticket | Hành động đưa Ticket từ giai đoạn đã có kết quả trở lại quá trình xử lý khi sinh viên phản hồi rằng vấn đề chưa được giải quyết và đáp ứng điều kiện mở lại. |
+| **CSAT (Customer Satisfaction)** | Mức độ hài lòng | Chỉ số đánh giá chất lượng hỗ trợ do sinh viên chấm theo thang **1 đến 5 sao** sau khi Ticket hoàn tất và đủ điều kiện đánh giá. |
+| **Activity History** | Lịch sử xử lý | Chuỗi các hoạt động và thay đổi quan trọng phát sinh trong suốt vòng đời Ticket, bao gồm cập nhật trạng thái, phân công, chuyển xử lý, yêu cầu bổ sung và ghi nhận kết quả. |
+| **Audit Trail** | Nhật ký tra soát | Dữ liệu ghi nhận các thao tác quan trọng nhằm phục vụ kiểm tra, đối chiếu và tra soát khi cần. |
+| **UAT (User Acceptance Testing)** | Kiểm thử chấp nhận người dùng | Giai đoạn kiểm thử nhằm xác nhận hệ thống đáp ứng yêu cầu nghiệp vụ và tiêu chí nghiệm thu trước khi bàn giao chính thức. |
+
+## 2. Quy Ước Sử Dụng Thuật Ngữ
+
+- **Ticket** là thuật ngữ thống nhất để chỉ yêu cầu hỗ trợ trong toàn bộ tài liệu dự án.
+- **Staff** và **Management** là hai nhóm người dùng độc lập về phạm vi chức năng; các chức năng quản trị hệ thống thuộc phạm vi Management và được kiểm soát theo quyền.
+- **Transfer** và **Escalation** là hai hành động khác nhau: Transfer thay đổi người/phòng ban xử lý, trong khi Escalation chuyển Ticket lên phạm vi xử lý phù hợp hơn khi cần hỗ trợ hoặc vượt thẩm quyền hiện tại.
+- Các trạng thái và điều kiện chuyển trạng thái được quy định chi tiết tại `ticket-lifecycle.md` và `state-transition.md`.
+- Các giá trị và điều kiện nghiệp vụ chi tiết như thời hạn xử lý, giới hạn file, điều kiện mở lại Ticket và quy tắc đánh giá được quy định tại `business-rules.md`.
