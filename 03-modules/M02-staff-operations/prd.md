@@ -177,8 +177,8 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
   - `MEDIUM`: 03 ngày làm việc.
   - `HIGH`: 02 ngày làm việc.
   - `URGENT`: 01 ngày làm việc.
-- Ticket được xem là **sắp quá hạn** khi đã sử dụng từ 80% thời gian xử lý mục tiêu trở lên nhưng chưa vượt thời hạn.
-- Ticket được xem là **quá hạn** khi đã vượt thời hạn xử lý và chưa ở `RESOLVED` hoặc `CLOSED`.
+- Ticket được xem là **sắp quá hạn** khi tỷ lệ sử dụng thời hạn đạt từ 80% đến dưới 100%.
+- Ticket được xem là **quá hạn** khi tỷ lệ sử dụng thời hạn đạt từ 100% trở lên và chưa ở `RESOLVED` hoặc `CLOSED`.
 
 #### 4. Luồng xử lý chi tiết
 1. Người dùng mở Ticket thuộc phạm vi xử lý.
@@ -202,8 +202,8 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
 #### 7. Tiêu chí nghiệm thu
 - **AC-03-01:** Mỗi Priority tạo ra Deadline đúng theo Business Rules.
 - **AC-03-02:** Thay đổi Priority hợp lệ cập nhật Deadline và lịch sử Ticket.
-- **AC-03-03:** Ticket đạt ngưỡng 80% được nhận diện là sắp quá hạn.
-- **AC-03-04:** Ticket vượt Deadline và chưa `RESOLVED`/`CLOSED` được nhận diện là quá hạn.
+- **AC-03-03:** Ticket có tỷ lệ sử dụng thời hạn từ 80% đến dưới 100% được nhận diện là sắp quá hạn.
+- **AC-03-04:** Ticket có tỷ lệ sử dụng thời hạn từ 100% trở lên và chưa `RESOLVED`/`CLOSED` được nhận diện là quá hạn.
 - **AC-03-05:** Khoảng thời gian `WAITING_STUDENT` không làm tiêu hao thời gian xử lý còn lại.
 
 ---
