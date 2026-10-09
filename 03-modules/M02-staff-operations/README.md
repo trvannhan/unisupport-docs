@@ -1,85 +1,63 @@
-# Phân Hệ Nhân Viên (M02 - Staff Operations)
+# M02 - Staff Operations
 
-## 1. Tổng Quan Phân Hệ
+## 1. Phạm Vi Phân Hệ
 
-Phân hệ **Nhân viên (Staff Operations)** là không gian làm việc chính dành cho cán bộ, chuyên viên thuộc các Phòng ban chức năng tại **Aurora University** (Phòng Đào tạo, Phòng CTHSSV, Phòng Tài chính - Kế toán, Trung tâm CNTT, Thư viện...). 
+**Staff Operations** là không gian làm việc dành cho nhân viên các phòng ban của Aurora University để tiếp nhận, phân loại, phân công, xử lý và theo dõi các Ticket hỗ trợ sinh viên.
 
-Phân hệ này cung cấp các công cụ vận hành giúp nhân viên tiếp nhận, phân loại, phân công, điều phối liên phòng ban, trao đổi với sinh viên và ghi nhận kết quả xử lý các phiếu hỗ trợ (Ticket) một cách chuyên nghiệp, tránh bỏ sót hoặc xử lý trùng lặp.
+Phân hệ tập trung vào hoạt động vận hành Ticket từ khi Ticket được đưa vào hàng chờ của phòng ban cho đến khi nhân viên ghi nhận kết quả xử lý ở trạng thái `RESOLVED`.
 
----
+## 2. Đối Tượng Và Phạm Vi Dữ Liệu
 
-## 2. Mục Tiêu & Giá Trị Mang Lại
+- **Đối tượng sử dụng chính:** Nhân viên (Staff).
+- **Phạm vi dữ liệu:** Nhân viên chỉ được xem và thao tác trên Ticket thuộc phòng ban/phạm vi trách nhiệm được cấp.
+- **Người phụ trách:** Một Ticket chỉ có một người phụ trách chính tại một thời điểm.
+- **Phân công:** Chỉ người dùng có quyền phân công mới được gán hoặc phân công lại Ticket cho nhân viên phù hợp.
+- **Điều kiện truy cập:** Người dùng phải đăng nhập bằng tài khoản hợp lệ và có quyền truy cập Staff Operations.
 
-- **Hòm thư công việc tập trung (Centralized Inbox)**: Gom toàn bộ yêu cầu của sinh viên về một nơi, chia theo Phòng ban và Cá nhân phụ trách.
-- **Phân công & Phối hợp rõ ràng**: Loại bỏ tình trạng đùn đẩy công việc nhờ cơ chế Tiếp nhận (Claim), Phân công (Assign) và Chuyển phòng ban (Transfer) minh bạch.
-- **Kiểm soát tiến độ & SLA**: Theo dõi mức độ ưu tiên và thời hạn cam kết xử lý (SLA), hạn chế tối đa các yêu cầu bị trễ hạn.
-- **Lưu vết toàn bộ quá trình**: Mọi ghi chú nội bộ, yêu cầu bổ sung thông tin hay cập nhật kết quả đều được ghi nhận vào nhật ký tra soát (Audit Trail).
+## 3. Functional Requirements
 
----
+| Mã FR | Yêu cầu chức năng |
+| :--- | :--- |
+| **FR-STF-00** | Đăng nhập và truy cập Staff Operations |
+| **FR-STF-01** | Xem hàng chờ, tìm kiếm và lọc Ticket |
+| **FR-STF-02** | Phân loại, tiếp nhận và phân công Ticket |
+| **FR-STF-03** | Quản lý mức độ ưu tiên và thời hạn xử lý |
+| **FR-STF-04** | Xử lý Ticket và yêu cầu sinh viên bổ sung |
+| **FR-STF-05** | Chuyển xử lý và Escalation |
+| **FR-STF-06** | Ghi nhận kết quả và hoàn tất phần xử lý |
 
-## 3. Danh Mục Yêu Cầu Chức Năng (Functional Requirements)
+Chi tiết các yêu cầu chức năng được đặc tả tại [prd.md](./prd.md).
 
-| Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ |
-| :--- | :--- | :--- |
-| **FR-STF-01** | Tiếp nhận, tìm kiếm & lọc yêu cầu | Xem danh sách yêu cầu mới/được giao, tìm kiếm, lọc theo trạng thái, phòng ban, mức ưu tiên. |
-| **FR-STF-02** | Phân loại & phân công xử lý | Claim Ticket chưa có chủ hoặc Assign cho nhân viên, chuẩn hóa nhóm vấn đề. |
-| **FR-STF-03** | Quản lý ưu tiên & thời hạn | Thiết lập mức ưu tiên, tính/hiển thị SLA, cảnh báo quá hạn. |
-| **FR-STF-04** | Xử lý & cập nhật yêu cầu | Ghi nhận tiến độ, trao đổi với sinh viên, yêu cầu bổ sung thông tin/hồ sơ. |
-| **FR-STF-05** | Chuyển xử lý, Escalation & hoàn tất | Chuyển phòng ban/người phụ trách khi cần, escalation các trường hợp khó. |
-| **FR-STF-06** | Đóng & mở lại yêu cầu | Đóng yêu cầu sau khi hoàn tất hoặc mở lại khi sinh viên phản hồi/chưa hài lòng. |
+## 4. Luồng Nghiệp Vụ Chính
 
-### Effort Theo Bảng Chi Phí Nội Bộ Đã Chốt
+```mermaid
+flowchart TD
+    A[Đăng nhập] --> B[Hàng chờ Ticket của phòng ban]
+    B --> C[Tìm kiếm / lọc / mở Ticket]
+    C --> D[Phân loại và tiếp nhận / phân công]
+    D --> E[IN_PROGRESS]
+    E --> F[Thiết lập / điều chỉnh Priority và Deadline]
+    F --> G[Xử lý Ticket]
 
-| Gói việc | Effort |
-| :--- | :---: |
-| Tiếp nhận, tìm kiếm & lọc yêu cầu | **33h** |
-| Phân loại & phân công xử lý | **38h** |
-| Quản lý ưu tiên & thời hạn | **29h** |
-| Xử lý & cập nhật yêu cầu | **39h** |
-| Chuyển xử lý, Escalation & hoàn tất | **32h** |
-| Đóng & mở lại yêu cầu | **26h** |
-| **Tổng M2 - Staff** | **197h** |
+    G --> H{Cần bổ sung thông tin?}
+    H -->|Có| I[WAITING_STUDENT]
+    I --> J[Sinh viên bổ sung]
+    J --> E
 
----
+    H -->|Không| K{Cần chuyển / Escalation?}
+    K -->|Có| L[Transfer / Escalation]
+    L --> E
 
-## 4. Sơ Đồ Luồng Tương Tác Của Nhân Viên (Staff Workflow)
-```
-[Đăng nhập (M05-Security)] ──► [Hòm thư Phòng ban / Inbox]
-                                 │
-                                 ▼
-                [Tiếp nhận & Lọc FR-STF-01]
-                                 │
-                                 ▼
-                [Phân loại & Phân công FR-STF-02]
-                                 │
-                                 ▼
-                    [Ưu tiên & SLA FR-STF-03]
-                                 │
-┌────────────────────────────────┼────────────────────────────────┐
-▼                                ▼                                ▼
-[Chuyển PB/Escalation FR-STF-05] [Xử lý & Bổ sung FR-STF-04] [Xử lý nghiệp vụ]
-│                                │                                │
-▼                                ▼                                │
-(Chờ PB mới Claim)      (Tạm dừng đếm SLA)                        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┤
-                                                                  ▼
-                                                    [Đóng & mở lại FR-STF-06]
-                                                                  │
-                                                                  ▼
-                                                    [Chuyển trạng thái RESOLVED]
+    K -->|Không| M[Ghi nhận kết quả]
+    M --> N[RESOLVED]
 ```
 
----
+Ticket ở `RESOLVED` được đóng hoặc mở lại theo quy tắc vòng đời dùng chung. Khi được mở lại, Ticket quay về `IN_PROGRESS` và tiếp tục xuất hiện trong phạm vi xử lý phù hợp.
 
-## 5. Quy Tắc Vận Hành & Giao Diện (Operational & UI Guidelines)
+## 5. Quan Hệ Với Các Tài Liệu Khác
 
-1. **Bộ lọc danh sách công việc (Inbox Filters)**:
-   - **Ticket Mới (Department New)**: Các Ticket gửi đến phòng ban chưa có người tiếp nhận.
-   - **Việc của tôi (My Assigned)**: Các Ticket do cá nhân nhân viên đang thụ lý.
-   - **Chờ sinh viên bổ sung (Pending Student)**: Các Ticket đang chờ phản hồi từ sinh viên.
-   - **Cảnh báo Quá hạn (Overdue / High Priority)**: Các Ticket sắp hoặc đã vượt thời gian SLA.
-2. **Phân biệt Ghi chú Nội bộ vs Phản hồi Công khai**:
-   - **Internal Note (Vàng)**: Trao đổi nội bộ giữa các nhân viên/quản lý, sinh viên **KHÔNG** nhìn thấy.
-   - **Public Response (Trắng/Xanh)**: Phản hồi chính thức gửi tới sinh viên.
-3. **An toàn bảo mật**: Nhân viên chỉ được xem file đính kèm của các Ticket thuộc Phòng ban mình phụ trách.
+Staff Operations tuân thủ các quy tắc nghiệp vụ được xác lập tại:
+
+- [Ticket Lifecycle](../../02-domain/ticket-lifecycle.md)
+- [State Transition](../../02-domain/state-transition.md)
+- [Business Rules](../../02-domain/business-rules.md)
