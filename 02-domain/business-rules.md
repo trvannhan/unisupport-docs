@@ -1,68 +1,150 @@
 # Quy Tắc Nghiệp Vụ Cốt Lõi (Business Rules)
 
-Tài liệu này tổng hợp toàn bộ các Quy tắc nghiệp vụ (Business Rules - BR) áp dụng bắt buộc trên toàn hệ thống UniSupport.
+Tài liệu này quy định các Business Rules dùng chung cho **UniSupport**. Các quy tắc trong phần này được áp dụng nhất quán giữa Student Portal, Staff Operations và Management Dashboard, đồng thời là cơ sở để xây dựng Functional Requirements và Acceptance Criteria.
+
+## 1. File Đính Kèm (`BR-FILE`)
+
+### `BR-FILE-01` — Quyền truy cập file đính kèm
+
+- File đính kèm của Ticket chỉ được truy cập bởi người dùng có liên quan và có quyền phù hợp.
+- Sinh viên chỉ được xem file thuộc Ticket của chính mình.
+- Nhân viên chỉ được xem file của Ticket thuộc phạm vi xử lý được phân quyền.
+- Người dùng Management chỉ được truy cập file khi quyền được cấp cho phép phục vụ quản lý hoặc tra soát.
+- Việc chuyển Ticket sang người/phòng ban khác không làm mất các file đã được ghi nhận trước đó.
+
+### `BR-FILE-02` — Định dạng, dung lượng và số lượng file
+
+- Định dạng được chấp nhận: **PDF, PNG, JPG/JPEG**.
+- Dung lượng tối đa: **10 MB cho mỗi file**.
+- Tối đa **03 file** cho mỗi lần tạo Ticket hoặc mỗi lần bổ sung thông tin.
+- File không đáp ứng định dạng hoặc dung lượng cho phép phải bị từ chối trước khi được gắn vào Ticket.
 
 ---
 
-## 1. Nhóm Quy Tắc Quản Lý File Đính Kèm & Bảo Mật (`BR-FILE`)
+## 2. Phân Công, Chuyển Xử Lý và Escalation (`BR-OWN`)
 
-### `BR-FILE-01`: Phân quyền truy cập tệp đính kèm (Attachment Access Control)
-- **Nội dung**: File đính kèm của Ticket không được lưu trữ ở đường dẫn public công khai.
-- **Quy tắc**:
-  - Chỉ **Sinh viên tạo ra Ticket đó** và **Nhân viên thuộc Phòng ban thụ lý Ticket** mới có quyền tải/xem file.
-  - Quản trị viên hệ thống có quyền xem phục vụ mục đích kiểm tra Audit Log.
-  - Mọi yêu cầu tải file phải thông qua một Secured API Endpoint có xác thực Token và kiểm tra vai trò người dùng.
+### `BR-OWN-01` — Phân công người phụ trách
 
-### `BR-FILE-02`: Định dạng và dung lượng file hợp lệ
-- **Nội dung**: Kiểm soát loại file tải lên để bảo đảm an toàn hệ thống và tối ưu bộ nhớ.
-- **Quy tắc**:
-  - Chỉ chấp nhận các định dạng tệp: `.pdf`, `.png`, `.jpg`, `.jpeg`.
-  - Dung lượng tối đa cho mỗi tệp: **10 MB (10,485,760 Bytes)**.
-  - Tối đa **03 tệp đính kèm** cho một lần khởi tạo hoặc bổ sung Ticket.
+- Ticket phải xác định được phòng ban phụ trách trong quá trình xử lý.
+- Một Ticket chỉ có **01 người phụ trách chính tại một thời điểm**.
+- Ticket có thể chưa có người phụ trách cụ thể khi vừa được tạo hoặc sau khi được chuyển sang phòng ban khác.
+- Mọi thay đổi người phụ trách phải được ghi nhận trong lịch sử Ticket.
 
----
+### `BR-OWN-02` — Chuyển xử lý
 
-## 2. Nhóm Quy Tắc Chuyển Phòng Ban & Phân Công (`BR-XFR`)
+- Ticket được phép chuyển sang người phụ trách hoặc phòng ban khác khi yêu cầu không thuộc phạm vi hiện tại hoặc cần đơn vị phù hợp hơn xử lý.
+- Người thực hiện chuyển phải nhập **lý do chuyển tối thiểu 10 ký tự**.
+- Khi chuyển sang phòng ban khác, người phụ trách hiện tại được gỡ khỏi Ticket và phòng ban mới thực hiện phân công lại.
+- Chuyển xử lý không làm mất nội dung, file đính kèm, kết quả trung gian hoặc lịch sử trước đó.
+- Việc chuyển xử lý không tự tạo trạng thái vòng đời mới; Ticket tiếp tục ở trạng thái nghiệp vụ phù hợp.
 
-### `BR-XFR-01`: Điều kiện và Luồng chuyển phòng ban (Department Transfer)
-- **Nội dung**: Cho phép chuyển Ticket sang phòng ban khác nếu sinh viên chọn nhầm đơn vị xử lý.
-- **Quy tắc**:
-  - Bắt buộc nhân viên phải nhập **Lý do chuyển phòng ban** (Tối thiểu 10 ký tự).
-  - Ngay khi chuyển phòng ban thành công:
-    1. Trường `department_id` cập nhật sang Phòng ban mới.
-    2. Trường `assigned_staff_id` tự động đặt về `NULL` (chờ nhân viên phòng ban mới Claim/Assign).
-    3. Hệ thống gửi thông báo In-app tới Hòm thư công việc của Phòng ban mới.
-    4. Trạng thái Ticket vẫn giữ nguyên là `IN_PROGRESS`.
+### `BR-OWN-03` — Escalation
+
+- Escalation được sử dụng khi Ticket vượt quá thẩm quyền xử lý hiện tại, cần hỗ trợ từ cấp phù hợp hơn hoặc có nguy cơ không đáp ứng thời hạn xử lý.
+- Người thực hiện phải ghi nhận lý do escalation.
+- Escalation phải giữ nguyên toàn bộ lịch sử xử lý và được ghi nhận như một sự kiện riêng trong Ticket.
+- Escalation không tự động đóng Ticket và không làm mất trách nhiệm theo dõi cho đến khi phạm vi xử lý mới được xác lập.
 
 ---
 
-## 3. Nhóm Quy Tắc Yêu Cầu Bổ Sung Hồ Sơ (`BR-SUP`)
+## 3. Mức Độ Ưu Tiên và Thời Hạn Xử Lý (`BR-DUE`)
 
-### `BR-SUP-01`: Tạm dừng đếm giờ SLA khi chờ sinh viên bổ sung
-- **Nội dung**: Bảo vệ KPI xử lý của nhân viên khi nguyên nhân chậm trễ do sinh viên chưa cung cấp đủ hồ sơ.
-- **Quy tắc**:
-  - Khi nhân viên phát yêu cầu bổ sung, trạng thái chuyển sang `WAITING_STUDENT`.
-  - Bộ đếm thời gian SLA (SLA Timer) tạm thời **tạm dừng**.
-  - Ngay khi sinh viên gửi câu trả lời hoặc đăng tải file bổ sung, trạng thái tự động chuyển về `IN_PROGRESS` và bộ đếm SLA tiếp tục chạy tiếp.
+### `BR-DUE-01` — Mức độ ưu tiên
+
+UniSupport sử dụng bốn mức độ ưu tiên:
+
+| Mức độ | Thời hạn xử lý mục tiêu |
+| :--- | :--- |
+| **Thấp (LOW)** | 05 ngày làm việc |
+| **Trung bình (MEDIUM)** | 03 ngày làm việc |
+| **Cao (HIGH)** | 02 ngày làm việc |
+| **Khẩn cấp (URGENT)** | 01 ngày làm việc |
+
+- Ticket mới được áp dụng mức **Trung bình (MEDIUM)** mặc định cho đến khi được người có quyền điều chỉnh.
+- Việc thay đổi mức độ ưu tiên phải có quyền phù hợp và được ghi nhận trong lịch sử Ticket.
+
+### `BR-DUE-02` — Cách xác định thời hạn và tình trạng quá hạn
+
+- Thời hạn xử lý được tính từ thời điểm Ticket được tạo thành công.
+- Khoảng thời gian Ticket ở trạng thái `WAITING_STUDENT` không được tính vào thời gian xử lý.
+- Khi sinh viên bổ sung thông tin hợp lệ và Ticket quay lại `IN_PROGRESS`, thời gian xử lý tiếp tục được tính từ phần thời gian còn lại.
+- Ticket được xem là **sắp quá hạn** khi đã sử dụng từ **80% thời gian xử lý mục tiêu** trở lên nhưng chưa vượt thời hạn.
+- Ticket được xem là **quá hạn** khi vượt quá thời hạn xử lý và chưa chuyển sang `RESOLVED` hoặc `CLOSED`.
 
 ---
 
-## 4. Nhóm Quy Tắc Đánh Giá Hài Lòng (`BR-RAT`)
+## 4. Yêu Cầu Bổ Sung Thông Tin (`BR-SUP`)
 
-### `BR-RAT-01`: Điều kiện và thời hạn đánh giá hài lòng
-- **Nội dung**: Đảm bảo sinh viên chỉ đánh giá đúng trải nghiệm thực tế sau khi yêu cầu đã giải quyết.
-- **Quy tắc**:
-  - Tính năng đánh giá (1-5 sao) chỉ hiển thị khi Ticket ở trạng thái `RESOLVED` hoặc `CLOSED`.
-  - Mỗi Ticket chỉ được phép gửi đánh giá **Duy nhất 01 lần**.
-  - Thời hạn sinh viên được thực hiện đánh giá là trong vòng **07 ngày** kể từ mốc thời gian `resolved_at`. Quá thời hạn này, tính năng đánh giá sẽ tự động khóa.
+### `BR-SUP-01` — Chờ sinh viên bổ sung
+
+- Nhân viên chỉ được yêu cầu bổ sung khi Ticket đang trong quá trình xử lý và thông tin hiện có chưa đủ để tiếp tục.
+- Nội dung yêu cầu bổ sung phải nêu rõ thông tin hoặc tài liệu cần cung cấp.
+- Sau khi yêu cầu bổ sung được gửi, Ticket chuyển sang `WAITING_STUDENT`.
+- Trong thời gian `WAITING_STUDENT`, thời hạn xử lý được tạm dừng theo `BR-DUE-02`.
+- Khi sinh viên bổ sung thông tin hoặc tài liệu hợp lệ, Ticket quay lại `IN_PROGRESS`.
+- Yêu cầu bổ sung và phản hồi của sinh viên phải được ghi nhận trong lịch sử Ticket.
 
 ---
 
-## 5. Nhóm Quy Tắc Tra Soát Hệ Thống (`BR-AUD`)
+## 5. Hoàn Tất, Phản Hồi và Mở Lại Ticket (`BR-LIFE`)
 
-### `BR-AUD-01`: Bất biến dữ liệu nhật ký tra soát (Audit Trail Integrity)
-- **Nội dung**: Đảm bảo tính toàn vẹn của lịch sử thao tác phục vụ tra soát khi có khiếu nại.
-- **Quy tắc**:
-  - Toàn bộ các bản ghi trong Bảng Nhật ký (`Activity Log / Audit Log`) là **chỉ ghi (Append-only)**.
-  - Nghiêm cấm mọi hành vi sửa (UPDATE) hoặc xóa (DELETE) dữ liệu nhật ký, kể cả tài khoản Quản lý (Manager).
-  - Tất cả các mốc thời gian ghi nhận trong log bắt buộc lưu trữ dưới chuẩn **UTC / ISO-8601** và quy đổi hiển thị theo múi giờ local (`GMT+7`).
+### `BR-LIFE-01` — Chuyển sang RESOLVED
+
+- Ticket chỉ được chuyển từ `IN_PROGRESS` sang `RESOLVED` khi đã có kết quả xử lý.
+- Nội dung kết quả xử lý là thông tin bắt buộc trước khi Ticket được đánh dấu `RESOLVED`.
+- Khi Ticket chuyển sang `RESOLVED`, sinh viên phải nhận được thông báo và có quyền xem kết quả.
+
+### `BR-LIFE-02` — Thời hạn phản hồi và tự động đóng
+
+- Sinh viên có **03 ngày làm việc** kể từ thời điểm Ticket chuyển sang `RESOLVED` để phản hồi kết quả.
+- Nếu sinh viên chấp nhận kết quả, Ticket được chuyển sang `CLOSED`.
+- Nếu hết **03 ngày làm việc** mà không có phản hồi yêu cầu xử lý tiếp, hệ thống chuyển Ticket sang `CLOSED`.
+- Thời điểm đóng phải được ghi nhận trong lịch sử Ticket.
+
+### `BR-LIFE-03` — Mở lại Ticket
+
+- Mở lại chỉ được thực hiện khi Ticket đang ở trạng thái `RESOLVED` và còn trong thời hạn phản hồi.
+- Sinh viên phải cung cấp lý do cho biết vấn đề chưa được giải quyết.
+- Ticket hợp lệ được mở lại sẽ chuyển từ `RESOLVED` về `IN_PROGRESS`.
+- Việc mở lại không xóa kết quả, thời điểm giải quyết hoặc lịch sử của vòng xử lý trước.
+- Ticket đã chuyển sang `CLOSED` không được mở lại; nếu phát sinh nhu cầu hỗ trợ mới, sinh viên tạo Ticket mới.
+
+---
+
+## 6. Đánh Giá Mức Độ Hài Lòng (`BR-CSAT`)
+
+### `BR-CSAT-01` — Điều kiện và thời hạn đánh giá
+
+- Sinh viên được đánh giá khi Ticket đã ở trạng thái `CLOSED`.
+- Mỗi Ticket chỉ được gửi **01 đánh giá**.
+- Điểm đánh giá sử dụng thang **1 đến 5 sao**.
+- Nội dung nhận xét bổ sung là không bắt buộc.
+- Sinh viên có **07 ngày theo lịch** kể từ thời điểm Ticket chuyển sang `CLOSED` để gửi đánh giá.
+- Sau thời hạn trên, Ticket vẫn được lưu phục vụ tra cứu nhưng không còn nhận đánh giá mới.
+
+---
+
+## 7. Lịch Sử Xử Lý và Tra Soát (`BR-AUD`)
+
+### `BR-AUD-01` — Ghi nhận lịch sử Ticket
+
+Các sự kiện quan trọng phải được ghi nhận trong lịch sử Ticket, tối thiểu gồm:
+
+- Tạo Ticket.
+- Phân loại và phân công.
+- Thay đổi trạng thái.
+- Thay đổi mức độ ưu tiên hoặc thời hạn xử lý.
+- Yêu cầu và tiếp nhận thông tin bổ sung.
+- Chuyển người/phòng ban xử lý.
+- Escalation.
+- Ghi nhận kết quả xử lý.
+- Mở lại Ticket.
+- Đóng Ticket.
+
+Mỗi sự kiện phải xác định được nội dung thay đổi, người hoặc hệ thống thực hiện và thời điểm phát sinh.
+
+### `BR-AUD-02` — Tính toàn vẹn của nhật ký tra soát
+
+- Người dùng thông thường không được chỉnh sửa hoặc xóa các bản ghi lịch sử đã phát sinh.
+- Các thao tác quản trị liên quan đến dữ liệu tra soát phải được kiểm soát theo quyền và không được làm mất dấu vết nghiệp vụ đã ghi nhận.
+- Lịch sử Ticket phải được bảo toàn khi Ticket được phân công lại, chuyển xử lý, escalation, mở lại hoặc đóng.
