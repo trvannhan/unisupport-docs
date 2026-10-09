@@ -1,6 +1,6 @@
 # PRJ-01 - Giả Định Dự Án
 
-Các giả định dưới đây bám theo Project Proposal đã chốt.
+Tài liệu này ghi nhận các giả định vận hành và triển khai được sử dụng trong kế hoạch dự án.
 
 ## 1. Phạm Vi Sử Dụng
 
@@ -11,14 +11,14 @@ Các giả định dưới đây bám theo Project Proposal đã chốt.
 
 ## 2. Tích Hợp Và Bảo Mật
 
-- Không yêu cầu tích hợp bên thứ ba trong baseline.
+- Không yêu cầu tích hợp bên thứ ba trong phạm vi hiện tại.
 - Không bao gồm chat trực tiếp hoặc gọi thoại.
 - Không yêu cầu chứng nhận bảo mật hoặc kiểm thử bảo mật chuyên sâu.
 
 ## 3. Hạ Tầng
 
 - Hạ tầng máy chủ và tên miền do Aurora University cung cấp.
-- Hiệu năng và độ ổn định phụ thuộc điều kiện hạ tầng Client.
+- Hiệu năng và độ ổn định phụ thuộc điều kiện hạ tầng Aurora University.
 - Không bao gồm thiết lập sao lưu tự động, giám sát máy chủ và hỗ trợ hạ tầng lâu dài.
 
 ## 4. Phối Hợp
