@@ -14,7 +14,7 @@ Tách biệt hai mục đích:
 - Cách lưu, định dạng và thời hạn log kỹ thuật là quyết định triển khai, không phải cam kết nghiệp vụ.
 
 ### 2.2 Nhật ký tra soát nghiệp vụ
-Tối thiểu bao gồm các sự kiện đã chốt trong PRD:
+Tối thiểu bao gồm các sự kiện được quy định trong PRD:
 - thay đổi trạng thái Ticket;
 - phân công/phân công lại;
 - thay đổi mức độ ưu tiên/thời hạn;
