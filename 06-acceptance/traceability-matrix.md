@@ -44,11 +44,11 @@ RTM liên kết **Gói công việc → Functional Requirement/Flow → Workflow
 
 **Tổng M03: 215h.**
 
-> Trong kế hoạch nguồn lực, nhóm công việc M3 sử dụng nhãn **Admin**. Trong mô hình sản phẩm và phân quyền, các chức năng này thuộc phạm vi **Management**.
+> **Quy ước ánh xạ M3:** nhãn `Admin` trong kế hoạch nguồn lực tương ứng với phạm vi chức năng **Management** trong Product/PRD.
 
 ## 5. Năng Lực Dùng Chung Và Hoạt Động Cấp Dự Án
 
 - FR-STU-00 và FR-STF-00 mô tả hành vi truy cập của từng phân hệ nhưng cơ chế xác thực dùng chung được truy xuất về WP-MGT-01, không cộng effort riêng.
-- Thông báo cho Staff/Management trong các workflow vận hành là thông báo tối thiểu của nghiệp vụ liên quan; không tạo một module Notification riêng.
+- Thông báo cho Staff/Management được truy xuất theo gói công việc nghiệp vụ phát sinh sự kiện tương ứng.
 - Hoạt động cấp dự án gồm **100h**: 70h quản lý dự án & điều phối + 30h môi trường, CI/CD, triển khai & bàn giao.
 - Tổng effort kế hoạch: **640h**.
