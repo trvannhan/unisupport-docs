@@ -32,4 +32,4 @@ Các thao tác quan trọng phải sinh Audit theo M03/`BR-AUD`. Audit không s�
 
 ## 6. Giới Hạn
 
-Không bao gồm penetration testing chuyên sâu hoặc chứng nhận bảo mật quốc tế trong baseline dự án.
+Phạm vi bảo mật không bao gồm penetration testing chuyên sâu hoặc chứng nhận bảo mật quốc tế.
