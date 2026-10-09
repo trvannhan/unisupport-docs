@@ -9,7 +9,7 @@ Thư mục `04-workflows` mô tả các **luồng nghiệp vụ xuyên chức n�
 | **[WF-01](./WF-01-submit-support-request.md)** | Gửi yêu cầu hỗ trợ | Sinh viên | Tạo Ticket, xác định phòng ban từ Nhóm vấn đề và nhận mã Ticket. |
 | **[WF-02](./WF-02-claim-and-triage.md)** | Tiếp nhận, phân loại và phân công | Nhân viên | Tiếp nhận Ticket mới, kiểm tra Nhóm vấn đề, mức độ ưu tiên và người phụ trách. |
 | **[WF-03](./WF-03-request-supplement.md)** | Yêu cầu và tiếp nhận bổ sung | Nhân viên, Sinh viên | Chuyển `IN_PROGRESS ↔ WAITING_STUDENT` và tạm dừng/tiếp tục thời hạn xử lý. |
-| **[WF-04](./WF-04-transfer-department.md)** | Chuyển xử lý sang phòng ban khác | Nhân viên | Chọn Nhóm vấn đề đích, xác định phòng ban đích và gỡ người phụ trách cũ. |
+| **[WF-04](./WF-04-transfer-department.md)** | Chuyển xử lý sang phòng ban khác | Nhân viên, Quản lý có quyền | Chọn Nhóm vấn đề đích, xác định phòng ban đích và gỡ người phụ trách cũ. |
 | **[WF-05](./WF-05-complete-and-resolve.md)** | Ghi nhận kết quả | Nhân viên, Sinh viên | Ghi nhận kết quả và chuyển `IN_PROGRESS → RESOLVED`. |
 | **[WF-06](./WF-06-close-and-rate.md)** | Phản hồi kết quả, mở lại, đóng và đánh giá | Sinh viên, Nhân viên, Hệ thống | Xử lý `RESOLVED → IN_PROGRESS/CLOSED` và CSAT sau khi Ticket đóng. |
 | **[WF-07](./WF-07-escalation.md)** | Chuyển cấp hỗ trợ | Nhân viên, Quản lý | Gửi yêu cầu hỗ trợ nội bộ tới Quản lý mà không thay đổi trách nhiệm xử lý Ticket. |
