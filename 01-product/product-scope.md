@@ -43,14 +43,14 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Tạo/chỉnh sửa/khóa tài khoản và gán quyền/phòng ban khi được cấp quyền quản trị.
 - Quản lý phòng ban, nhóm vấn đề/danh mục và cấu hình nghiệp vụ cơ bản.
 - Tra soát các thao tác quan trọng.
-- Quản lý chính sách lưu trữ dữ liệu cơ bản theo phạm vi đã chốt.
+- Quản lý chính sách lưu trữ dữ liệu cơ bản trong phạm vi hệ thống.
 
 > Các chức năng quản trị hệ thống thuộc phạm vi của phân hệ **Management** và được kiểm soát theo quyền của tài khoản Quản lý.
 
 ### 1.4 Năng lực dùng chung
 
 **Thông báo trong hệ thống**
-- Tạo và hiển thị thông báo cho người dùng liên quan khi Ticket phát sinh các sự kiện nghiệp vụ đã chốt.
+- Tạo và hiển thị thông báo cho người dùng liên quan khi Ticket phát sinh các sự kiện nghiệp vụ được quy định.
 
 **Xác thực, bảo mật & phân quyền**
 - Cả 3 phân hệ sử dụng chung cơ chế xác thực.
@@ -85,13 +85,13 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 5. **Hạ tầng**: Máy chủ và tên miền do Aurora University cung cấp; hiệu năng và tính ổn định phụ thuộc vào hạ tầng này.
 6. **Tích hợp**: Không yêu cầu tích hợp bên thứ ba trong phạm vi hiện tại.
 7. **Bảo mật**: Không yêu cầu chứng nhận bảo mật hoặc kiểm thử bảo mật chuyên sâu.
-8. **Phản hồi/phê duyệt**: Thời gian chờ phản hồi hoặc phê duyệt từ phía Client được quản lý như dependency của kế hoạch dự án.
+8. **Phản hồi/phê duyệt**: Thời gian chờ phản hồi hoặc phê duyệt từ phía Client được quản lý như một phụ thuộc của kế hoạch dự án.
 
 ---
 
 ## 4. Ràng Buộc Dự Án (Project Constraints)
 
-- **Thời gian thực hiện**: 14 tuần theo Proposal đã nộp.
+- **Thời gian thực hiện**: 14 tuần.
 - **Ngân sách**: 300.000.000 VNĐ.
 - **Nghiệm thu chính thức**: 10 ngày làm việc kể từ khi bàn giao.
 - **Bảo hành kỹ thuật**: 30 ngày kể từ ngày hai bên xác nhận nghiệm thu.
