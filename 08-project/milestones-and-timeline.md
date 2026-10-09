@@ -16,9 +16,9 @@
 ## 2. Cột Mốc
 
 - **Mốc 0 - Tuần 1:** Ký xác nhận hợp tác và đặt cọc.
-- **Mốc 1 - Cuối Tuần 2:** Chốt phạm vi và yêu cầu.
+- **Mốc 1 - Cuối Tuần 2:** Hoàn tất phạm vi và yêu cầu.
 - **Mốc 2 - Cuối Tuần 4:** Duyệt giao diện/prototype.
-- **Mốc 3 - Cuối Tuần 9:** Hoàn thành phát triển 3 phân hệ, demo nội bộ.
+- **Mốc 3 - Cuối Tuần 9:** Hoàn thành phát triển 3 phân hệ, trình diễn nội bộ.
 - **Mốc 4 - Tuần 13:** Hoàn thành kiểm thử/UAT nội bộ và tổng hợp phản hồi.
 - **Mốc 5 - Tuần 14:** Hoàn tất sửa lỗi thuộc phạm vi, triển khai và bàn giao.
 
