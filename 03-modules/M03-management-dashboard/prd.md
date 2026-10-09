@@ -5,10 +5,10 @@
 Phân hệ **Management Dashboard** cho phép người dùng Quản lý giám sát hoạt động hỗ trợ sinh viên, xem báo cáo và thực hiện các chức năng quản trị trong phạm vi quyền được cấp.
 
 - **Actor chính:** Quản lý (Management).
-- **Phạm vi dữ liệu:** Chỉ truy cập dữ liệu thuộc phạm vi quản lý được cấp.
-- **Phạm vi quyền:** Không phải mọi tài khoản Management đều mặc định có toàn bộ quyền quản trị; mỗi chức năng phải kiểm tra quyền tương ứng.
-- **Vai trò hệ thống:** Student, Staff và Management là ba nhóm người dùng chính; không sử dụng một vai trò Admin độc lập.
-- **Tác động lên Ticket:** Việc xem Dashboard, báo cáo hoặc tra soát không làm thay đổi trạng thái Ticket. Management chỉ tham gia thao tác xử lý Ticket khi được phân quyền theo ma trận vai trò/quyền dùng chung.
+- **Phạm vi quản lý:** Mỗi tài khoản Quản lý được cấu hình ở phạm vi **toàn trường** hoặc **một phòng ban cụ thể**. Mọi dữ liệu hiển thị và thao tác phải giới hạn theo phạm vi này.
+- **Phạm vi quyền:** Không phải mọi tài khoản Quản lý đều mặc định có toàn bộ chức năng quản trị; mỗi chức năng phải kiểm tra quyền tương ứng.
+- **Vai trò hệ thống:** UniSupport sử dụng ba nhóm người dùng chính: Sinh viên, Nhân viên và Quản lý.
+- **Tác động lên Ticket:** Việc xem Dashboard, báo cáo hoặc tra soát không làm thay đổi trạng thái Ticket. Quản lý chỉ tham gia thao tác xử lý Ticket khi được phân quyền theo ma trận vai trò/quyền dùng chung.
 
 ---
 
@@ -27,7 +27,7 @@ Cho phép người dùng Management đăng nhập UniSupport và truy cập các
 - **Tên đăng nhập:** bắt buộc, sử dụng tài khoản do nhà trường cấp.
 - **Mật khẩu:** bắt buộc.
 - Không chấp nhận dữ liệu chỉ chứa khoảng trắng.
-- Sau khi đăng nhập, hệ thống chỉ hiển thị chức năng và dữ liệu mà tài khoản có quyền truy cập.
+- Sau khi đăng nhập, hệ thống chỉ hiển thị chức năng và dữ liệu nằm trong quyền và phạm vi quản lý của tài khoản.
 
 #### 4. Luồng xử lý chi tiết
 1. Người dùng truy cập UniSupport.
@@ -44,7 +44,8 @@ Cho phép người dùng Management đăng nhập UniSupport và truy cập các
 - Phiên hết hạn: yêu cầu xác thực lại.
 
 #### 6. Quy tắc nghiệp vụ
-- Management không được truy cập dữ liệu ngoài phạm vi quản lý được cấp.
+- Quản lý phạm vi toàn trường được xem dữ liệu toàn trường theo quyền chức năng được cấp.
+- Quản lý phạm vi phòng ban chỉ được xem dữ liệu thuộc phòng ban được cấu hình.
 - Quyền truy cập tuân thủ [Actors & Roles](../../01-product/actors-and-roles.md).
 
 #### 7. Tiêu chí nghiệm thu
@@ -67,11 +68,11 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 #### 3. Quy tắc Dữ liệu & Validation
 - **Tên đăng nhập/Mã định danh:** bắt buộc và duy nhất trong hệ thống.
 - **Họ tên:** bắt buộc.
-- **Nhóm người dùng:** bắt buộc chọn một trong `STUDENT`, `STAFF`, `MANAGEMENT`.
+- **Nhóm người dùng:** bắt buộc chọn một trong Sinh viên (`STUDENT`), Nhân viên (`STAFF`) hoặc Quản lý (`MANAGEMENT`).
 - **Trạng thái tài khoản:** đang hoạt động hoặc bị khóa.
-- Tài khoản Staff phải được gắn với ít nhất một phòng ban đang hoạt động.
-- Phạm vi quản lý của tài khoản Management phải được cấu hình phù hợp với quyền được cấp.
-- Không tạo thêm nhóm người dùng `ADMIN`.
+- Tài khoản Nhân viên phải được gắn với **một phòng ban đang hoạt động**.
+- Tài khoản Quản lý phải được xác định phạm vi **toàn trường** hoặc **một phòng ban đang hoạt động**.
+- **Lý do khóa tài khoản:** bắt buộc, từ **10 đến 500 ký tự**.
 - Người thực hiện không được tự khóa chính tài khoản đang đăng nhập.
 
 #### 4. Luồng xử lý chi tiết
@@ -102,9 +103,9 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 
 #### 5. Luồng ngoại lệ
 - Tên đăng nhập/Mã định danh đã tồn tại: từ chối tạo mới.
-- Staff không có phòng ban hợp lệ: từ chối lưu.
+- Tài khoản Nhân viên không có phòng ban hợp lệ: từ chối lưu.
 - Người dùng cố tự khóa tài khoản đang đăng nhập: từ chối.
-- Tài khoản Staff còn Ticket đang phụ trách: từ chối khóa và hiển thị các Ticket cần xử lý trước.
+- Tài khoản Nhân viên còn Ticket đang phụ trách: từ chối khóa và hiển thị các Ticket cần xử lý trước.
 - Người dùng không có quyền quản trị tài khoản: từ chối thao tác.
 
 #### 6. Quy tắc nghiệp vụ
@@ -116,10 +117,10 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 #### 7. Tiêu chí nghiệm thu
 - **AC-01-01:** Tài khoản hợp lệ được tạo với đúng nhóm người dùng và phạm vi.
 - **AC-01-02:** Không thể tạo hai tài khoản có cùng Tên đăng nhập/Mã định danh.
-- **AC-01-03:** Staff không thể được lưu nếu không thuộc ít nhất một phòng ban đang hoạt động.
+- **AC-01-03:** Tài khoản Nhân viên chỉ được lưu khi được gắn với một phòng ban đang hoạt động.
 - **AC-01-04:** Không thể khóa Staff đang phụ trách Ticket hoạt động nếu chưa xử lý việc phân công lại.
 - **AC-01-05:** Mọi thay đổi vai trò/phạm vi và trạng thái tài khoản được ghi nhận trong nhật ký tra soát.
-- **AC-01-06:** Hệ thống không tạo hoặc yêu cầu vai trò Admin độc lập.
+- **AC-01-06:** Tài khoản Quản lý chỉ truy cập được dữ liệu trong phạm vi toàn trường hoặc phòng ban đã được cấu hình.
 
 ---
 
@@ -175,9 +176,9 @@ Cho phép Management có quyền cấu hình quản lý danh sách phòng ban v�
 #### 7. Tiêu chí nghiệm thu
 - **AC-02-01:** Category hoạt động luôn có đúng một phòng ban tiếp nhận mặc định.
 - **AC-02-02:** M01 chỉ hiển thị Category đang hoạt động khi sinh viên tạo Ticket.
-- **AC-02-03:** Thay đổi mapping Category → phòng ban không tự động thay đổi Ticket đã tồn tại.
+- **AC-02-03:** Thay đổi ánh xạ Nhóm vấn đề → phòng ban không tự động thay đổi Ticket đã tồn tại.
 - **AC-02-04:** Không thể vô hiệu hóa phòng ban còn Ticket đang hoạt động.
-- **AC-02-05:** M02 sử dụng cấu hình mới cho các thao tác phân loại/Transfer phát sinh sau khi cấu hình được cập nhật.
+- **AC-02-05:** M02 sử dụng cấu hình mới cho các thao tác phân loại/chuyển xử lý phát sinh sau khi cấu hình được cập nhật.
 - **AC-02-06:** Thay đổi phòng ban/Category được ghi nhận để tra soát.
 
 ---
@@ -207,8 +208,8 @@ Cho phép Management có quyền tra soát xem các thao tác quan trọng đã 
 Các sự kiện tối thiểu cần tra soát gồm:
 - Thay đổi trạng thái Ticket.
 - Phân công/phân công lại.
-- Thay đổi Priority/Deadline.
-- Transfer và Escalation.
+- Thay đổi mức độ ưu tiên/thời hạn xử lý.
+- Chuyển xử lý và chuyển cấp xử lý.
 - Ghi nhận kết quả, mở lại và đóng Ticket.
 - Tạo/thay đổi/khóa tài khoản và quyền.
 - Thay đổi phòng ban/Nhóm vấn đề và cấu hình liên quan.
@@ -326,7 +327,7 @@ Bộ lọc hỗ trợ tối thiểu:
 
 ---
 
-### [FR-MGT-06] Báo cáo, CSAT và xuất dữ liệu
+### [FR-MGT-06] Báo cáo, mức độ hài lòng (CSAT) và xuất dữ liệu
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nhóm vấn đề, thời gian xử lý và mức độ hài lòng của sinh viên; người có quyền có thể xuất dữ liệu báo cáo.
@@ -340,7 +341,7 @@ Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nh
 - **Khoảng thời gian:** bắt buộc; ngày bắt đầu không được sau ngày kết thúc.
 - Bộ lọc hỗ trợ tối thiểu: phòng ban và Nhóm vấn đề.
 - **Xu hướng Nhóm vấn đề:** đếm Ticket theo Category dựa trên thời điểm Ticket được tạo trong khoảng báo cáo.
-- **Thời gian xử lý:** chỉ tính Ticket đã từng đạt `RESOLVED` trong khoảng báo cáo; thời gian của mỗi Ticket là tổng thời gian làm việc hợp lệ từ lúc tạo đến lần `RESOLVED` gần nhất, loại trừ toàn bộ thời gian `WAITING_STUDENT`.
+- **Thời gian xử lý:** chỉ tính Ticket có lần chuyển sang `RESOLVED` trong khoảng báo cáo. Với Ticket chưa từng mở lại, thời gian xử lý được tính từ lúc tạo đến `RESOLVED`, loại trừ thời gian `WAITING_STUDENT` và thời gian ngoài lịch làm việc. Với Ticket đã mở lại, tổng thời gian xử lý bằng tổng các khoảng thời gian Ticket thực sự ở quá trình xử lý đến từng lần `RESOLVED`; khoảng thời gian Ticket nằm ở `RESOLVED` để chờ sinh viên phản hồi không được tính là thời gian xử lý của nhân viên.
 - **CSAT trung bình:** trung bình cộng điểm 1–5 của các đánh giá hợp lệ được gửi trong khoảng báo cáo.
 - **Tỷ lệ phản hồi CSAT:** số Ticket có đánh giá / số Ticket `CLOSED` đủ điều kiện đánh giá trong cùng phạm vi báo cáo.
 - Dữ liệu xuất phải tuân thủ cùng bộ lọc và phạm vi quyền như dữ liệu đang xem.
@@ -372,7 +373,7 @@ Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nh
 
 #### 7. Tiêu chí nghiệm thu
 - **AC-06-01:** Báo cáo xu hướng Category tính đúng Ticket được tạo trong khoảng thời gian đã chọn.
-- **AC-06-02:** Thời gian xử lý trung bình loại trừ toàn bộ thời gian `WAITING_STUDENT`.
+- **AC-06-02:** Thời gian xử lý trung bình loại trừ thời gian `WAITING_STUDENT`, thời gian ngoài lịch làm việc và khoảng thời gian chờ phản hồi của sinh viên khi Ticket ở `RESOLVED`.
 - **AC-06-03:** Điểm CSAT trung bình chỉ sử dụng đánh giá hợp lệ 1–5 sao.
 - **AC-06-04:** Khoảng thời gian không hợp lệ bị từ chối.
 - **AC-06-05:** Người không có quyền xuất không thể xuất báo cáo.
