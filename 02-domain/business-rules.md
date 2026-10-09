@@ -49,7 +49,7 @@ Tài liệu này quy định các Business Rules dùng chung cho **UniSupport**.
 
 ## 3. Mức Độ Ưu Tiên và Thời Hạn Xử Lý (`BR-DUE`)
 
-### `BR-DUE-01` — Mức độ ưu tiên
+### `BR-DUE-01` — Mức độ ưu tiên và thời hạn mục tiêu
 
 UniSupport sử dụng bốn mức độ ưu tiên:
 
@@ -61,11 +61,14 @@ UniSupport sử dụng bốn mức độ ưu tiên:
 | **Khẩn cấp (URGENT)** | 01 ngày làm việc |
 
 - Ticket mới được áp dụng mức **Trung bình (MEDIUM)** mặc định cho đến khi được người có quyền điều chỉnh.
+- Thời hạn xử lý ban đầu được xác định từ mức độ ưu tiên hiện tại của Ticket.
+- Khi mức độ ưu tiên được thay đổi, thời hạn xử lý phải được tính lại theo mức mới nhưng vẫn giữ nguyên phần thời gian xử lý hợp lệ đã sử dụng trước đó.
 - Việc thay đổi mức độ ưu tiên phải có quyền phù hợp và được ghi nhận trong lịch sử Ticket.
 
-### `BR-DUE-02` — Cách xác định thời hạn và tình trạng quá hạn
+### `BR-DUE-02` — Cách tính ngày làm việc và tình trạng thời hạn
 
-- Thời hạn xử lý được tính từ thời điểm Ticket được tạo thành công.
+- **Ngày làm việc** là từ thứ Hai đến thứ Sáu, không bao gồm ngày nghỉ lễ hoặc ngày nghỉ chính thức của Aurora University.
+- Thời hạn xử lý được tính từ thời điểm Ticket được tạo thành công theo số ngày làm việc tương ứng với mức độ ưu tiên.
 - Khoảng thời gian Ticket ở trạng thái `WAITING_STUDENT` không được tính vào thời gian xử lý.
 - Khi sinh viên bổ sung thông tin hợp lệ và Ticket quay lại `IN_PROGRESS`, thời gian xử lý tiếp tục được tính từ phần thời gian còn lại.
 - Ticket được xem là **sắp quá hạn** khi đã sử dụng từ **80% thời gian xử lý mục tiêu** trở lên nhưng chưa vượt thời hạn.
