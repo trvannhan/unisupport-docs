@@ -2,7 +2,7 @@
 
 ## 1. Mục Tiêu
 
-Student Portal cung cấp một kênh thống nhất để sinh viên Aurora University gửi và theo dõi yêu cầu hỗ trợ. Phân hệ phải bảo đảm sinh viên có thể chủ động tra cứu hướng dẫn, tạo Ticket, theo dõi tiến độ, bổ sung thông tin, nhận kết quả và phản hồi về chất lượng hỗ trợ mà không phải phụ thuộc vào các kênh rời rạc.
+Student Portal cung cấp một kênh thống nhất để sinh viên Aurora University gửi và theo dõi yêu cầu hỗ trợ. Phân hệ phải bảo đảm sinh viên có thể chủ động tra cứu hướng dẫn, tạo Ticket, theo dõi tiến độ, bổ sung thông tin, nhận kết quả và phản hồi về chất lượng hỗ trợ mà không phụ thuộc vào các kênh rời rạc.
 
 ## 2. Actor Và Phạm Vi Truy Cập
 
@@ -11,42 +11,37 @@ Student Portal cung cấp một kênh thống nhất để sinh viên Aurora Uni
 - Các thao tác tạo Ticket, theo dõi chi tiết, bổ sung thông tin, phản hồi kết quả và đánh giá yêu cầu phiên đăng nhập hợp lệ.
 - Quyền truy cập file đính kèm và dữ liệu Ticket tuân thủ các Business Rules dùng chung tại `02-domain`.
 
-## 3. Traceability Theo Work Package
-
-| Work Package | Effort | Functional Requirements |
-| :--- | :---: | :--- |
-| **WP-STU-01 - Tra cứu hướng dẫn & FAQ** | 14h | FR-STU-01 |
-| **WP-STU-02 - Tạo & gửi yêu cầu hỗ trợ** | 37h | FR-STU-02 |
-| **WP-STU-03 - Xem & theo dõi yêu cầu** | 33h | FR-STU-03 |
-| **WP-STU-04 - Nhận thông báo trạng thái** | 19h | FR-STU-04 |
-| **WP-STU-05 - Bổ sung thông tin & phản hồi** | 25h | FR-STU-05, FR-STU-06, FR-STU-07 |
-| **Tổng M01** | **128h** | |
-
-FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và không tạo thêm work package hoặc effort riêng cho M01.
-
 ---
 
-## 4. Functional Requirements
+## 3. Functional Requirements
 
 ### FR-STU-00 — Đăng Nhập Và Truy Cập Student Portal
 
-**Mục đích:** Cho phép sinh viên xác thực bằng tài khoản hợp lệ và truy cập Student Portal theo đúng phạm vi quyền.
+**Mô tả & phạm vi**
 
-**Điều kiện tiên quyết**
+Cho phép sinh viên xác thực bằng tài khoản hợp lệ và truy cập Student Portal theo đúng phạm vi quyền.
+
+**Actor & điều kiện tiên quyết**
+- Actor: Sinh viên.
 - Tài khoản sinh viên tồn tại và đang hoạt động.
+
+**Dữ liệu đầu vào & validation**
+- Tài khoản đăng nhập: bắt buộc.
+- Mật khẩu: bắt buộc.
+- Không chấp nhận thông tin đăng nhập chỉ chứa khoảng trắng.
 
 **Luồng chính**
 1. Sinh viên truy cập UniSupport.
 2. Hệ thống yêu cầu đăng nhập nếu chưa có phiên hợp lệ.
 3. Sinh viên nhập thông tin đăng nhập.
-4. Hệ thống xác thực tài khoản và trạng thái hoạt động.
+4. Hệ thống kiểm tra thông tin tài khoản và trạng thái hoạt động.
 5. Nếu hợp lệ, hệ thống tạo phiên làm việc và cho phép truy cập Student Portal.
 6. Sinh viên có thể đăng xuất khi kết thúc phiên sử dụng.
 
 **Luồng ngoại lệ**
 - Thông tin đăng nhập không hợp lệ: từ chối truy cập và hiển thị thông báo phù hợp.
-- Tài khoản bị khóa/vô hiệu hóa: không tạo phiên đăng nhập.
-- Phiên hết hạn: yêu cầu xác thực lại.
+- Tài khoản bị khóa hoặc vô hiệu hóa: không tạo phiên đăng nhập.
+- Phiên hết hạn: yêu cầu người dùng xác thực lại.
 
 **Business Rules**
 - Sinh viên không được truy cập dữ liệu hoặc chức năng ngoài phạm vi Student.
@@ -62,11 +57,17 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 
 ### FR-STU-01 — Tra Cứu Hướng Dẫn Và FAQ
 
-**Mục đích:** Giúp sinh viên tra cứu các vấn đề thường gặp và thông tin cần chuẩn bị trước khi tạo Ticket.
+**Mô tả & phạm vi**
 
-**Điều kiện tiên quyết**
-- Sinh viên đã đăng nhập Student Portal.
+Giúp sinh viên tra cứu các vấn đề thường gặp và thông tin cần chuẩn bị trước khi tạo Ticket.
+
+**Actor & điều kiện tiên quyết**
+- Actor: Sinh viên đã đăng nhập.
 - Dữ liệu FAQ và nhóm vấn đề đang hoạt động.
+
+**Dữ liệu đầu vào & validation**
+- Từ khóa tìm kiếm: không bắt buộc.
+- Nhóm vấn đề: không bắt buộc khi người dùng chỉ duyệt danh sách FAQ.
 
 **Luồng chính**
 1. Sinh viên mở mục **Hướng dẫn / FAQ**.
@@ -77,30 +78,32 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 
 **Luồng ngoại lệ**
 - Không có kết quả phù hợp: hệ thống hiển thị trạng thái không tìm thấy và vẫn cho phép chuyển sang tạo Ticket.
-- Dữ liệu FAQ tạm thời không khả dụng: hệ thống thông báo phù hợp mà không làm phát sinh Ticket tự động.
+- Dữ liệu FAQ tạm thời không khả dụng: hệ thống hiển thị thông báo phù hợp và không tự động tạo Ticket.
 
 **Business Rules**
 - FAQ chỉ hỗ trợ tra cứu, không thay thế quy trình xử lý Ticket.
-- Không có chức năng chatbot AI hoặc hệ thống CMS FAQ chuyên biệt trong phạm vi này.
+- Không bao gồm chatbot AI hoặc hệ thống CMS FAQ chuyên biệt.
 
 **Acceptance Criteria**
 - **AC-01-01:** Sinh viên xem được danh sách FAQ theo nhóm vấn đề.
-- **AC-01-02:** Tìm kiếm/chọn nhóm vấn đề trả về nội dung phù hợp với dữ liệu FAQ hiện có.
+- **AC-01-02:** Tìm kiếm hoặc chọn nhóm vấn đề trả về nội dung phù hợp với dữ liệu FAQ hiện có.
 - **AC-01-03:** Sinh viên có thể chuyển từ FAQ sang chức năng tạo Ticket khi cần hỗ trợ thêm.
 
 ---
 
 ### FR-STU-02 — Tạo Và Gửi Yêu Cầu Hỗ Trợ
 
-**Mục đích:** Cho phép sinh viên tạo Ticket mới và nhận mã Ticket để theo dõi.
+**Mô tả & phạm vi**
 
-**Điều kiện tiên quyết**
-- Sinh viên đã đăng nhập.
+Cho phép sinh viên tạo Ticket mới bằng cách chọn nhóm vấn đề, nhập nội dung yêu cầu và đính kèm tài liệu minh chứng khi cần.
+
+**Actor & điều kiện tiên quyết**
+- Actor: Sinh viên đã đăng nhập.
 - Danh mục nhóm vấn đề và ánh xạ phòng ban phụ trách đang hoạt động.
 
-**Dữ liệu đầu vào**
+**Dữ liệu đầu vào & validation**
 - **Nhóm vấn đề:** bắt buộc.
-- **Nội dung yêu cầu:** bắt buộc.
+- **Nội dung yêu cầu:** bắt buộc, không chấp nhận nội dung chỉ chứa khoảng trắng.
 - **File đính kèm:** không bắt buộc; tối đa 03 file/lần, mỗi file tối đa 10 MB, định dạng PDF/PNG/JPG/JPEG.
 
 **Luồng chính**
@@ -111,19 +114,19 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 5. Sinh viên xác nhận gửi.
 6. Hệ thống kiểm tra trường bắt buộc và file đính kèm.
 7. Hệ thống xác định phòng ban tiếp nhận theo nhóm vấn đề.
-8. Hệ thống tạo đúng một Ticket, cấp mã Ticket duy nhất và ghi nhận thời điểm tạo.
-9. Ticket được khởi tạo ở trạng thái `NEW`, priority mặc định `MEDIUM` và thời hạn xử lý tương ứng.
-10. Hệ thống hiển thị kết quả tạo thành công và mã Ticket cho sinh viên.
+8. Hệ thống tạo Ticket, cấp mã Ticket duy nhất và ghi nhận thời điểm tạo.
+9. Ticket được khởi tạo ở trạng thái `NEW`, mức ưu tiên mặc định `MEDIUM` và thời hạn xử lý tương ứng.
+10. Hệ thống thông báo tạo Ticket thành công và hiển thị mã Ticket cho sinh viên.
 
 **Luồng ngoại lệ**
 - Thiếu nhóm vấn đề hoặc nội dung yêu cầu: không tạo Ticket và chỉ rõ thông tin cần bổ sung.
 - File sai định dạng, vượt 10 MB hoặc vượt quá 03 file: từ chối file không hợp lệ.
 - Nhóm vấn đề không còn hoạt động: không tạo Ticket và yêu cầu sinh viên chọn lại.
-- Yêu cầu gửi lặp do thao tác lặp/retry: không được tạo nhiều Ticket cho cùng một lần gửi.
+- Một thao tác gửi bị lặp do người dùng thao tác nhiều lần hoặc thử lại: không được làm phát sinh nhiều Ticket từ cùng một lần gửi.
 
 **Business Rules**
 - Tuân thủ `BR-FILE-01`, `BR-FILE-02` và `BR-DUE-01`.
-- Ticket phải gắn cố định với sinh viên tạo Ticket.
+- Ticket phải gắn với sinh viên tạo Ticket.
 - Sinh viên không tự chọn người phụ trách.
 - Mã Ticket phải duy nhất trong hệ thống.
 
@@ -133,16 +136,23 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 - **AC-02-03:** Ticket mới được gắn nhóm vấn đề, phòng ban tiếp nhận, priority `MEDIUM` và thời hạn xử lý tương ứng.
 - **AC-02-04:** Dữ liệu bắt buộc không hợp lệ không làm phát sinh Ticket.
 - **AC-02-05:** File không đáp ứng quy tắc định dạng, dung lượng hoặc số lượng không được chấp nhận.
-- **AC-02-06:** Một thao tác gửi lặp không tạo nhiều Ticket trùng từ cùng yêu cầu gửi.
+- **AC-02-06:** Thao tác gửi lặp không tạo nhiều Ticket từ cùng một lần gửi.
 
 ---
 
 ### FR-STU-03 — Xem Và Theo Dõi Ticket
 
-**Mục đích:** Cho phép sinh viên theo dõi trạng thái, trách nhiệm xử lý và lịch sử cập nhật của các Ticket thuộc mình.
+**Mô tả & phạm vi**
 
-**Điều kiện tiên quyết**
-- Sinh viên đã đăng nhập.
+Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng thái, trách nhiệm xử lý, thời hạn và lịch sử cập nhật.
+
+**Actor & điều kiện tiên quyết**
+- Actor: Sinh viên đã đăng nhập.
+
+**Dữ liệu đầu vào & validation**
+- Bộ lọc trạng thái: không bắt buộc.
+- Mã Ticket hoặc từ khóa tìm kiếm: không bắt buộc.
+- Hệ thống chỉ trả về dữ liệu thuộc sinh viên đang đăng nhập.
 
 **Luồng chính**
 1. Sinh viên mở **Ticket của tôi**.
@@ -170,23 +180,37 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 
 ### FR-STU-04 — Nhận Và Xem Thông Báo Ticket
 
-**Mục đích:** Thông báo cho sinh viên khi Ticket của mình có sự kiện nghiệp vụ cần biết hoặc cần hành động.
+**Mô tả & phạm vi**
 
-**Các sự kiện phát thông báo**
-- Ticket được tạo thành công.
-- Trạng thái Ticket thay đổi.
-- Nhân viên yêu cầu bổ sung thông tin/tài liệu.
-- Ticket được chuyển sang phòng ban khác.
-- Ticket có kết quả xử lý.
-- Ticket được mở lại hoặc đóng.
+Thông báo cho sinh viên khi Ticket của mình có sự kiện nghiệp vụ cần biết hoặc cần hành động.
+
+**Actor & điều kiện tiên quyết**
+- Actor: Sinh viên đã đăng nhập.
+- Ticket và người nhận thông báo đã được xác định hợp lệ.
+
+**Dữ liệu đầu vào & validation**
+- Không yêu cầu dữ liệu nhập bắt buộc từ sinh viên.
+- Thông báo phải liên kết với đúng Ticket và đúng người nhận.
 
 **Luồng chính**
-1. Một sự kiện thuộc danh sách thông báo xảy ra.
+1. Một sự kiện cần thông báo xảy ra.
 2. Hệ thống tạo thông báo cho sinh viên sở hữu Ticket.
 3. Sinh viên thấy thông báo mới trong Student Portal.
 4. Sinh viên mở thông báo.
 5. Hệ thống hiển thị nội dung phù hợp và cho phép điều hướng đến Ticket liên quan.
-6. Thông báo có thể được đánh dấu đã đọc.
+6. Sinh viên có thể đánh dấu thông báo đã đọc.
+
+**Các sự kiện phát thông báo**
+- Ticket được tạo thành công.
+- Trạng thái Ticket thay đổi.
+- Nhân viên yêu cầu bổ sung thông tin hoặc tài liệu.
+- Ticket được chuyển sang phòng ban khác.
+- Ticket có kết quả xử lý.
+- Ticket được mở lại hoặc đóng.
+
+**Luồng ngoại lệ**
+- Ticket không còn thuộc phạm vi truy cập: không cho phép mở chi tiết thông qua thông báo.
+- Thông báo không còn liên kết đến dữ liệu hợp lệ: hiển thị thông báo phù hợp thay vì làm lộ dữ liệu.
 
 **Business Rules**
 - Chỉ gửi thông báo đến sinh viên sở hữu Ticket.
@@ -203,11 +227,18 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 
 ### FR-STU-05 — Bổ Sung Thông Tin Và Tài Liệu
 
-**Mục đích:** Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi nhân viên yêu cầu.
+**Mô tả & phạm vi**
 
-**Điều kiện tiên quyết**
+Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi nhân viên yêu cầu.
+
+**Actor & điều kiện tiên quyết**
+- Actor: Sinh viên đã đăng nhập.
 - Ticket thuộc sinh viên.
 - Ticket đang ở trạng thái `WAITING_STUDENT`.
+
+**Dữ liệu đầu vào & validation**
+- Nội dung bổ sung hoặc file đính kèm: phải có ít nhất một trong hai.
+- File đính kèm tuân thủ quy tắc PDF/PNG/JPG/JPEG, tối đa 10 MB/file và tối đa 03 file/lần.
 
 **Luồng chính**
 1. Sinh viên mở Ticket có yêu cầu bổ sung.
@@ -226,7 +257,6 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 
 **Business Rules**
 - Tuân thủ `BR-SUP-01`, `BR-FILE-02` và `BR-DUE-02`.
-- Mỗi lần bổ sung tối đa 03 file, mỗi file tối đa 10 MB.
 - Bổ sung thành công phải được ghi nhận trong lịch sử Ticket.
 
 **Acceptance Criteria**
@@ -239,12 +269,20 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 
 ### FR-STU-06 — Xem Kết Quả, Phản Hồi Và Yêu Cầu Mở Lại
 
-**Mục đích:** Cho phép sinh viên xem kết quả xử lý và xác nhận Ticket đã được giải quyết hoặc phản hồi rằng vấn đề vẫn chưa được giải quyết.
+**Mô tả & phạm vi**
 
-**Điều kiện tiên quyết**
+Cho phép sinh viên xem kết quả xử lý và xác nhận Ticket đã được giải quyết hoặc phản hồi rằng vấn đề vẫn chưa được giải quyết.
+
+**Actor & điều kiện tiên quyết**
+- Actor: Sinh viên đã đăng nhập.
 - Ticket thuộc sinh viên.
-- Ticket đang ở `RESOLVED` hoặc `CLOSED` để xem kết quả.
-- Chức năng phản hồi/mở lại chỉ áp dụng khi Ticket đang ở `RESOLVED` và còn trong thời hạn phản hồi.
+- Ticket ở `RESOLVED` hoặc `CLOSED` để xem kết quả.
+- Chức năng phản hồi và mở lại chỉ áp dụng khi Ticket đang ở `RESOLVED` và còn trong thời hạn phản hồi.
+
+**Dữ liệu đầu vào & validation**
+- Xác nhận kết quả: không yêu cầu nội dung bổ sung.
+- Yêu cầu mở lại: bắt buộc có lý do.
+- Hệ thống phải kiểm tra trạng thái Ticket và thời hạn phản hồi trước khi chấp nhận thao tác.
 
 **Luồng A — Chấp nhận kết quả**
 1. Sinh viên mở Ticket `RESOLVED`.
@@ -265,6 +303,11 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 2. Hết 03 ngày làm việc mà sinh viên không yêu cầu xử lý tiếp.
 3. Hệ thống chuyển Ticket sang `CLOSED`.
 
+**Luồng ngoại lệ**
+- Yêu cầu mở lại thiếu lý do: từ chối thao tác.
+- Ticket đã `CLOSED` hoặc hết thời hạn phản hồi: không cho phép mở lại.
+- Ticket không thuộc sinh viên: từ chối truy cập và thao tác.
+
 **Business Rules**
 - Tuân thủ `BR-LIFE-01`, `BR-LIFE-02`, `BR-LIFE-03`.
 - Reopen chỉ thực hiện từ `RESOLVED` về `IN_PROGRESS`.
@@ -282,12 +325,19 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 
 ### FR-STU-07 — Đánh Giá Mức Độ Hài Lòng (CSAT)
 
-**Mục đích:** Ghi nhận mức độ hài lòng của sinh viên sau khi Ticket đã kết thúc vòng đời xử lý.
+**Mô tả & phạm vi**
 
-**Điều kiện tiên quyết**
+Ghi nhận mức độ hài lòng của sinh viên sau khi Ticket đã kết thúc vòng đời xử lý.
+
+**Actor & điều kiện tiên quyết**
+- Actor: Sinh viên đã đăng nhập.
 - Ticket thuộc sinh viên.
 - Ticket đang ở trạng thái `CLOSED`.
 - Ticket chưa có đánh giá và còn trong thời hạn đánh giá.
+
+**Dữ liệu đầu vào & validation**
+- Điểm đánh giá: bắt buộc, từ 1 đến 5 sao.
+- Nhận xét: không bắt buộc.
 
 **Luồng chính**
 1. Sinh viên mở Ticket `CLOSED`.
@@ -306,8 +356,6 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 **Business Rules**
 - Tuân thủ `BR-CSAT-01`.
 - Mỗi Ticket chỉ có tối đa 01 đánh giá.
-- Điểm hợp lệ từ 1 đến 5 sao.
-- Nhận xét là không bắt buộc.
 - Đánh giá không làm thay đổi trạng thái Ticket.
 
 **Acceptance Criteria**
@@ -319,16 +367,12 @@ FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và
 
 ---
 
-## 5. Quy Tắc Dùng Chung Áp Dụng Cho M01
+## 4. Quy Tắc Tham Chiếu
 
-- Bộ trạng thái Ticket duy nhất: `NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED`, `CLOSED`.
-- Transfer và Escalation không phải trạng thái.
-- File đính kèm: PDF/PNG/JPG/JPEG, tối đa 10 MB/file và 03 file cho mỗi lần tạo hoặc bổ sung.
-- Priority mặc định của Ticket mới là `MEDIUM`.
-- Thời hạn mục tiêu: LOW 05 ngày làm việc, MEDIUM 03 ngày, HIGH 02 ngày, URGENT 01 ngày.
-- Thời gian ở `WAITING_STUDENT` không tính vào thời gian xử lý.
-- Sinh viên có 03 ngày làm việc để phản hồi khi Ticket ở `RESOLVED`.
-- Reopen chỉ từ `RESOLVED` về `IN_PROGRESS`; `CLOSED` là trạng thái kết thúc.
-- CSAT chỉ được gửi khi Ticket `CLOSED`, tối đa một lần trong 07 ngày theo lịch kể từ thời điểm đóng.
+Các Functional Requirements của M01 phải tuân thủ nhất quán:
 
-Các giá trị trên phải giữ nguyên khi đặc tả Workflow, API Contract, Data Dictionary, Test Cases và RTM.
+- [Ticket Lifecycle](../../02-domain/ticket-lifecycle.md)
+- [State Transition](../../02-domain/state-transition.md)
+- [Business Rules](../../02-domain/business-rules.md)
+
+Các chi tiết triển khai kỹ thuật như API endpoint, HTTP status code, JWT/token, database schema, cơ chế idempotency cụ thể, route giao diện và component UI không thuộc phạm vi PRD này và được đặc tả tại tài liệu kỹ thuật tương ứng.
