@@ -10,7 +10,7 @@ Phân hệ tập trung vào hoạt động vận hành Ticket từ khi Ticket đ
 
 - **Đối tượng sử dụng chính:** Nhân viên (Staff).
 - **Phạm vi dữ liệu:** Nhân viên chỉ được xem và thao tác trên Ticket thuộc phòng ban/phạm vi trách nhiệm được cấp.
-- **Người phụ trách:** Một Ticket chỉ có một người phụ trách chính tại một thời điểm.
+- **Người phụ trách:** Một Ticket có tối đa một người phụ trách chính tại một thời điểm. Ticket chưa được tiếp nhận/phân công hoặc vừa Transfer sang phòng ban mới có thể chưa có người phụ trách chính.
 - **Phân công:** Chỉ người dùng có quyền phân công mới được gán hoặc phân công lại Ticket cho nhân viên phù hợp.
 - **Điều kiện truy cập:** Người dùng phải đăng nhập bằng tài khoản hợp lệ và có quyền truy cập Staff Operations.
 
@@ -55,7 +55,20 @@ flowchart TD
 
 Ticket ở `RESOLVED` được đóng hoặc mở lại theo quy tắc vòng đời dùng chung. Khi được mở lại, Ticket quay về `IN_PROGRESS` và tiếp tục xuất hiện trong phạm vi xử lý phù hợp.
 
-## 5. Quan Hệ Với Các Tài Liệu Khác
+## 5. Traceability Với Baseline Nguồn Lực
+
+| Work Package | Effort baseline | Phạm vi được ánh xạ |
+| :--- | :---: | :--- |
+| **WP-STF-01** — Tiếp nhận, tìm kiếm & lọc yêu cầu | **33h** | FR-STF-01 |
+| **WP-STF-02** — Phân loại & phân công xử lý | **38h** | FR-STF-02 |
+| **WP-STF-03** — Quản lý ưu tiên & thời hạn | **29h** | FR-STF-03 |
+| **WP-STF-04** — Xử lý & cập nhật yêu cầu | **39h** | FR-STF-04 |
+| **WP-STF-05** — Chuyển xử lý, Escalation & hoàn tất | **32h** | FR-STF-05 và phần ghi nhận kết quả tại FR-STF-06 |
+| **WP-STF-06** — Đóng & mở lại yêu cầu | **26h** | Xử lý Ticket sau khi reopen, đồng bộ trạng thái/lịch sử/hàng chờ liên quan tại FR-STF-01 và FR-STF-06; thao tác xác nhận kết quả/reopen thuộc M01, auto-close thuộc vòng đời dùng chung. |
+
+Bảng trên giữ nguyên effort baseline và chỉ làm rõ phạm vi chức năng thực tế để tránh tính trùng giữa M01, M02 và các quy tắc vòng đời dùng chung.
+
+## 6. Quan Hệ Với Các Tài Liệu Khác
 
 Staff Operations tuân thủ các quy tắc nghiệp vụ được xác lập tại:
 
