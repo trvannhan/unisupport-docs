@@ -83,26 +83,33 @@ Người dùng chịu trách nhiệm giám sát hoạt động hỗ trợ và th
 
 ---
 
-## 3. Bảng Tổng Hợp Quyền Theo Nhóm Người Dùng
+## 3. Ma Trận Quyền Theo Nhóm Người Dùng
+
+Ma trận dưới đây mô tả phạm vi chức năng chính của từng nhóm người dùng trong UniSupport.
 
 | Chức năng / Hành động | Sinh viên | Nhân viên | Quản lý |
 | :--- | :---: | :---: | :---: |
-| Đăng nhập hệ thống | ✅ | ✅ | ✅ |
-| Tra cứu FAQ/hướng dẫn | ✅ | ❌ | ❌ |
-| Tạo Ticket hỗ trợ | ✅ | ❌ | ❌ |
-| Xem Ticket theo phạm vi được cấp | Ticket của mình | ✅ | Theo quyền |
-| Tiếp nhận / xử lý Ticket | ❌ | ✅ | Theo quyền |
-| Phân loại / xác định ưu tiên | ❌ | ✅ | Theo quyền |
-| Phân công / chuyển xử lý / escalation | ❌ | Theo quyền | Theo quyền |
-| Yêu cầu sinh viên bổ sung | ❌ | ✅ | Theo quyền |
-| Bổ sung thông tin theo yêu cầu | ✅ | ❌ | ❌ |
-| Ghi nhận kết quả / đóng / mở lại Ticket | ❌ | ✅ | Theo quyền |
-| Gửi đánh giá hài lòng | ✅ | ❌ | ❌ |
-| Xem Dashboard / báo cáo | ❌ | ❌ | ✅ |
-| Quản lý tài khoản / phân quyền | ❌ | ❌ | Theo quyền quản trị |
-| Quản lý phòng ban / danh mục | ❌ | ❌ | Theo quyền quản trị |
-| Xem Audit Trail / tra soát thay đổi | ❌ | ❌ | Theo quyền quản trị |
-| Quản lý thời hạn lưu trữ dữ liệu | ❌ | ❌ | Theo quyền quản trị |
-| Xuất báo cáo / dữ liệu | ❌ | ❌ | Theo quyền |
+| Đăng nhập hệ thống | Được phép | Được phép | Được phép |
+| Tra cứu FAQ/hướng dẫn | Được phép | Không áp dụng | Không áp dụng |
+| Tạo và gửi Ticket | Được phép | Không áp dụng | Không áp dụng |
+| Xem Ticket | Ticket của mình | Theo phạm vi phụ trách | Theo phạm vi quản lý |
+| Tiếp nhận và xử lý Ticket | Không áp dụng | Được phép | Khi được phân quyền |
+| Phân loại và xác định mức độ ưu tiên | Không áp dụng | Được phép | Khi được phân quyền |
+| Phân công / chuyển xử lý / escalation | Không áp dụng | Khi được phân quyền | Khi được phân quyền |
+| Yêu cầu sinh viên bổ sung thông tin | Không áp dụng | Được phép | Khi được phân quyền |
+| Bổ sung thông tin theo yêu cầu | Được phép | Không áp dụng | Không áp dụng |
+| Ghi nhận kết quả / đóng / mở lại Ticket | Không áp dụng | Được phép | Khi được phân quyền |
+| Đánh giá mức độ hài lòng | Được phép | Không áp dụng | Không áp dụng |
+| Xem Dashboard và báo cáo | Không áp dụng | Không áp dụng | Được phép |
+| Quản lý tài khoản và phân quyền | Không áp dụng | Không áp dụng | Được phép |
+| Quản lý phòng ban và danh mục | Không áp dụng | Không áp dụng | Được phép |
+| Xem Audit Trail | Không áp dụng | Không áp dụng | Được phép |
+| Quản lý thời hạn lưu trữ dữ liệu | Không áp dụng | Không áp dụng | Được phép |
+| Xuất báo cáo / dữ liệu | Không áp dụng | Không áp dụng | Được phép |
+
+> **Quy ước:**  
+> **Được phép**: chức năng thuộc trách nhiệm chính của nhóm người dùng.  
+> **Không áp dụng**: chức năng không thuộc phạm vi sử dụng của nhóm.  
+> **Khi được phân quyền**: chỉ được thực hiện khi tài khoản có quyền phù hợp với vai trò và phạm vi trách nhiệm.
 
 > Chi tiết quyền theo dữ liệu, trạng thái Ticket và từng hành động được đặc tả trong phần Domain, Functional Requirements, Workflows và Security.
