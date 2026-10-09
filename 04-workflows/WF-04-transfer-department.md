@@ -1,43 +1,52 @@
-# [WF-04] Chuyển tiếp yêu cầu sang phòng ban khác (Transfer Department)
+# WF-04 - Chuyển Xử Lý Sang Phòng Ban Khác
 
-### [FR-STF-05] Chuyển tiếp Ticket giữa các phòng ban
+## 1. Mục Đích Và Phạm Vi
 
-**Mô tả**
-Hệ thống cho phép nhân viên chuyển tiếp Ticket sang đúng phòng ban hoặc người phụ trách khác nếu nội dung yêu cầu thuộc phạm vi giải quyết của đơn vị đó.
+Mô tả cách Ticket được chuyển sang **phòng ban khác** khi nội dung thực tế thuộc phạm vi xử lý khác. Đổi người phụ trách trong cùng phòng ban không dùng Workflow này mà thực hiện bằng phân công lại.
 
-**Actor**
-Nhân viên đang phụ trách Ticket (Staff).
+## 2. Vai Trò Và Điều Kiện Bắt Đầu
 
-**Preconditions**
-- Ticket đang ở trạng thái `Mới` hoặc `Đang xử lý`.
-- Nhân viên thực hiện có quyền xử lý Ticket hiện tại.
+- **Vai trò:** Nhân viên hoặc Quản lý có quyền chuyển xử lý.
+- Ticket thuộc phạm vi được phép thao tác.
+- Ticket đang ở `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT`.
 
-**Luồng chính**
-1. Nhân viên mở chi tiết Ticket và chọn chức năng **Chuyển phòng ban**.
-2. Hệ thống hiển thị danh sách các phòng ban chuyên trách tại Aurora University (VD: Phòng Đào tạo, Phòng Công tác sinh viên, Phòng Tài chính - Kế toán,...).
-3. Nhân viên chọn **Phòng ban đích** và nhập **Lý do chuyển tiếp** (bắt buộc).
-4. Nhân viên chọn **Xác nhận chuyển**.
-5. Hệ thống cập nhật phòng ban phụ trách mới cho Ticket, hủy bỏ gán cá nhân phụ trách cũ, và chuyển trạng thái Ticket về `Mới` (hoặc `Đã chuyển tiếp`).
-6. Hệ thống lưu lại lịch sử chuyển tiếp (phòng ban cũ, phòng ban mới, lý do, người chuyển, thời gian).
-7. Hệ thống gửi thông báo nội bộ đến nhân viên/quản lý của phòng ban mới.
+## 3. Luồng Nghiệp Vụ Chính
 
-**Business Rules**
-- Lý do chuyển tiếp là thông tin bắt buộc nhằm đảm bảo minh bạch nghiệp vụ.
-- Không cho phép chuyển tiếp Ticket về chính phòng ban hiện tại.
-- Mọi tài liệu đính kèm, lịch sử trao đổi trước đó của Ticket phải được giữ nguyên vẹn khi chuyển sang phòng ban mới.
-- Nhân viên ở phòng ban cũ sau khi chuyển đi sẽ chuyển sang chế độ chỉ xem (Read-only) đối với Ticket đó, trừ khi được phân quyền quản trị.
+1. Người dùng mở Ticket và chọn **Chuyển xử lý**.
+2. Hệ thống hiển thị các Category đang hoạt động cùng phòng ban được cấu hình.
+3. Người dùng chọn **Category đích** và nhập lý do chuyển.
+4. Hệ thống xác định phòng ban đích từ Category đã chọn.
+5. Hệ thống kiểm tra Category đích thuộc phòng ban khác phòng ban hiện tại và dữ liệu chuyển hợp lệ.
+6. Hệ thống cập nhật **Category và phòng ban** trong cùng một thao tác.
+7. Hệ thống gỡ người phụ trách hiện tại.
+8. Ticket giữ nguyên trạng thái nghiệp vụ hiện tại phù hợp.
+9. Ticket xuất hiện trong hàng chờ của phòng ban mới để được tiếp nhận/phân công.
+10. Hệ thống ghi nhận Category trước/sau, phòng ban trước/sau, lý do và người thực hiện.
+11. Sinh viên và phạm vi phòng ban mới nhận thông báo trong hệ thống.
 
-**Alternative / Error Flows**
-- **Không nhập lý do chuyển:** Hệ thống chặn thao tác và báo lỗi "Lý do chuyển tiếp không được để trống".
-- **Chọn phòng ban đích trùng với phòng ban hiện tại:** Hệ thống hiển thị cảnh báo và không cho phép thực hiện.
+## 4. Luồng Ngoại Lệ
 
-**Acceptance Criteria**
-- **AC-01:** Nhân viên chọn phòng ban mới và nhập lý do chuyển đầy đủ -> Hệ thống cập nhật đơn vị phụ trách mới thành công, ghi log lịch sử.
-- **AC-02:** Nhân viên không nhập lý do chuyển -> Hệ thống hiển thị báo lỗi validation và dừng thao tác.
-- **AC-03:** Ticket sau khi chuyển xuất hiện trong danh sách tiếp nhận của phòng ban mới.
-- **AC-04:** Nhân viên phòng ban cũ không thể chỉnh sửa hay cập nhật trạng thái của Ticket sau khi đã chuyển thành công.
+- Category đích không hoạt động hoặc vẫn thuộc phòng ban hiện tại: từ chối.
+- Lý do chuyển không hợp lệ: từ chối.
+- Ticket đã thay đổi phạm vi/trạng thái trước khi xác nhận: từ chối và hiển thị dữ liệu mới nhất.
+- Người dùng không có quyền chuyển xử lý: từ chối.
 
-**Ví dụ Edge Case**
-Nhân viên chọn phòng ban đích là "Phòng Tài chính" nhưng để trống ô "Lý do chuyển tiếp" rồi nhấn nút **Xác nhận chuyển**.
+## 5. Quy Tắc Nghiệp Vụ
 
-**Expected Result:** Hệ thống không thực hiện chuyển phòng ban, hiển thị thông báo lỗi màu đỏ ngay dưới trường Lý do chuyển: "Vui lòng nhập lý do chuyển tiếp yêu cầu" và giữ nguyên đơn vị xử lý hiện tại.
+- Lý do chuyển từ 10 đến 1.000 ký tự.
+- Transfer không tạo trạng thái mới và không tự chuyển Ticket về `NEW`.
+- Category và phòng ban phải được cập nhật nhất quán; không lưu trạng thái trung gian không khớp.
+- Transfer thành công luôn gỡ người phụ trách hiện tại.
+- Nội dung, file, kết quả trung gian và lịch sử trước đó được giữ nguyên.
+
+## 6. Tiêu Chí Nghiệm Thu
+
+- Transfer hợp lệ cập nhật đúng Category/phòng ban và giữ nguyên mã Ticket.
+- Người phụ trách cũ được gỡ và Ticket xuất hiện trong hàng chờ phòng ban mới.
+- Trạng thái nghiệp vụ hiện tại không bị đổi chỉ vì Transfer.
+- Lịch sử và thông báo được ghi/gửi đúng đối tượng.
+
+## 7. Tài Liệu Liên Quan
+
+- M02: `FR-STF-05`.
+- Domain: `BR-OWN-02`.
