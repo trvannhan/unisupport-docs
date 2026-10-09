@@ -1,71 +1,96 @@
 # Tổng Quan Nghiệp Vụ Hỗ Trợ Sinh Viên (Domain Overview)
 
-## 1. Bối Cảnh Nghiệp Vụ Tại Aurora University
-Tại **Aurora University**, dịch vụ hỗ trợ sinh viên đóng vai trò cầu nối quan trọng giữa Sinh viên và các Đơn vị/Phòng ban chuyên trách trong toàn trường. Các nhóm nghiệp vụ hỗ trợ phổ biến bao gồm:
+## 1. Bối Cảnh Nghiệp Vụ
 
-- **Phòng Đào tạo**: Giải quyết các vấn đề đăng ký tín chỉ, miễn giảm học phần, cấp bảng điểm, xác nhận điểm, đăng ký tốt nghiệp, hoãn thi.
-- **Phòng Công tác Học sinh Sinh viên (CTHSSV)**: Xác nhận sinh viên, giải quyết chế độ chính sách, học bổng, khen thưởng, kỷ luật, thẻ sinh viên, ký túc xá.
-- **Phòng Tài chính - Kế toán**: Giải đáp thắc mắc về học phí, hóa đơn, hoàn phí, gia hạn nộp học phí.
-- **Trung tâm Công nghệ Thông tin**: Cấp lại mật khẩu tài khoản portal, lỗi kết nối Wi-Fi, hỗ trợ phần mềm học tập, email sinh viên.
-- **Thư viện & Bộ phận Khác**: Mượn trả giáo trình, cấp tài khoản thư viện số, xác nhận nghĩa vụ thư viện.
+Tại **Aurora University**, các yêu cầu hỗ trợ sinh viên hiện được tiếp nhận và xử lý qua nhiều kênh khác nhau. Điều này làm cho thông tin dễ bị phân tán, khó theo dõi trách nhiệm xử lý và khó tổng hợp dữ liệu phục vụ quản lý.
+
+UniSupport chuẩn hóa quy trình này bằng cách đưa các yêu cầu hỗ trợ về một đầu mối chung dưới dạng **Ticket**. Mỗi Ticket được theo dõi xuyên suốt từ khi sinh viên gửi yêu cầu, được phân loại và giao xử lý, cho đến khi có kết quả, đóng yêu cầu và ghi nhận phản hồi.
+
+Miền nghiệp vụ của UniSupport xoay quanh ba nhóm người dùng chính:
+
+- **Sinh viên (Student):** gửi yêu cầu, theo dõi tiến độ, bổ sung thông tin, nhận kết quả và đánh giá mức độ hài lòng.
+- **Nhân viên (Staff):** tiếp nhận, phân loại, phân công/xử lý, cập nhật trạng thái, yêu cầu bổ sung, chuyển xử lý, escalation và hoàn tất Ticket.
+- **Quản lý (Management):** giám sát tình hình xử lý, theo dõi khối lượng công việc và thời hạn, xem báo cáo, đồng thời thực hiện các chức năng quản trị được phân quyền.
 
 ---
 
-## 2. Mục Tiêu Chuẩn Hóa Miền Nghiệp Vụ (Domain Objectives)
+## 2. Các Khái Niệm Nghiệp Vụ Cốt Lõi
 
-Trước khi triển khai UniSupport, quy trình trao đổi mang tính thủ công, thiếu tính nhất quán và không lưu vết. Việc chuẩn hóa miền nghiệp vụ hướng tới 4 nguyên tắc cốt lõi:
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        4 NGUYÊN TẮC CỐT LÕI                            │
-├───────────────────┬───────────────────┬────────────────┬───────────────┤
-│ 1. ĐỊNH DANH      │ 2. PHÂN ĐỊNH      │ 3. LƯU VẾT     │ 4. RÕ RÀNG    │
-│    DUY NHẤT       │    TRÁCH NHIỆM    │    MINH BẠCH   │    TRẠNG THÁI │
-│ (Ticket ID)       │ (Department/Agent)│ (Audit Trail)  │ (Lifecycle)   │
-└───────────────────┴───────────────────┴────────────────┴───────────────┘
-```
+Các khái niệm chính được sử dụng xuyên suốt UniSupport gồm:
 
-1. **Định danh duy nhất (Single Identifier)**: Mọi yêu cầu từ sinh viên được đóng gói thành một đơn vị nghiệp vụ gọi là **Ticket** với một mã định danh duy nhất (Ticket ID).
-2. **Phân định trách nhiệm (Ownership Assignment)**: Mỗi Ticket luôn thuộc về **01 Phòng ban phụ trách**. Sau khi trải qua bước Tiếp nhận (Claim) hoặc Phân công (Assign), Ticket mới được gắn với **01 Nhân viên thụ lý (Assignee)** chính. Ở giai đoạn khởi tạo (`NEW`) hoặc khi đang chuyển phòng ban, trường Nhân viên thụ lý có thể để trống (`NULL`).
-3. **Lưu vết minh bạch (Complete Auditability)**: Các thao tác quan trọng liên quan đến quá trình xử lý Ticket như thay đổi trạng thái, thay đổi đơn vị/người phụ trách, yêu cầu bổ sung và ghi nhận kết quả được lưu lại để phục vụ tra soát.
-4. **Vòng đời trạng thái rõ ràng (Strict Lifecycle)**: Ticket được quản lý theo các trạng thái và quy tắc chuyển trạng thái thống nhất trong toàn hệ thống.
+- **Ticket:** đại diện cho một yêu cầu hỗ trợ của sinh viên.
+- **Mã Ticket:** mã định danh duy nhất để tra cứu và theo dõi yêu cầu.
+- **Nhóm vấn đề (Category):** dùng để phân loại nội dung yêu cầu và hỗ trợ điều phối xử lý.
+- **Phòng ban (Department):** đơn vị chịu trách nhiệm xử lý Ticket.
+- **Người phụ trách (Assignee):** nhân viên được giao trách nhiệm xử lý Ticket.
+- **Mức độ ưu tiên (Priority):** thể hiện mức độ cần ưu tiên của Ticket.
+- **Thời hạn xử lý:** mốc thời gian dùng để theo dõi tiến độ và nhận biết Ticket sắp hoặc đã quá hạn.
+- **Lịch sử xử lý:** tập hợp các thay đổi và hoạt động quan trọng phát sinh trong quá trình xử lý Ticket.
+- **Kết quả xử lý (Resolution):** nội dung hoặc tài liệu phản hồi sau khi yêu cầu được xử lý.
+- **Đánh giá hài lòng (CSAT):** phản hồi của sinh viên về chất lượng hỗ trợ sau khi yêu cầu được giải quyết.
+
 ---
 
-## 3. Bản Đồ Tổng Quan Các Luồng Nghiệp Vụ (Business Process Map)
+## 3. Nguyên Tắc Nghiệp Vụ Chung
+
+UniSupport áp dụng các nguyên tắc chung sau cho toàn bộ vòng đời Ticket:
+
+1. **Định danh rõ ràng:** Mỗi yêu cầu được tạo thành một Ticket và có mã Ticket duy nhất để tra cứu.
+2. **Trách nhiệm xử lý rõ ràng:** Ticket phải xác định được phòng ban phụ trách và, khi được phân công, người chịu trách nhiệm xử lý.
+3. **Phân loại và ưu tiên thống nhất:** Ticket được phân loại theo nhóm vấn đề và xác định mức độ ưu tiên để hỗ trợ điều phối công việc.
+4. **Theo dõi được tiến độ:** Trạng thái, thời hạn xử lý và các hoạt động quan trọng của Ticket phải được ghi nhận xuyên suốt quá trình xử lý.
+5. **Hỗ trợ chuyển xử lý và escalation:** Ticket có thể được chuyển sang người/phòng ban phù hợp hoặc escalation khi cần thiết mà vẫn giữ được lịch sử xử lý.
+6. **Bổ sung thông tin có kiểm soát:** Nhân viên có thể yêu cầu sinh viên bổ sung thông tin hoặc tài liệu trước khi tiếp tục xử lý.
+7. **Kết quả và phản hồi được lưu vết:** Kết quả xử lý, việc đóng/mở lại Ticket và đánh giá hài lòng được ghi nhận để phục vụ theo dõi và báo cáo.
+8. **Truy cập theo quyền:** Người dùng chỉ được xem và thao tác trên dữ liệu phù hợp với vai trò và phạm vi trách nhiệm của mình.
+
+---
+
+## 4. Luồng Nghiệp Vụ Tổng Quan
+
+```text
+[Sinh viên tra cứu hướng dẫn/FAQ]
+                |
+                v
+      [Tạo và gửi yêu cầu]
+                |
+                v
+ [Hệ thống tạo mã Ticket]
+                |
+                v
+ [Tiếp nhận và phân loại]
+                |
+                v
+ [Phân công người/phòng ban phụ trách]
+                |
+                v
+ [Xác định ưu tiên và thời hạn]
+                |
+                v
+         [Xử lý Ticket]
+                |
+        +-------+--------------------+
+        |                            |
+        | Cần bổ sung                | Cần chuyển/escalation
+        v                            v
+[Yêu cầu sinh viên bổ sung]   [Chuyển xử lý / Escalation]
+        |                            |
+        v                            v
+[Sinh viên bổ sung]        [Đơn vị/người phụ trách mới]
+        |                            |
+        +-------------+--------------+
+                      |
+                      v
+              [Tiếp tục xử lý]
+                      |
+                      v
+             [Ghi nhận kết quả]
+                      |
+                      v
+           [Đóng / mở lại Ticket]
+                      |
+                      v
+       [Sinh viên xem kết quả, đánh giá]
 ```
-[Sinh viên tạo Ticket]
-        |
-        v
-[Hệ thống tạo mã Ticket và ghi nhận yêu cầu]
-        |
-        v
-[Ticket được đưa vào hàng chờ xử lý]
-        |
-        v
-[Nhân viên tiếp nhận / được phân công]
-        |
-        v
-[Phân loại và xử lý Ticket]
-        |
-        +-----------------------------+
-        |                             |
-        | Cần bổ sung thông tin       | Cần chuyển đơn vị xử lý
-        v                             v
-[Nhân viên yêu cầu bổ sung]     [Chuyển phòng ban / người phụ trách]
-        |                             |
-        v                             v
-[Sinh viên bổ sung thông tin]   [Đơn vị/người phụ trách mới tiếp nhận]
-        |                             |
-        +-------------+---------------+
-                      |
-                      v
-             [Tiếp tục xử lý Ticket]
-                      |
-                      v
-             [Ghi nhận kết quả xử lý]
-                      |
-                      v
-                [Đóng Ticket]
-                      |
-                      v
-         [Sinh viên xem kết quả và đánh giá]
-```
+
+Dữ liệu phát sinh từ các Ticket được sử dụng cho Dashboard và báo cáo quản lý, bao gồm tình trạng xử lý, Ticket sắp/quá hạn, khối lượng công việc, thời gian xử lý và mức độ hài lòng.
