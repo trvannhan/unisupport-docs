@@ -1,59 +1,46 @@
-# Kịch bản Kiểm thử & Test Cases UAT (Test Scenarios & UAT Acceptance)
+# Kịch Bản UAT Chính
 
-### 1. Tổng quan
-Tài liệu cung cấp danh sách các kịch bản kiểm thử chấp nhận người dùng (UAT) phục vụ cho giai đoạn nghiệm thu **10 ngày làm việc** của Aurora University (theo Mục 5.2 trong Proposal).
+Tài liệu này liệt kê các kịch bản nghiệm thu đại diện theo đúng phạm vi Resource/PRD. Chi tiết validation được kiểm tra thêm theo Acceptance Criteria trong từng FR.
 
-### 2. Danh sách Kịch bản Kiểm thử Nghiệm thu (UAT Test Scenarios)
+## 1. M01 - Sinh Viên
 
-#### 2.1 Phân hệ Sinh viên (M01 - Student Portal)
+| Mã | Kịch bản | Kết quả chính |
+| :--- | :--- | :--- |
+| TS-STU-01 | Tra cứu FAQ theo Nhóm vấn đề | Hiển thị nội dung hướng dẫn phù hợp và cho phép chuyển sang tạo Ticket khi cần. |
+| TS-STU-02 | Tạo Ticket với Category, nội dung và file hợp lệ | Tạo đúng một Ticket `NEW`, mã duy nhất, đúng phòng ban và mức `MEDIUM`. |
+| TS-STU-03 | Xem danh sách/chi tiết Ticket của mình | Chỉ hiển thị Ticket thuộc sinh viên và đúng lịch sử được phép xem. |
+| TS-STU-04 | Nhận và mở thông báo Ticket | Thông báo đúng người, đúng Ticket và trạng thái đọc/chưa đọc. |
+| TS-STU-05 | Bổ sung thông tin khi `WAITING_STUDENT` | Ticket quay về `IN_PROGRESS`, thời hạn tiếp tục từ phần còn lại. |
+| TS-STU-06 | Chấp nhận kết quả hoặc yêu cầu mở lại | Chấp nhận → `CLOSED`; mở lại hợp lệ → `IN_PROGRESS`. |
+| TS-STU-07 | Đánh giá sau khi Ticket đóng | Chỉ nhận 1 đánh giá 1–5 sao trong 07 ngày theo lịch. |
 
-##### [TS-STU-02] Kiểm thử Chức năng Tạo Ticket hỗ trợ
-- **Tiền điều kiện:** Sinh viên đã đăng nhập tài khoản hợp lệ.
-- **Các bước thực hiện:**
-  1. Vào màn hình **Tạo Ticket**.
-  2. Chọn nhóm vấn đề (VD: Phòng Đào tạo), nhập tiêu đề và nội dung mô tả.
-  3. Đính kèm 1 tệp tài liệu dạng `.pdf` (dung lượng < 10 MB).
-  4. Nhấn **Gửi yêu cầu**.
-- **Kết quả mong đợi:** 
-  - Hệ thống sinh mã Ticket duy nhất, chuyển trạng thái Ticket thành `Mới`.
-  - Hiển thị thông báo tạo thành công và đính kèm tệp PDF chính xác.
-- **Tiêu chí Chấp nhận (Pass Criteria):** Đạt tiêu chuẩn AC-01 đến AC-07 trong `WF-01`.
+## 2. M02 - Nhân Viên
 
-##### [TS-STU-05] Kiểm thử Chức năng Đánh giá hài lòng
-- **Tiền điều kiện:** Ticket đã được nhân viên chuyển sang trạng thái `Hoàn thành`.
-- **Các bước thực hiện:**
-  1. Sinh viên mở chi tiết Ticket đã hoàn thành.
-  2. Chọn số sao đánh giá (4/5 sao) và nhập nhận xét: "Xử lý nhanh, nhiệt tình".
-  3. Nhấn **Gửi đánh giá**.
-- **Kết quả mong đợi:** Hệ thống ghi nhận đánh giá, khóa form không cho phép gửi lại.
+| Mã | Kịch bản | Kết quả chính |
+| :--- | :--- | :--- |
+| TS-STF-01 | Xem hàng chờ, tìm kiếm và lọc | Chỉ hiển thị Ticket trong phạm vi quyền và đúng bộ lọc. |
+| TS-STF-02 | Tiếp nhận/phân công Ticket | Tối đa một người phụ trách; Ticket `NEW` chuyển `IN_PROGRESS`. |
+| TS-STF-03 | Điều chỉnh mức độ ưu tiên | Deadline tính lại theo Business Rules, không reset đồng hồ. |
+| TS-STF-04 | Yêu cầu sinh viên bổ sung | `IN_PROGRESS → WAITING_STUDENT`, tạm dừng thời hạn. |
+| TS-STF-05 | Transfer sang phòng ban khác | Category + phòng ban đổi nhất quán, assignee cũ được gỡ, state được giữ. |
+| TS-STF-06 | Escalation tới Quản lý | Không đổi Category/phòng ban/assignee/state; đúng người nhận được thông báo. |
+| TS-STF-07 | Ghi nhận kết quả | `IN_PROGRESS → RESOLVED`, sinh viên xem được kết quả. |
+| TS-STF-08 | Tiếp tục xử lý Ticket được mở lại | Giữ assignee cũ nếu hợp lệ; nếu không thì về hàng chờ phòng ban. |
 
----
+## 3. M03 - Quản Lý
 
-#### 2.2 Phân hệ Nhân viên (M02 - Staff Operations)
+| Mã | Kịch bản | Kết quả chính |
+| :--- | :--- | :--- |
+| TS-MGT-01 | Tạo/cập nhật/khóa tài khoản | Đúng role/phạm vi; không làm mất tài khoản quản trị cuối cùng. |
+| TS-MGT-02 | Quản lý phòng ban và Category | Category hoạt động có đúng một phòng ban; không vô hiệu hóa phòng ban còn Ticket cần xử lý/mở lại. |
+| TS-MGT-03 | Xem nhật ký tra soát | Đúng phạm vi; bản ghi không sửa/xóa qua chức năng ứng dụng. |
+| TS-MGT-04 | Cấu hình thời hạn lưu trữ | Chỉ đánh dấu dữ liệu đến hạn; không tự động xóa/ẩn danh/di chuyển. |
+| TS-MGT-05 | Dashboard | Số liệu trạng thái, gần quá hạn, quá hạn và workload đúng Business Rules. |
+| TS-MGT-06 | Báo cáo/CSAT/xuất dữ liệu | Đúng công thức thời gian xử lý, CSAT và phạm vi quyền. |
 
-##### [TS-STF-01] Kiểm thử Tiếp nhận và Phân loại Ticket
-- **Tiền điều kiện:** Đã có Ticket mới ở trạng thái `Mới`.
-- **Các bước thực hiện:**
-  1. Nhân viên truy cập danh sách tiếp nhận.
-  2. Nhấn nút **Tiếp nhận** (Claim) trên Ticket.
-  3. Thay đổi độ ưu tiên thành `Cao`.
-- **Kết quả mong đợi:** Ticket đổi trạng thái thành `Đang xử lý`, tài khoản nhân viên được gán làm người phụ trách chính.
+## 4. Năng Lực Dùng Chung
 
-##### [TS-STF-02] Kiểm thử Chuyển tiếp phòng ban
-- **Tiền điều kiện:** Ticket đang thuộc phòng Công tác sinh viên.
-- **Các bước thực hiện:**
-  1. Nhân viên chọn nút **Chuyển phòng ban**.
-  2. Chọn phòng đích là "Phòng Tài chính - Kế toán" và nhập lý do: "Yêu cầu liên quan đến học phí".
-  3. Nhấn **Xác nhận chuyển**.
-- **Kết quả mong đợi:** Ticket được chuyển sang danh sách phòng Tài chính - Kế toán, ghi nhận đầy đủ nhật ký chuyển đổi.
-
----
-
-#### 2.3 Phân hệ Quản lý & Bảo mật (M03 & M05)
-
-##### [TS-SEC-01] Kiểm thử Bảo mật Truy cập File đính kèm
-- **Tiền điều kiện:** Sinh viên A sở hữu Ticket chứa file đính kèm `docA.pdf`. Sinh viên B đăng nhập ở trình duyệt khác.
-- **Các bước thực hiện:**
-  1. Copy đường dẫn truy cập trực tiếp file `docA.pdf`.
-  2. Dán đường dẫn vào trình duyệt đã đăng nhập tài khoản Sinh viên B.
-- **Kết quả mong đợi:** Hệ thống từ chối truy cập và trả về màn hình báo lỗi `403 Forbidden`.
+- Đăng nhập bằng tài khoản hợp lệ; tài khoản bị khóa không truy cập được.
+- Sinh viên/Staff/Management không truy cập dữ liệu ngoài phạm vi.
+- File đính kèm chỉ người liên quan có quyền mới truy cập được.
+- Các thao tác quan trọng sinh bản ghi Audit tương ứng.
