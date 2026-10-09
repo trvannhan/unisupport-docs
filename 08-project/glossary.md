@@ -5,8 +5,8 @@ Tài liệu nghiệp vụ chi tiết sử dụng [Terminology](../02-domain/term
 | Thuật ngữ | Giải thích |
 | :--- | :--- |
 | **PRD** | Tài liệu yêu cầu sản phẩm/chức năng. |
-| **WP (Work Package)** | Nhóm công việc trong Resource dùng để ước tính effort. |
-| **RTM** | Ma trận truy xuất Resource WP → FR/Flow → Workflow → UAT. |
+| **WP (Work Package)** | Gói công việc trong kế hoạch nguồn lực dùng để ước tính effort. |
+| **RTM** | Ma trận truy xuất gói công việc → FR/Flow → Workflow → UAT. |
 | **UAT** | Kiểm thử chấp nhận người dùng/khách hàng. |
 | **RBAC** | Phân quyền dựa trên vai trò/quyền; UniSupport có ba nhóm người dùng chính Student, Staff, Management. |
 | **Audit Trail** | Nhật ký phục vụ tra soát các thao tác quan trọng. |
