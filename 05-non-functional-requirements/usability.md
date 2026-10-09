@@ -2,7 +2,7 @@
 
 ## 1. Phạm Vi
 
-Giao diện UniSupport là Web Application và phải sử dụng được trên trình duyệt máy tính và thiết bị di động theo Proposal.
+Giao diện UniSupport là Web Application và phải sử dụng được trên trình duyệt máy tính và thiết bị di động.
 
 ## 2. Yêu Cầu
 
