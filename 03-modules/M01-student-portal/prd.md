@@ -1,226 +1,334 @@
-# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Sinh Viên (PRD - M01 Student Portal)
+# PRD - M01 Student Portal
 
-## 1. Tổng Quan Phân Hệ & Cơ Cấu Effort Baseline
+## 1. Mục Tiêu
 
-Phân hệ **Sinh viên (Student Portal)** là điểm giao tiếp số duy nhất dành cho khoảng 3.000 sinh viên tại **Aurora University**. Phân hệ này cho phép sinh viên khởi tạo, theo dõi, tương tác và đánh giá toàn bộ các yêu cầu hỗ trợ (Ticket) từ hành chính, đào tạo, học phí cho đến kỹ thuật.
+Student Portal cung cấp một kênh thống nhất để sinh viên Aurora University gửi và theo dõi yêu cầu hỗ trợ. Phân hệ phải bảo đảm sinh viên có thể chủ động tra cứu hướng dẫn, tạo Ticket, theo dõi tiến độ, bổ sung thông tin, nhận kết quả và phản hồi về chất lượng hỗ trợ mà không phải phụ thuộc vào các kênh rời rạc.
 
-### Bảng Phân Rã Chức Năng & Effort Theo Bảng Chi Phí Nội Bộ Đã Chốt (Tổng: 128h)
+## 2. Actor Và Phạm Vi Truy Cập
 
-| Mã gói việc | Tên chức năng theo bảng chi phí | Tóm tắt scope nghiệp vụ | Effort kế hoạch |
-| :--- | :--- | :--- | :---: |
-| **WP-STU-01** | Tra cứu hướng dẫn & FAQ | Sinh viên tra cứu hướng dẫn/FAQ cơ bản trước hoặc trong quá trình tạo yêu cầu hỗ trợ. | **14h** |
-| **WP-STU-02** | Tạo & gửi yêu cầu hỗ trợ | Chọn nhóm vấn đề, mô tả tình huống, đính kèm ảnh/PDF, gửi yêu cầu và nhận mã Ticket. | **37h** |
-| **WP-STU-03** | Xem & theo dõi yêu cầu | Xem danh sách yêu cầu cá nhân, trạng thái hiện tại, đơn vị/người phụ trách và lịch sử cập nhật. | **33h** |
-| **WP-STU-04** | Nhận thông báo trạng thái | Nhận thông báo trong hệ thống khi Ticket được tiếp nhận, yêu cầu bổ sung, chuyển trạng thái hoặc hoàn tất. | **19h** |
-| **WP-STU-05** | Bổ sung thông tin & phản hồi | Bổ sung câu trả lời, giấy tờ/file minh chứng khi nhân viên yêu cầu và phản hồi trong phạm vi Ticket. | **25h** |
-| **TỔNG M1 - Student** | | | **128h** |
+- **Actor chính:** Student.
+- Sinh viên chỉ được truy cập Ticket do chính tài khoản của mình tạo.
+- Các thao tác tạo Ticket, theo dõi chi tiết, bổ sung thông tin, phản hồi kết quả và đánh giá yêu cầu phiên đăng nhập hợp lệ.
+- Quyền truy cập file đính kèm và dữ liệu Ticket tuân thủ các Business Rules dùng chung tại `02-domain`.
 
-> Ghi chú: Đăng nhập, xem kết quả và đánh giá hài lòng vẫn thuộc phạm vi M01 theo proposal. Trong bảng chi phí nội bộ, các phần này được gộp vào các gói việc Student tương ứng thay vì tách thành dòng effort riêng.
+## 3. Traceability Theo Work Package
+
+| Work Package | Effort | Functional Requirements |
+| :--- | :---: | :--- |
+| **WP-STU-01 - Tra cứu hướng dẫn & FAQ** | 14h | FR-STU-01 |
+| **WP-STU-02 - Tạo & gửi yêu cầu hỗ trợ** | 37h | FR-STU-02 |
+| **WP-STU-03 - Xem & theo dõi yêu cầu** | 33h | FR-STU-03 |
+| **WP-STU-04 - Nhận thông báo trạng thái** | 19h | FR-STU-04 |
+| **WP-STU-05 - Bổ sung thông tin & phản hồi** | 25h | FR-STU-05, FR-STU-06, FR-STU-07 |
+| **Tổng M01** | **128h** | |
+
+FR-STU-00 sử dụng năng lực xác thực dùng chung của hệ thống và không tạo thêm work package hoặc effort riêng cho M01.
 
 ---
 
-### [FR-STU-01] Tra cứu hướng dẫn & FAQ
+## 4. Functional Requirements
 
-**Mô tả**
-Hệ thống cung cấp khu vực hướng dẫn/FAQ cơ bản để Sinh viên tra cứu nhóm vấn đề thường gặp, phòng ban phụ trách và yêu cầu hồ sơ trước khi tạo Ticket.
+### FR-STU-00 — Đăng Nhập Và Truy Cập Student Portal
 
-**Actor**
-Sinh viên (Student).
+**Mục đích:** Cho phép sinh viên xác thực bằng tài khoản hợp lệ và truy cập Student Portal theo đúng phạm vi quyền.
 
-**Preconditions**
-- Sinh viên truy cập được hệ thống UniSupport.
+**Điều kiện tiên quyết**
+- Tài khoản sinh viên tồn tại và đang hoạt động.
+
+**Luồng chính**
+1. Sinh viên truy cập UniSupport.
+2. Hệ thống yêu cầu đăng nhập nếu chưa có phiên hợp lệ.
+3. Sinh viên nhập thông tin đăng nhập.
+4. Hệ thống xác thực tài khoản và trạng thái hoạt động.
+5. Nếu hợp lệ, hệ thống tạo phiên làm việc và cho phép truy cập Student Portal.
+6. Sinh viên có thể đăng xuất khi kết thúc phiên sử dụng.
+
+**Luồng ngoại lệ**
+- Thông tin đăng nhập không hợp lệ: từ chối truy cập và hiển thị thông báo phù hợp.
+- Tài khoản bị khóa/vô hiệu hóa: không tạo phiên đăng nhập.
+- Phiên hết hạn: yêu cầu xác thực lại.
+
+**Business Rules**
+- Sinh viên không được truy cập dữ liệu hoặc chức năng ngoài phạm vi Student.
+- Cơ chế xác thực và quản lý phiên được dùng chung với các phân hệ khác.
+
+**Acceptance Criteria**
+- **AC-00-01:** Tài khoản hợp lệ và đang hoạt động đăng nhập thành công vào Student Portal.
+- **AC-00-02:** Thông tin đăng nhập sai hoặc tài khoản bị vô hiệu hóa không tạo được phiên hợp lệ.
+- **AC-00-03:** Phiên Student không cho phép truy cập dữ liệu vượt phạm vi quyền.
+- **AC-00-04:** Phiên hết hạn yêu cầu người dùng đăng nhập lại trước khi tiếp tục thao tác được bảo vệ.
+
+---
+
+### FR-STU-01 — Tra Cứu Hướng Dẫn Và FAQ
+
+**Mục đích:** Giúp sinh viên tra cứu các vấn đề thường gặp và thông tin cần chuẩn bị trước khi tạo Ticket.
+
+**Điều kiện tiên quyết**
+- Sinh viên đã đăng nhập Student Portal.
+- Dữ liệu FAQ và nhóm vấn đề đang hoạt động.
 
 **Luồng chính**
 1. Sinh viên mở mục **Hướng dẫn / FAQ**.
-2. Hệ thống hiển thị danh sách câu hỏi thường gặp theo nhóm vấn đề.
-3. Sinh viên tìm kiếm hoặc chọn nhóm vấn đề liên quan.
-4. Hệ thống hiển thị hướng dẫn ngắn, phòng ban xử lý phù hợp và gợi ý tạo Ticket nếu cần hỗ trợ thêm.
+2. Hệ thống hiển thị nội dung FAQ theo nhóm vấn đề.
+3. Sinh viên chọn nhóm vấn đề hoặc tìm nội dung liên quan.
+4. Hệ thống hiển thị câu trả lời, đơn vị phụ trách và thông tin/tài liệu cần chuẩn bị nếu có.
+5. Nếu FAQ chưa giải quyết được vấn đề, sinh viên chuyển sang chức năng tạo Ticket.
+
+**Luồng ngoại lệ**
+- Không có kết quả phù hợp: hệ thống hiển thị trạng thái không tìm thấy và vẫn cho phép chuyển sang tạo Ticket.
+- Dữ liệu FAQ tạm thời không khả dụng: hệ thống thông báo phù hợp mà không làm phát sinh Ticket tự động.
 
 **Business Rules**
-- FAQ chỉ đóng vai trò hỗ trợ tra cứu, không thay thế quy trình tạo Ticket chính thức.
-- Nội dung FAQ phải dùng ngôn ngữ dễ hiểu, phù hợp với sinh viên.
+- FAQ chỉ hỗ trợ tra cứu, không thay thế quy trình xử lý Ticket.
+- Không có chức năng chatbot AI hoặc hệ thống CMS FAQ chuyên biệt trong phạm vi này.
 
 **Acceptance Criteria**
-- **AC-01**: Sinh viên mở FAQ -> Xem được danh sách hướng dẫn theo nhóm vấn đề.
-- **AC-02**: Sinh viên chọn một hướng dẫn -> Hệ thống hiển thị phòng ban/nhóm vấn đề phù hợp để tạo Ticket.
+- **AC-01-01:** Sinh viên xem được danh sách FAQ theo nhóm vấn đề.
+- **AC-01-02:** Tìm kiếm/chọn nhóm vấn đề trả về nội dung phù hợp với dữ liệu FAQ hiện có.
+- **AC-01-03:** Sinh viên có thể chuyển từ FAQ sang chức năng tạo Ticket khi cần hỗ trợ thêm.
 
 ---
 
+### FR-STU-02 — Tạo Và Gửi Yêu Cầu Hỗ Trợ
 
+**Mục đích:** Cho phép sinh viên tạo Ticket mới và nhận mã Ticket để theo dõi.
 
-### [FR-STU-02] Tạo & gửi yêu cầu hỗ trợ
+**Điều kiện tiên quyết**
+- Sinh viên đã đăng nhập.
+- Danh mục nhóm vấn đề và ánh xạ phòng ban phụ trách đang hoạt động.
 
-**Mô tả**
-Hệ thống cho phép sinh viên tạo một Ticket hỗ trợ bằng cách nhập thông tin mô tả vấn đề gặp phải, chọn phòng ban/nhóm vấn đề và đính kèm file minh chứng (nếu có), sau đó gửi yêu cầu đến bộ phận phụ trách.
-
-**Actor**
-Sinh viên đã đăng nhập vào hệ thống.
-
-**Preconditions**
-- Sinh viên đã đăng nhập thành công.
-- Sinh viên có quyền tạo Ticket.
+**Dữ liệu đầu vào**
+- **Nhóm vấn đề:** bắt buộc.
+- **Nội dung yêu cầu:** bắt buộc.
+- **File đính kèm:** không bắt buộc; tối đa 03 file/lần, mỗi file tối đa 10 MB, định dạng PDF/PNG/JPG/JPEG.
 
 **Luồng chính**
-1. Sinh viên mở chức năng **Tạo Ticket**.
-2. Hệ thống hiển thị form tạo Ticket.
-3. Sinh viên chọn **Phòng ban / Nhóm vấn đề**, nhập **Tiêu đề** và **Mô tả chi tiết**.
-4. Sinh viên đính kèm file minh chứng (nếu có, hỗ trợ PDF/PNG/JPG, tối đa 10MB/file, tối đa 3 file).
-5. Sinh viên nhấn nút **Gửi yêu cầu**.
-6. Hệ thống kiểm tra tính hợp lệ của dữ liệu.
-7. Nếu dữ liệu hợp lệ, hệ thống tạo Ticket mới, sinh **Mã Ticket duy nhất** (Ví dụ: `TK-20261004-001`).
-8. Hệ thống lưu file đính kèm vào bộ nhớ bảo mật và liên kết với Ticket.
-9. Hệ thống chuyển Ticket về trạng thái `NEW` và phát thông báo cho Phòng ban phụ trách.
-10. Hệ thống hiển thị thông báo tạo Ticket thành công và cung cấp Mã Ticket cho sinh viên.
+1. Sinh viên mở chức năng **Tạo yêu cầu**.
+2. Hệ thống hiển thị biểu mẫu tạo Ticket.
+3. Sinh viên chọn nhóm vấn đề và nhập nội dung yêu cầu.
+4. Sinh viên đính kèm file minh chứng nếu cần.
+5. Sinh viên xác nhận gửi.
+6. Hệ thống kiểm tra trường bắt buộc và file đính kèm.
+7. Hệ thống xác định phòng ban tiếp nhận theo nhóm vấn đề.
+8. Hệ thống tạo đúng một Ticket, cấp mã Ticket duy nhất và ghi nhận thời điểm tạo.
+9. Ticket được khởi tạo ở trạng thái `NEW`, priority mặc định `MEDIUM` và thời hạn xử lý tương ứng.
+10. Hệ thống hiển thị kết quả tạo thành công và mã Ticket cho sinh viên.
+
+**Luồng ngoại lệ**
+- Thiếu nhóm vấn đề hoặc nội dung yêu cầu: không tạo Ticket và chỉ rõ thông tin cần bổ sung.
+- File sai định dạng, vượt 10 MB hoặc vượt quá 03 file: từ chối file không hợp lệ.
+- Nhóm vấn đề không còn hoạt động: không tạo Ticket và yêu cầu sinh viên chọn lại.
+- Yêu cầu gửi lặp do thao tác lặp/retry: không được tạo nhiều Ticket cho cùng một lần gửi.
 
 **Business Rules**
-- Tiêu đề và Mô tả vấn đề là các trường thông tin bắt buộc.
-- Nội dung chỉ chứa khoảng trắng được xem là không hợp lệ.
-- File đính kèm chỉ chấp nhận định dạng `.pdf`, `.png`, `.jpg`, `.jpeg` với dung lượng tối đa 10MB/file.
-- Thao tác gửi của sinh viên chỉ tạo tối đa **một Ticket**, kể cả khi nhấn nút gửi nhiều lần do double-click, gián đoạn mạng hoặc retry.
-- Ticket sau khi tạo phải được liên kết cố định với tài khoản sinh viên gửi yêu cầu.
-
-**Alternative / Error Flows**
-- **Thiếu thông tin bắt buộc**: Hệ thống không tạo Ticket và hiển thị thông báo yêu cầu sinh viên bổ sung thông tin.
-- **File đính kèm không hợp lệ (sai định dạng hoặc >10MB)**: Hệ thống hiển thị lỗi cụ thể bên dưới ô upload file và dừng quá trình gửi.
-- **Sự cố hệ thống / Database**: Hệ thống hiển thị thông báo lỗi kỹ thuật, hoàn tác giao dịch và không lưu dữ liệu không hoàn chỉnh.
+- Tuân thủ `BR-FILE-01`, `BR-FILE-02` và `BR-DUE-01`.
+- Ticket phải gắn cố định với sinh viên tạo Ticket.
+- Sinh viên không tự chọn người phụ trách.
+- Mã Ticket phải duy nhất trong hệ thống.
 
 **Acceptance Criteria**
-- **AC-01**: Sinh viên nhập đầy đủ thông tin hợp lệ và chọn **Gửi yêu cầu** -> Hệ thống tạo đúng một Ticket với Mã duy nhất và hiển thị thông báo thành công.
-- **AC-02**: Sinh viên để trống trường mô tả -> Hệ thống không tạo Ticket và hiển thị lỗi validation.
-- **AC-03**: Sinh viên đính kèm file vượt quá 10MB -> Hệ thống báo lỗi file quá dung lượng cho phép.
-- **AC-04**: Sinh viên nhấn nút **Gửi yêu cầu** nhiều lần liên tiếp -> Hệ thống chỉ tạo duy nhất 01 Ticket.
-- **AC-05**: Ticket được tạo lưu đúng thông tin sinh viên gửi và xuất hiện trong danh sách Ticket cá nhân.
-
-**Ví dụ Edge Case**
-Sinh viên nhấn nút **Gửi yêu cầu** 5 lần liên tiếp trong thời gian ngắn do gián đoạn mạng.
--> **Expected Result**: Hệ thống xử lý request đầu tiên, vô hiệu hóa nút bấm (Disable) và chỉ ghi nhận **duy nhất một Ticket** cho thao tác gửi đó.
+- **AC-02-01:** Dữ liệu hợp lệ tạo đúng một Ticket ở trạng thái `NEW`.
+- **AC-02-02:** Ticket mới có mã Ticket duy nhất và thuộc đúng sinh viên tạo.
+- **AC-02-03:** Ticket mới được gắn nhóm vấn đề, phòng ban tiếp nhận, priority `MEDIUM` và thời hạn xử lý tương ứng.
+- **AC-02-04:** Dữ liệu bắt buộc không hợp lệ không làm phát sinh Ticket.
+- **AC-02-05:** File không đáp ứng quy tắc định dạng, dung lượng hoặc số lượng không được chấp nhận.
+- **AC-02-06:** Một thao tác gửi lặp không tạo nhiều Ticket trùng từ cùng yêu cầu gửi.
 
 ---
 
-### [FR-STU-03] Xem & theo dõi yêu cầu
+### FR-STU-03 — Xem Và Theo Dõi Ticket
 
-**Mô tả**
-Hệ thống hiển thị danh sách các Ticket do sinh viên tạo ra và cho phép xem chi tiết tiến độ xử lý, lịch sử phản hồi theo thời gian thực.
+**Mục đích:** Cho phép sinh viên theo dõi trạng thái, trách nhiệm xử lý và lịch sử cập nhật của các Ticket thuộc mình.
 
-**Actor**
-Sinh viên đã đăng nhập vào hệ thống.
-
-**Preconditions**
-- Sinh viên đã đăng nhập thành công.
+**Điều kiện tiên quyết**
+- Sinh viên đã đăng nhập.
 
 **Luồng chính**
-1. Sinh viên truy cập vào mục **Danh sách Ticket của tôi**.
-2. Hệ thống hiển thị danh sách tất cả các Ticket sinh viên đã gửi, sắp xếp theo thời gian tạo mới nhất.
-3. Sinh viên xem được các thông tin tóm tắt: Mã Ticket, Tiêu đề, Ngày tạo, Phòng ban phụ trách, Trạng thái hiện tại (`NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED`, `CLOSED`).
-4. Sinh viên nhấn vào một Ticket cụ thể để xem **Chi tiết Ticket**.
-5. Hệ thống hiển thị toàn bộ nội dung yêu cầu, file đính kèm, thông tin nhân viên thụ lý (nếu có) và dòng thời gian (Timeline) các bước xử lý.
+1. Sinh viên mở **Ticket của tôi**.
+2. Hệ thống hiển thị các Ticket thuộc sinh viên, ưu tiên Ticket cập nhật gần nhất.
+3. Mỗi Ticket hiển thị tối thiểu: mã Ticket, nhóm vấn đề, thời điểm tạo và trạng thái hiện tại.
+4. Sinh viên mở một Ticket để xem chi tiết.
+5. Hệ thống hiển thị nội dung yêu cầu, phòng ban/người phụ trách nếu đã được phân công, mức độ ưu tiên, thời hạn xử lý, file được phép truy cập, kết quả nếu đã có và lịch sử xử lý phù hợp với sinh viên.
+
+**Luồng ngoại lệ**
+- Không có Ticket: hiển thị trạng thái danh sách trống.
+- Ticket không thuộc sinh viên đang đăng nhập: từ chối truy cập và không hiển thị dữ liệu Ticket.
 
 **Business Rules**
-- Sinh viên **chỉ nhìn thấy và truy cập được** các Ticket do chính tài khoản của mình khởi tạo.
-- Trạng thái Ticket được cập nhật thời gian thực (Real-time hoặc khi tải lại trang).
-- Mọi nhật ký trao đổi công khai đều được sắp xếp theo trình tự thời gian tăng dần.
-
-**Alternative / Error Flows**
-- **Sinh viên không có Ticket nào**: Hệ thống hiển thị giao diện trống (Empty state) kèm gợi ý "Bạn chưa có yêu cầu hỗ trợ nào. Nhấn vào đây để tạo mới".
-- **Sinh viên cố tình nhập URL Ticket của người khác**: Hệ thống từ chối truy cập (Lỗi `403 Forbidden`) và điều hướng về danh sách cá nhân.
+- Bộ trạng thái hiển thị thống nhất: `NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED`, `CLOSED`.
+- Transfer và Escalation được thể hiện trong lịch sử xử lý, không hiển thị như trạng thái Ticket riêng.
+- Sinh viên chỉ xem các hoạt động được phép công khai theo phạm vi quyền.
 
 **Acceptance Criteria**
-- **AC-01**: Màn hình danh sách hiển thị đúng và đủ các Ticket thuộc sở hữu của sinh viên đăng nhập.
-- **AC-02**: Khi nhấn vào 01 Ticket, màn hình chi tiết hiển thị đầy đủ thông tin lịch sử xử lý và file đính kèm gốc.
-- **AC-03**: Sinh viên truy cập trái phép Ticket của sinh viên khác -> Hệ thống báo lỗi không có quyền truy cập.
-
-**Ví dụ Edge Case**
-Sinh viên copy đường dẫn chi tiết Ticket `TK-20261004-001` gửi cho một sinh viên khác đăng nhập xem thử.
--> **Expected Result**: Hệ thống phát hiện tài khoản truy cập không phải người tạo, chặn hiển thị và báo lỗi "Bạn không có quyền xem Ticket này".
+- **AC-03-01:** Danh sách chỉ chứa Ticket thuộc sinh viên đang đăng nhập.
+- **AC-03-02:** Chi tiết Ticket hiển thị đúng trạng thái hiện tại và lịch sử xử lý được phép xem.
+- **AC-03-03:** Ticket của sinh viên khác không thể được truy cập thông qua đường dẫn hoặc mã Ticket.
+- **AC-03-04:** Khi trạng thái, phòng ban hoặc người phụ trách thay đổi hợp lệ, thông tin theo dõi phản ánh giá trị mới.
 
 ---
 
-### [FR-STU-04] Nhận thông báo trạng thái
+### FR-STU-04 — Nhận Và Xem Thông Báo Ticket
 
-**Mô tả**
-Nhận thông báo trong hệ thống khi Ticket được tiếp nhận, yêu cầu bổ sung, chuyển trạng thái hoặc hoàn tất (liên kết với Module Notification M04).
+**Mục đích:** Thông báo cho sinh viên khi Ticket của mình có sự kiện nghiệp vụ cần biết hoặc cần hành động.
 
----
-
-### [FR-STU-05] Bổ sung thông tin, xem kết quả & đánh giá CSAT
-
-**Mô tả**
-Khi Ticket ở trạng thái `WAITING_STUDENT`, sinh viên có thể nhập câu trả lời bổ sung và tải lên các file giấy tờ theo yêu cầu của nhân viên. Đồng thời, cho phép sinh viên xem kết quả xử lý và đánh giá mức độ hài lòng (CSAT) sau khi Ticket hoàn tất.
-
-**Actor**
-Sinh viên đã đăng nhập vào hệ thống.
-
-**Preconditions**
-- Sinh viên đã đăng nhập thành công.
-- Ticket tương ứng đang ở trạng thái `WAITING_STUDENT`.
+**Các sự kiện phát thông báo**
+- Ticket được tạo thành công.
+- Trạng thái Ticket thay đổi.
+- Nhân viên yêu cầu bổ sung thông tin/tài liệu.
+- Ticket được chuyển sang phòng ban khác.
+- Ticket có kết quả xử lý.
+- Ticket được mở lại hoặc đóng.
 
 **Luồng chính**
-1. Sinh viên mở màn hình Chi tiết Ticket đang ở trạng thái `WAITING_STUDENT`.
-2. Sinh viên xem nội dung ghi chú/yêu cầu bổ sung từ nhân viên.
-3. Sinh viên nhập câu trả lời bổ sung vào khung phản hồi.
-4. Sinh viên chọn file đính kèm mới (nếu nhân viên yêu cầu bổ sung giấy tờ/ảnh chụp).
-5. Sinh viên nhấn nút **Gửi phản hồi bổ sung**.
-6. Hệ thống lưu nội dung phản hồi, lưu file đính kèm bổ sung.
-7. Hệ thống tự động chuyển trạng thái Ticket từ `WAITING_STUDENT` về `IN_PROGRESS`.
-8. Bộ đếm thời gian SLA xử lý của nhân viên tiếp tục chạy lại.
+1. Một sự kiện thuộc danh sách thông báo xảy ra.
+2. Hệ thống tạo thông báo cho sinh viên sở hữu Ticket.
+3. Sinh viên thấy thông báo mới trong Student Portal.
+4. Sinh viên mở thông báo.
+5. Hệ thống hiển thị nội dung phù hợp và cho phép điều hướng đến Ticket liên quan.
+6. Thông báo có thể được đánh dấu đã đọc.
 
 **Business Rules**
-- Tính năng gửi bổ sung chỉ kích hoạt khi Ticket ở trạng thái `WAITING_STUDENT`.
-- Ngay khi sinh viên gửi bổ sung thành công, trạng thái **bắt buộc** phải chuyển về `IN_PROGRESS`.
-- Nội dung phản hồi bổ sung không được để trống.
-
-**Alternative / Error Flows**
-- **Sinh viên gửi phản hồi nhưng để trống nội dung và không có file**: Hệ thống báo lỗi "Vui lòng nhập nội dung trả lời hoặc tải lên file đính kèm".
-- **Ticket đã bị đóng hoặc chuyển trạng thái trước khi gửi**: Hệ thống thông báo trạng thái Ticket đã thay đổi và làm mới lại trang.
+- Chỉ gửi thông báo đến sinh viên sở hữu Ticket.
+- Thông báo không được làm lộ dữ liệu của Ticket khác.
+- Phạm vi cơ bản sử dụng thông báo trong hệ thống; không mặc định yêu cầu SMS hoặc push notification bên ngoài hệ thống.
 
 **Acceptance Criteria**
-- **AC-01**: Sinh viên nhập thông tin bổ sung và nhấn gửi -> Phản hồi hiển thị trong lịch sử, trạng thái Ticket chuyển thành `IN_PROGRESS`.
-- **AC-02**: Sinh viên đính kèm thêm file minh chứng -> File được tải lên thành công và nhân viên phụ trách xem được.
-- **AC-03**: Nút gửi phản hồi bổ sung bị ẩn/khóa nếu Ticket không ở trạng thái `WAITING_STUDENT`.
-
-**Ví dụ Edge Case**
-Sinh viên đang soạn nội dung bổ sung thì nhân viên chủ động hủy hoặc chuyển trạng thái Ticket. Khi sinh viên bấm Gửi phản hồi:
--> **Expected Result**: Hệ thống báo lỗi "Trạng thái Ticket đã thay đổi. Vui lòng tải lại trang", không lưu dữ liệu thừa.
+- **AC-04-01:** Sự kiện hợp lệ tạo thông báo cho đúng sinh viên.
+- **AC-04-02:** Thông báo liên kết đúng Ticket và chỉ mở được khi người dùng có quyền.
+- **AC-04-03:** Trạng thái đã đọc/chưa đọc được ghi nhận nhất quán.
+- **AC-04-04:** Sinh viên không xem được thông báo thuộc tài khoản khác.
 
 ---
 
-#### Tích hợp: Xem kết quả giải quyết & Đánh giá mức độ hài lòng (CSAT)
+### FR-STU-05 — Bổ Sung Thông Tin Và Tài Liệu
 
-**Mô tả**
-Cho phép sinh viên xem nội dung kết quả xử lý chính thức từ nhà trường, nhận file đính kèm kết quả (nếu có) và thực hiện chấm điểm hài lòng đối với dịch vụ hỗ trợ.
+**Mục đích:** Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi nhân viên yêu cầu.
 
-**Actor**
-Sinh viên đã đăng nhập vào hệ thống.
-
-**Preconditions**
-- Ticket của sinh viên đã được nhân viên chuyển sang trạng thái `RESOLVED` hoặc `CLOSED`.
+**Điều kiện tiên quyết**
+- Ticket thuộc sinh viên.
+- Ticket đang ở trạng thái `WAITING_STUDENT`.
 
 **Luồng chính**
-1. Sinh viên mở chi tiết Ticket đã giải quyết.
-2. Sinh viên xem nội dung kết quả giải quyết và tải file phản hồi (nếu có).
-3. Hệ thống hiển thị khung **Đánh giá mức độ hài lòng (CSAT)**.
-4. Sinh viên chọn số sao đánh giá (từ 1 đến 5 sao).
-5. Sinh viên nhập nhận xét/góp ý thêm (không bắt buộc).
-6. Sinh viên nhấn nút **Gửi đánh giá**.
-7. Hệ thống lưu kết quả đánh giá, ghi nhận mốc thời gian.
-8. Hệ thống chuyển trạng thái Ticket thành `CLOSED` (nếu trước đó đang ở `RESOLVED`).
-9. Hệ thống hiển thị thông báo "Cảm ơn bạn đã gửi đánh giá dịch vụ".
+1. Sinh viên mở Ticket có yêu cầu bổ sung.
+2. Hệ thống hiển thị nội dung cần bổ sung.
+3. Sinh viên nhập nội dung phản hồi và/hoặc đính kèm tài liệu.
+4. Sinh viên xác nhận gửi bổ sung.
+5. Hệ thống kiểm tra trạng thái Ticket và tính hợp lệ của dữ liệu/file.
+6. Hệ thống lưu nội dung bổ sung vào lịch sử Ticket.
+7. Ticket chuyển từ `WAITING_STUDENT` về `IN_PROGRESS`.
+8. Thời gian xử lý tiếp tục được tính từ phần thời gian còn lại.
+
+**Luồng ngoại lệ**
+- Không có nội dung và không có file: từ chối gửi bổ sung.
+- Ticket không còn ở `WAITING_STUDENT`: từ chối thao tác và hiển thị trạng thái mới nhất.
+- File không hợp lệ: áp dụng quy tắc file dùng chung.
 
 **Business Rules**
-- Điểm đánh giá bắt buộc từ 1 đến 5 sao.
-- Mỗi Ticket chỉ được phép đánh giá **Duy nhất 01 lần**.
-- Thời hạn thực hiện đánh giá là trong vòng **07 ngày** kể từ khi Ticket ở trạng thái `RESOLVED`. Quá 7 ngày, hệ thống tự động khóa tính năng đánh giá.
-- Sau khi gửi đánh giá, điểm số và nhận xét không thể chỉnh sửa.
-
-**Alternative / Error Flows**
-- **Sinh viên không bấm gửi đánh giá**: Sau 03 ngày làm việc ở trạng thái `RESOLVED`, hệ thống tự động chuyển Ticket sang `CLOSED`. Sinh viên vẫn có thể đánh giá trong hạn 7 ngày còn lại.
-- **Sinh viên cố tình gửi đánh giá lần 2**: Hệ thống ẩn form đánh giá và hiển thị điểm số đã chấm trước đó.
+- Tuân thủ `BR-SUP-01`, `BR-FILE-02` và `BR-DUE-02`.
+- Mỗi lần bổ sung tối đa 03 file, mỗi file tối đa 10 MB.
+- Bổ sung thành công phải được ghi nhận trong lịch sử Ticket.
 
 **Acceptance Criteria**
-- **AC-01**: Sinh viên chọn số sao (ví dụ: 5 sao), nhập nhận xét và bấm gửi -> Đánh giá được lưu thành công, Ticket chuyển sang `CLOSED`.
-- **AC-02**: Sinh viên không chọn số sao mà bấm gửi -> Hệ thống nhắc nhở chọn điểm số đánh giá.
-- **AC-03**: Sau khi đã gửi đánh giá -> Form đánh giá chuyển sang dạng chỉ xem (Read-only), hiển thị điểm đã chấm.
+- **AC-05-01:** Ticket `WAITING_STUDENT` nhận bổ sung hợp lệ và chuyển về `IN_PROGRESS`.
+- **AC-05-02:** Nội dung/file bổ sung được lưu đúng Ticket và nhân viên có quyền có thể truy cập.
+- **AC-05-03:** Ticket ngoài `WAITING_STUDENT` không chấp nhận bổ sung theo luồng này.
+- **AC-05-04:** Thời gian chờ sinh viên không bị tính vào thời gian xử lý.
 
-**Ví dụ Edge Case**
-Sinh viên mở form đánh giá của Ticket đã được giải quyết từ 10 ngày trước (đã quá thời hạn 7 ngày).
--> **Expected Result**: Hệ thống hiển thị thông báo "Đã quá thời hạn gửi đánh giá cho Ticket này" và khóa form nhập liệu.
+---
+
+### FR-STU-06 — Xem Kết Quả, Phản Hồi Và Yêu Cầu Mở Lại
+
+**Mục đích:** Cho phép sinh viên xem kết quả xử lý và xác nhận Ticket đã được giải quyết hoặc phản hồi rằng vấn đề vẫn chưa được giải quyết.
+
+**Điều kiện tiên quyết**
+- Ticket thuộc sinh viên.
+- Ticket đang ở `RESOLVED` hoặc `CLOSED` để xem kết quả.
+- Chức năng phản hồi/mở lại chỉ áp dụng khi Ticket đang ở `RESOLVED` và còn trong thời hạn phản hồi.
+
+**Luồng A — Chấp nhận kết quả**
+1. Sinh viên mở Ticket `RESOLVED`.
+2. Hệ thống hiển thị kết quả xử lý và thời hạn phản hồi còn lại.
+3. Sinh viên xác nhận kết quả đã giải quyết vấn đề.
+4. Hệ thống chuyển Ticket sang `CLOSED` và ghi nhận thời điểm đóng.
+
+**Luồng B — Yêu cầu mở lại**
+1. Sinh viên mở Ticket `RESOLVED` trong thời hạn phản hồi.
+2. Sinh viên chọn **Vấn đề chưa được giải quyết**.
+3. Sinh viên nhập lý do mở lại.
+4. Hệ thống kiểm tra trạng thái và thời hạn phản hồi.
+5. Nếu hợp lệ, hệ thống ghi nhận lý do và chuyển Ticket về `IN_PROGRESS`.
+6. Hệ thống thông báo cho phạm vi xử lý liên quan.
+
+**Luồng C — Tự động đóng**
+1. Ticket ở `RESOLVED`.
+2. Hết 03 ngày làm việc mà sinh viên không yêu cầu xử lý tiếp.
+3. Hệ thống chuyển Ticket sang `CLOSED`.
+
+**Business Rules**
+- Tuân thủ `BR-LIFE-01`, `BR-LIFE-02`, `BR-LIFE-03`.
+- Reopen chỉ thực hiện từ `RESOLVED` về `IN_PROGRESS`.
+- Ticket `CLOSED` không được mở lại.
+- Mọi lần chấp nhận, mở lại và tự động đóng phải được ghi nhận trong lịch sử.
+
+**Acceptance Criteria**
+- **AC-06-01:** Sinh viên xem được kết quả của Ticket `RESOLVED` hoặc `CLOSED` thuộc mình.
+- **AC-06-02:** Xác nhận kết quả khi Ticket đang `RESOLVED` làm Ticket chuyển sang `CLOSED`.
+- **AC-06-03:** Yêu cầu mở lại hợp lệ trong 03 ngày làm việc chuyển Ticket từ `RESOLVED` về `IN_PROGRESS`.
+- **AC-06-04:** Reopen thiếu lý do, hết thời hạn hoặc Ticket đã `CLOSED` bị từ chối.
+- **AC-06-05:** Ticket `RESOLVED` không có yêu cầu xử lý tiếp được tự động đóng khi hết thời hạn phản hồi.
+
+---
+
+### FR-STU-07 — Đánh Giá Mức Độ Hài Lòng (CSAT)
+
+**Mục đích:** Ghi nhận mức độ hài lòng của sinh viên sau khi Ticket đã kết thúc vòng đời xử lý.
+
+**Điều kiện tiên quyết**
+- Ticket thuộc sinh viên.
+- Ticket đang ở trạng thái `CLOSED`.
+- Ticket chưa có đánh giá và còn trong thời hạn đánh giá.
+
+**Luồng chính**
+1. Sinh viên mở Ticket `CLOSED`.
+2. Hệ thống hiển thị chức năng đánh giá nếu Ticket còn đủ điều kiện.
+3. Sinh viên chọn điểm từ 1 đến 5 sao.
+4. Sinh viên nhập nhận xét nếu muốn.
+5. Sinh viên gửi đánh giá.
+6. Hệ thống kiểm tra quyền, thời hạn và việc Ticket đã được đánh giá trước đó.
+7. Hệ thống lưu đánh giá và xác nhận gửi thành công.
+
+**Luồng ngoại lệ**
+- Không chọn điểm: từ chối gửi.
+- Ticket đã có đánh giá: không cho gửi lần hai.
+- Quá 07 ngày theo lịch kể từ khi Ticket chuyển sang `CLOSED`: không cho gửi đánh giá mới.
+
+**Business Rules**
+- Tuân thủ `BR-CSAT-01`.
+- Mỗi Ticket chỉ có tối đa 01 đánh giá.
+- Điểm hợp lệ từ 1 đến 5 sao.
+- Nhận xét là không bắt buộc.
+- Đánh giá không làm thay đổi trạng thái Ticket.
+
+**Acceptance Criteria**
+- **AC-07-01:** Ticket `CLOSED` còn trong thời hạn cho phép nhận đánh giá 1-5 sao.
+- **AC-07-02:** Đánh giá hợp lệ được lưu đúng Ticket và sử dụng cho báo cáo CSAT.
+- **AC-07-03:** Không thể gửi đánh giá lần thứ hai cho cùng Ticket.
+- **AC-07-04:** Ticket quá thời hạn 07 ngày theo lịch không nhận đánh giá mới.
+- **AC-07-05:** Gửi CSAT không thay đổi trạng thái `CLOSED`.
+
+---
+
+## 5. Quy Tắc Dùng Chung Áp Dụng Cho M01
+
+- Bộ trạng thái Ticket duy nhất: `NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED`, `CLOSED`.
+- Transfer và Escalation không phải trạng thái.
+- File đính kèm: PDF/PNG/JPG/JPEG, tối đa 10 MB/file và 03 file cho mỗi lần tạo hoặc bổ sung.
+- Priority mặc định của Ticket mới là `MEDIUM`.
+- Thời hạn mục tiêu: LOW 05 ngày làm việc, MEDIUM 03 ngày, HIGH 02 ngày, URGENT 01 ngày.
+- Thời gian ở `WAITING_STUDENT` không tính vào thời gian xử lý.
+- Sinh viên có 03 ngày làm việc để phản hồi khi Ticket ở `RESOLVED`.
+- Reopen chỉ từ `RESOLVED` về `IN_PROGRESS`; `CLOSED` là trạng thái kết thúc.
+- CSAT chỉ được gửi khi Ticket `CLOSED`, tối đa một lần trong 07 ngày theo lịch kể từ thời điểm đóng.
+
+Các giá trị trên phải giữ nguyên khi đặc tả Workflow, API Contract, Data Dictionary, Test Cases và RTM.
