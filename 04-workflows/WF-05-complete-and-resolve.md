@@ -1,42 +1,50 @@
-# [WF-05] Cập nhật kết quả & Đóng yêu cầu (Complete and Resolve)
+# WF-05 - Ghi Nhận Kết Quả Và Chuyển Sang RESOLVED
 
-### [FR-STF-06] Nhân viên cập nhật kết quả giải quyết và hoàn thành Ticket
+## 1. Mục Đích Và Phạm Vi
 
-**Mô tả**
-Hệ thống cho phép nhân viên phụ trách ghi nhận kết quả xử lý, tải lên các tài liệu/kết quả giải quyết (nếu có) và đóng Ticket sau khi đã hoàn thành xử lý cho sinh viên.
+Mô tả bước nhân viên ghi nhận kết quả xử lý chính thức và đưa Ticket từ `IN_PROGRESS` sang `RESOLVED`. Workflow này **không đóng Ticket**.
 
-**Actor**
-Nhân viên phụ trách Ticket (Staff).
+## 2. Vai Trò Và Điều Kiện Bắt Đầu
 
-**Preconditions**
-- Ticket đang ở trạng thái `Đang xử lý` (In Progress).
-- Nhân viên thực hiện là người đang trực tiếp phụ trách Ticket đó.
+- **Vai trò chính:** Nhân viên phụ trách Ticket hoặc người có quyền ghi nhận kết quả.
+- Ticket đang ở `IN_PROGRESS`.
+- Kết quả xử lý đã sẵn sàng để phản hồi cho sinh viên.
 
-**Luồng chính**
-1. Nhân viên truy cập chi tiết Ticket cần hoàn thành.
-2. Nhân viên chọn chức năng **Hoàn thành / Giải quyết**.
-3. Nhân viên nhập nội dung **Kết quả giải quyết** (bắt buộc) và đính kèm file kết quả (nếu có).
-4. Nhân viên bấm chọn **Xác nhận hoàn thành**.
-5. Hệ thống ghi nhận nội dung giải quyết, cập nhật trạng thái Ticket sang `Hoàn thành` (Resolved / Closed).
-6. Hệ thống lưu mốc thời gian hoàn thành, tính toán thời gian xử lý thực tế phục vụ báo cáo SLA.
-7. Hệ thống tự động gửi thông báo nội bộ cho sinh viên về việc Ticket đã được xử lý xong kèm kết quả giải quyết.
+## 3. Luồng Nghiệp Vụ Chính
 
-**Business Rules**
-- Nội dung kết quả giải quyết là bắt buộc, không được để trống hoặc chỉ chứa khoảng trắng.
-- Sau khi Ticket chuyển sang trạng thái `Hoàn thành`, thông tin kết quả không được phép chỉnh sửa trừ khi có quyền Quản lý (Manager).
-- Lịch sử cập nhật và tệp kết quả được lưu trữ nguyên vẹn để tra soát.
+1. Nhân viên mở Ticket đang xử lý.
+2. Nhân viên chọn **Ghi nhận kết quả**.
+3. Nhân viên nhập nội dung kết quả và đính kèm tài liệu kết quả nếu có.
+4. Hệ thống kiểm tra quyền, trạng thái, nội dung và file.
+5. Hệ thống lưu kết quả xử lý.
+6. Ticket chuyển từ `IN_PROGRESS` sang `RESOLVED`.
+7. Hệ thống ghi nhận thời điểm giải quyết và sự kiện thay đổi trạng thái.
+8. Sinh viên nhận thông báo và có thể xem kết quả.
+9. Ticket bắt đầu thời hạn 03 ngày làm việc để sinh viên chấp nhận kết quả hoặc yêu cầu mở lại.
 
-**Alternative / Error Flows**
-- **Để trống nội dung kết quả:** Hệ thống chặn thao tác, hiển thị thông báo "Vui lòng nhập nội dung kết quả giải quyết trước khi hoàn thành Ticket".
-- **Lỗi lưu dữ liệu:** Hệ thống thông báo lỗi, giữ nguyên trạng thái `Đang xử lý` của Ticket.
+## 4. Luồng Ngoại Lệ
 
-**Acceptance Criteria**
-- **AC-01:** Nhân viên nhập đầy đủ nội dung kết quả và xác nhận -> Hệ thống chuyển trạng thái Ticket thành `Hoàn thành`, ghi nhận mốc thời gian và gửi thông báo cho sinh viên.
-- **AC-02:** Nhân viên để trống ô kết quả giải quyết -> Hệ thống hiển thị lỗi validation và dừng thao tác.
-- **AC-03:** Sinh viên nhận được thông báo nội bộ ngay sau khi nhân viên bấm hoàn thành Ticket.
-- **AC-04:** Nhân viên không phụ trách Ticket này tìm cách hoàn thành Ticket -> Hệ thống chặn truy cập (HTTP 403).
+- Thiếu nội dung kết quả hoặc nội dung không hợp lệ: không chuyển trạng thái.
+- File kết quả không hợp lệ: từ chối file theo quy tắc dùng chung.
+- Ticket không còn ở `IN_PROGRESS` hoặc người dùng không còn quyền: từ chối thao tác.
 
-**Ví dụ Edge Case**
-Nhân viên nhấn **Xác nhận hoàn thành** khi ô nội dung giải quyết chỉ chứa các dấu khoảng trắng "   ".
+## 5. Quy Tắc Nghiệp Vụ
 
-**Expected Result:** Hệ thống coi đây là nội dung không hợp lệ, không chuyển trạng thái Ticket và hiển thị lỗi validation: "Nội dung kết quả giải quyết không được để trống".
+- Nội dung kết quả từ 20 đến 2.000 ký tự.
+- Tài liệu kết quả: tối đa 03 file/lần, tối đa 10 MB/file, PDF/PNG/JPG/JPEG.
+- `RESOLVED` chưa phải trạng thái kết thúc vòng đời.
+- Kết quả và lịch sử trước đó phải được giữ nguyên.
+- Việc đóng/mở lại sau `RESOLVED` thực hiện theo WF-06.
+
+## 6. Tiêu Chí Nghiệm Thu
+
+- Kết quả hợp lệ chuyển đúng `IN_PROGRESS → RESOLVED`.
+- Sinh viên nhận thông báo và xem được kết quả/tài liệu được phép truy cập.
+- Thiếu kết quả không làm Ticket đổi trạng thái.
+- Workflow không tạo thao tác Staff đóng Ticket độc lập.
+
+## 7. Tài Liệu Liên Quan
+
+- M02: `FR-STF-06`.
+- M01: `FR-STU-04`, `FR-STU-06`.
+- Domain: `BR-LIFE-01`, `BR-FILE-01`, `BR-FILE-02`.
