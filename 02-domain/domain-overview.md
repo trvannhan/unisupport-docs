@@ -48,49 +48,41 @@ UniSupport áp dụng các nguyên tắc chung sau cho toàn bộ vòng đời T
 
 ## 4. Luồng Nghiệp Vụ Tổng Quan
 
-```text
-[Sinh viên tra cứu hướng dẫn/FAQ]
-                |
-                v
-      [Tạo và gửi yêu cầu]
-                |
-                v
- [Hệ thống tạo mã Ticket]
-                |
-                v
- [Tiếp nhận và phân loại]
-                |
-                v
- [Phân công người/phòng ban phụ trách]
-                |
-                v
- [Xác định ưu tiên và thời hạn]
-                |
-                v
-         [Xử lý Ticket]
-                |
-        +-------+--------------------+
-        |                            |
-        | Cần bổ sung                | Cần chuyển/escalation
-        v                            v
-[Yêu cầu sinh viên bổ sung]   [Chuyển xử lý / Escalation]
-        |                            |
-        v                            v
-[Sinh viên bổ sung]        [Đơn vị/người phụ trách mới]
-        |                            |
-        +-------------+--------------+
-                      |
-                      v
-              [Tiếp tục xử lý]
-                      |
-                      v
-             [Ghi nhận kết quả]
-                      |
-                      v
-           [Đóng / mở lại Ticket]
-                      |
-                      v
-       [Sinh viên xem kết quả, đánh giá]
+```mermaid
+flowchart TD
+    A[Sinh viên đăng nhập] --> B[Tra cứu hướng dẫn / FAQ]
+
+    B --> C{FAQ đã giải quyết được vấn đề?}
+    C -->|Có| D[Kết thúc tra cứu]
+    C -->|Không| E[Tạo và gửi yêu cầu]
+
+    E --> F[Hệ thống tạo mã Ticket]
+    F --> G[Tiếp nhận và phân loại]
+    G --> H[Phân công người / phòng ban phụ trách]
+    H --> I[Xác định mức độ ưu tiên và thời hạn xử lý]
+    I --> J[Xử lý Ticket]
+
+    J --> K{Có cần bổ sung hoặc chuyển xử lý?}
+
+    K -->|Cần bổ sung| L[Yêu cầu sinh viên bổ sung]
+    L --> M[Sinh viên bổ sung thông tin / tài liệu]
+    M --> J
+
+    K -->|Cần chuyển / escalation| N[Chuyển xử lý / Escalation]
+    N --> O[Đơn vị / người phụ trách mới tiếp nhận]
+    O --> J
+
+    K -->|Không| P[Ghi nhận kết quả xử lý]
+    P --> Q[RESOLVED]
+
+    Q --> R{Sinh viên chấp nhận kết quả?}
+    R -->|Chưa giải quyết được vấn đề| S[Mở lại Ticket]
+    S --> J
+
+    R -->|Đồng ý hoặc hết thời hạn phản hồi| T[CLOSED]
+    T --> U[Sinh viên xem kết quả và đánh giá]
 ```
+
+Trong luồng trên, **RESOLVED** thể hiện Ticket đã có kết quả xử lý nhưng vẫn còn thời gian để sinh viên phản hồi. Nếu sinh viên cho rằng vấn đề chưa được giải quyết trong thời hạn cho phép, Ticket được mở lại và quay về quá trình xử lý. Nếu sinh viên chấp nhận kết quả hoặc hết thời hạn phản hồi, Ticket chuyển sang **CLOSED** và kết thúc vòng đời xử lý.
 
 Dữ liệu phát sinh từ các Ticket được sử dụng cho Dashboard và báo cáo quản lý, bao gồm tình trạng xử lý, Ticket sắp/quá hạn, khối lượng công việc, thời gian xử lý và mức độ hài lòng.
