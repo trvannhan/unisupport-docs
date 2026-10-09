@@ -1,20 +1,19 @@
-# [NFR-REL] Yêu cầu về Độ ổn định & Tin cậy (Reliability Requirements)
+# NFR-REL - Độ Ổn Định Và Tin Cậy
 
-### 1. Tổng quan
-Tài liệu định nghĩa các chỉ số và quy tắc nhằm đảm bảo hệ thống UniSupport duy trì trạng thái hoạt động ổn định và nhất quán trên hạ tầng do Aurora University cung cấp.
+## 1. Mục Tiêu
 
-### 2. Chỉ số sẵn sàng & Tin cậy
+Đảm bảo các thao tác nghiệp vụ quan trọng không tạo dữ liệu dở dang hoặc làm sai vòng đời Ticket.
 
-| Chỉ số | Yêu cầu | Ghi chú |
-| :--- | :--- | :--- |
-| **Mức độ sẵn sàng (Availability)** | $\ge 98.5\%$ | Trong thời gian hoạt động hành chính của nhà trường |
-| **Toàn vẹn dữ liệu (Data Integrity)** | 100% | Không xảy ra mất mát dữ liệu Ticket trong điều kiện vận hành bình thường |
-| **Xử lý sự cố lỗi (Graceful Degradation)** | Hiển thị thông báo lỗi thân thiện | Không để lộ lỗi hệ thống (Stack trace/Code error) cho người dùng cuối |
+## 2. Yêu Cầu
 
-### 3. Toàn vẹn giao dịch & Khôi phục
-- **Đảm bảo giao dịch (Database Transaction):** Thao tác gửi Ticket bao gồm thông tin văn bản và lưu tệp đính kèm phải tuân thủ nguyên tắc All-or-Nothing (ACID). Nếu lưu tệp thất bại, thông tin Ticket sẽ không được tạo để tránh dữ liệu mống/rác.
-- **Hạ tầng & Sao lưu:** Tính ổn định, tên miền, chứng chỉ SSL và sao lưu dữ liệu máy chủ hoàn toàn phụ thuộc vào hạ tầng do Aurora University cung cấp (nằm ngoài phạm vi bảo trì dài hạn của nhà phát triển).
+- Tạo Ticket thành công phải tạo đầy đủ Ticket, mã Ticket, Category, phòng ban và trạng thái ban đầu.
+- Các thao tác thay đổi đồng thời nhiều dữ liệu nghiệp vụ, ví dụ Transfer cập nhật Category + phòng ban, phải hoàn tất nhất quán hoặc không ghi nhận thay đổi.
+- Lỗi khi lưu dữ liệu không được để Ticket ở trạng thái không hợp lệ so với Domain.
+- Lịch sử xử lý đã ghi nhận không bị mất khi Transfer, reopen hoặc cập nhật kết quả.
+- Hệ thống phải hiển thị thông báo lỗi dễ hiểu cho người dùng, không để lỗi kỹ thuật thay thế kết quả nghiệp vụ.
+- Khả năng vận hành thực tế phụ thuộc hạ tầng máy chủ, mạng và tên miền do Client cung cấp theo Proposal.
 
-### 4. Tiêu chí Kiểm thử & Nghiệm thu
-- **NFR-REL-01:** Khi xảy ra lỗi kết nối mạng trong quá trình gửi Ticket, hệ thống hủy giao dịch và không lưu Ticket ở trạng thái dở dang (dữ liệu không hoàn chỉnh).
-- **NFR-REL-02:** Giao diện người dùng hiển thị thông điệp lỗi rõ ràng (ví dụ: "Có lỗi xảy ra, vui lòng thử lại sau") thay vì lộ mã lỗi lập trình (Stack trace).
+## 3. Nghiệm Thu
+
+- Các trường hợp lỗi trong luồng tạo, phân công, Transfer, bổ sung và ghi kết quả không tạo trạng thái dữ liệu trái Business Rules.
+- Sau lỗi, người dùng có thể tải lại và thấy trạng thái nghiệp vụ cuối cùng đã được ghi nhận thành công.
