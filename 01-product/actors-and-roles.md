@@ -14,7 +14,7 @@ UniSupport có **3 nhóm người dùng chính**, tương ứng với 3 phân h�
      Student           Staff          Management
 ```
 
-Các quyền quản trị hệ thống không tạo thành một nhóm người dùng thứ tư. Chúng là các quyền thuộc phân hệ **Management** và chỉ được cấp cho tài khoản Quản lý phù hợp.
+Các chức năng quản trị hệ thống thuộc phạm vi của phân hệ **Management** và được phân quyền cho các tài khoản Quản lý phù hợp.
 
 ---
 
