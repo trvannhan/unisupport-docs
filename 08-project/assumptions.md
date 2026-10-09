@@ -23,5 +23,5 @@ Tài liệu này ghi nhận các giả định vận hành và triển khai đư
 
 ## 4. Phối Hợp
 
-- Thời gian 14 tuần không bao gồm phần chờ phản hồi/phê duyệt vượt thời gian đã thống nhất.
+- Thời gian 14 tuần không bao gồm thời gian chờ phản hồi hoặc phê duyệt vượt quá kế hoạch phối hợp.
 - Điều chỉnh phạm vi, chi phí hoặc tiến độ phải được hai bên xác nhận lại.
