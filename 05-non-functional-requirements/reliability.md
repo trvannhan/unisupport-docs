@@ -11,7 +11,7 @@
 - Lỗi khi lưu dữ liệu không được để Ticket ở trạng thái không hợp lệ so với Domain.
 - Lịch sử xử lý đã ghi nhận không bị mất khi Transfer, reopen hoặc cập nhật kết quả.
 - Hệ thống phải hiển thị thông báo lỗi dễ hiểu cho người dùng, không để lỗi kỹ thuật thay thế kết quả nghiệp vụ.
-- Khả năng vận hành thực tế phụ thuộc hạ tầng máy chủ, mạng và tên miền do Client cung cấp theo Proposal.
+- Khả năng vận hành thực tế phụ thuộc hạ tầng máy chủ, mạng và tên miền do Aurora University cung cấp.
 
 ## 3. Nghiệm Thu
 
