@@ -48,7 +48,7 @@ UniSupport gồm **3 phân hệ chính**:
 | Mã phân hệ | Tên phân hệ | Chức năng cốt lõi |
 | :--- | :--- | :--- |
 | **M01** | **Sinh viên (Student Portal)** | Đăng nhập, gửi yêu cầu hỗ trợ, đính kèm file ảnh/PDF, nhận mã Ticket, theo dõi tiến độ, bổ sung hồ sơ, nhận thông báo, xem kết quả và đánh giá mức độ hài lòng. |
-| **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, tiếp nhận và tìm kiếm yêu cầu, phân loại, xác định mức độ ưu tiên, phân công/chuyển xử lý, cập nhật tiến độ, yêu cầu bổ sung, ghi nhận kết quả và đóng/mở lại Ticket theo quy định nghiệp vụ. |
+| **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, tiếp nhận và tìm kiếm yêu cầu, phân loại, xác định mức độ ưu tiên, phân công/chuyển xử lý, cập nhật tiến độ, yêu cầu bổ sung, ghi nhận kết quả và tiếp tục xử lý Ticket được mở lại hợp lệ. |
 | **M03** | **Quản lý (Management Dashboard)** | Đăng nhập, theo dõi Dashboard và báo cáo, giám sát khối lượng công việc và thời hạn xử lý, quản lý tài khoản và quyền, quản lý danh mục/cấu hình, tra soát hoạt động và các chức năng quản trị thuộc phạm vi Management. |
 
 ### Năng lực dùng chung
