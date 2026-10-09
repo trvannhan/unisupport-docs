@@ -54,8 +54,8 @@ Nhân viên thuộc các phòng ban chịu trách nhiệm tiếp nhận và xử
 - Yêu cầu sinh viên bổ sung thông tin hoặc giấy tờ.
 - Phân công hoặc chuyển Ticket sang người/phòng ban phù hợp khi được cấp quyền.
 - Thực hiện escalation khi cần thiết.
-- Ghi nhận kết quả và hoàn tất/đóng Ticket.
-- Mở lại Ticket khi đáp ứng điều kiện nghiệp vụ đã quy định.
+- Ghi nhận kết quả xử lý và chuyển Ticket sang `RESOLVED`.
+- Tiếp tục xử lý Ticket khi sinh viên mở lại hợp lệ về `IN_PROGRESS`.
 
 **Phạm vi dữ liệu**
 - Chỉ được truy cập và thao tác trên Ticket trong phạm vi phòng ban, nhiệm vụ và quyền được cấp.
@@ -94,11 +94,16 @@ Ma trận dưới đây mô tả phạm vi chức năng chính của từng nhó
 | Tạo và gửi Ticket | Được phép | Không áp dụng | Không áp dụng |
 | Xem Ticket | Ticket của mình | Theo phạm vi phụ trách | Theo phạm vi quản lý |
 | Tiếp nhận và xử lý Ticket | Không áp dụng | Được phép | Khi được phân quyền |
-| Phân loại và xác định mức độ ưu tiên | Không áp dụng | Được phép | Khi được phân quyền |
-| Phân công / chuyển xử lý / escalation | Không áp dụng | Khi được phân quyền | Khi được phân quyền |
-| Yêu cầu sinh viên bổ sung thông tin | Không áp dụng | Được phép | Khi được phân quyền |
+| Phân loại Category | Không áp dụng | Người phụ trách hoặc khi được phân quyền | Khi được phân quyền |
+| Thay đổi Priority | Không áp dụng | Người phụ trách hoặc khi được phân quyền | Khi được phân quyền |
+| Tiếp nhận Ticket chưa có người phụ trách | Không áp dụng | Được phép trong phạm vi phòng ban | Khi được phân quyền |
+| Phân công / phân công lại | Không áp dụng | Khi được phân quyền | Khi được phân quyền |
+| Transfer sang phòng ban khác | Không áp dụng | Khi được phân quyền | Khi được phân quyền |
+| Escalation tới Management | Không áp dụng | Khi được phân quyền | Không áp dụng |
+| Yêu cầu sinh viên bổ sung thông tin | Không áp dụng | Người phụ trách hoặc khi được phân quyền | Khi được phân quyền |
 | Bổ sung thông tin theo yêu cầu | Được phép | Không áp dụng | Không áp dụng |
-| Ghi nhận kết quả / đóng / mở lại Ticket | Không áp dụng | Được phép | Khi được phân quyền |
+| Ghi nhận kết quả và chuyển `RESOLVED` | Không áp dụng | Người phụ trách hoặc khi được phân quyền | Khi được phân quyền |
+| Xác nhận kết quả / yêu cầu mở lại | Được phép | Không áp dụng | Không áp dụng |
 | Đánh giá mức độ hài lòng | Được phép | Không áp dụng | Không áp dụng |
 | Xem Dashboard và báo cáo | Không áp dụng | Không áp dụng | Được phép |
 | Quản lý tài khoản và phân quyền | Không áp dụng | Không áp dụng | Được phép |
@@ -111,5 +116,7 @@ Ma trận dưới đây mô tả phạm vi chức năng chính của từng nhó
 > **Được phép**: chức năng thuộc trách nhiệm chính của nhóm người dùng.  
 > **Không áp dụng**: chức năng không thuộc phạm vi sử dụng của nhóm.  
 > **Khi được phân quyền**: chỉ được thực hiện khi tài khoản có quyền phù hợp với vai trò và phạm vi trách nhiệm.
+
+> **Quy tắc vòng đời:** Sinh viên xác nhận kết quả hoặc yêu cầu mở lại trong giai đoạn `RESOLVED`; hệ thống tự động đóng Ticket khi hết thời hạn phản hồi. Staff không có thao tác đóng hoặc mở lại Ticket độc lập với các quy tắc này.
 
 > Chi tiết quyền theo dữ liệu, trạng thái Ticket và từng hành động được đặc tả trong phần Domain, Functional Requirements, Workflows và Security.
