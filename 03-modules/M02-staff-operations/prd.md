@@ -8,7 +8,7 @@ Phân hệ **Staff Operations** cung cấp không gian làm việc để nhân v
 - **Phạm vi dữ liệu:** Nhân viên chỉ được truy cập Ticket thuộc phòng ban hoặc phạm vi trách nhiệm được cấp.
 - **Người phụ trách:** Một Ticket chỉ có một người phụ trách chính tại một thời điểm.
 - **Phân công:** Các thao tác phân công/phân công lại chỉ dành cho người dùng có quyền phù hợp.
-- **Phạm vi vòng đời:** M02 xử lý Ticket đến khi ghi nhận kết quả ở `RESOLVED`; việc đóng hoặc mở lại tuân theo vòng đời Ticket dùng chung.
+- **Phạm vi vòng đời:** Các thao tác xử lý chính của M02 kết thúc khi Ticket được ghi nhận `RESOLVED`. Nhân viên vẫn có thể xem Ticket `RESOLVED`/`CLOSED` trong phạm vi quyền; nếu Ticket được mở lại hợp lệ về `IN_PROGRESS`, M02 tiếp tục xử lý Ticket đó.
 
 ---
 
@@ -115,7 +115,7 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
   - Nhân viên không được nhập tự do hoặc tạo Category mới trong màn hình xử lý Ticket.
   - Mỗi Category được cấu hình với một phòng ban tiếp nhận phù hợp.
   - Nếu nội dung thực tế không phù hợp với Category hiện tại, người có quyền xử lý có thể chọn lại một Category có sẵn.
-  - Nếu Category mới thuộc phòng ban khác, Ticket phải đi qua luồng **Transfer**; hệ thống không được tự đổi phòng ban một cách ngầm định.
+  - Nếu Category mới thuộc phòng ban khác, thay đổi Category chỉ được xác nhận cùng với luồng **Transfer** sang phòng ban được cấu hình cho Category đó; hệ thống không được lưu Category mới nhưng vẫn giữ Ticket ở phòng ban cũ.
 - **Người phụ trách:** phải là nhân viên đang hoạt động và thuộc phòng ban đang phụ trách Ticket.
 - Một Ticket chỉ có **01 người phụ trách chính tại một thời điểm**.
 - Danh sách nhân viên dùng cho thao tác Assign/Reassign chỉ hiển thị các nhân viên hợp lệ thuộc phòng ban hiện tại.
@@ -154,7 +154,7 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 - **AC-02-02:** Không thể có hai người phụ trách chính đồng thời cho cùng một Ticket.
 - **AC-02-03:** Phân công chỉ chấp nhận nhân viên hợp lệ thuộc phòng ban đang xử lý.
 - **AC-02-04:** Thay đổi Category hợp lệ được ghi nhận trong lịch sử.
-- **AC-02-05:** Category dẫn đến phòng ban khác phải sử dụng Transfer.
+- **AC-02-05:** Category thuộc phòng ban khác chỉ được lưu khi Transfer sang đúng phòng ban tương ứng được thực hiện thành công.
 
 ---
 
@@ -165,7 +165,7 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
 
 #### 2. Actors & Điều kiện tiên quyết
 - **Actor:** Nhân viên phụ trách Ticket hoặc người dùng có quyền điều phối/điều chỉnh mức độ ưu tiên.
-- **Preconditions:** Ticket thuộc phạm vi xử lý của người dùng và chưa ở trạng thái `CLOSED`.
+- **Preconditions:** Ticket thuộc phạm vi xử lý của người dùng và đang ở một trong các trạng thái `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT`.
 
 #### 3. Quy tắc Dữ liệu & Validation
 - Priority chỉ nhận một trong bốn giá trị: `LOW`, `MEDIUM`, `HIGH`, `URGENT`.
@@ -259,7 +259,7 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 ### [FR-STF-05] Chuyển xử lý và Escalation
 
 #### 1. Mô tả & Phạm vi
-Cho phép chuyển Ticket sang người/phòng ban phù hợp khác hoặc thực hiện Escalation khi Ticket cần phạm vi xử lý cao hơn, cần hỗ trợ hoặc có nguy cơ không đáp ứng thời hạn.
+Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn vị chịu trách nhiệm, hoặc thực hiện Escalation khi Ticket cần hỗ trợ/chuyển cấp xử lý. Việc đổi người phụ trách trong cùng phòng ban được thực hiện bằng luồng phân công lại tại FR-STF-02.
 
 #### 2. Actors & Điều kiện tiên quyết
 - **Actor:** Nhân viên có quyền xử lý Ticket.
@@ -282,7 +282,7 @@ Cho phép chuyển Ticket sang người/phòng ban phù hợp khác hoặc thự
 4. Nhân viên chọn phòng ban đích và nhập lý do Transfer.
 5. Hệ thống kiểm tra quyền, trạng thái và dữ liệu.
 6. Hệ thống thay đổi phòng ban phụ trách.
-7. Người phụ trách hiện tại được gỡ khỏi Ticket nếu không còn thuộc phạm vi phù hợp.
+7. Người phụ trách hiện tại được gỡ khỏi Ticket vì Ticket đã chuyển sang phòng ban khác.
 8. Ticket giữ trạng thái nghiệp vụ hiện tại phù hợp và xuất hiện trong hàng chờ của phòng ban mới.
 9. Hệ thống ghi nhận phòng ban trước, phòng ban sau, lý do và người thực hiện vào lịch sử.
 
@@ -292,9 +292,10 @@ Cho phép chuyển Ticket sang người/phòng ban phù hợp khác hoặc thự
 3. Hệ thống hiển thị các phạm vi/cấp xử lý hợp lệ đã được cấu hình.
 4. Nhân viên chọn đích Escalation và nhập lý do.
 5. Hệ thống kiểm tra quyền, trạng thái và dữ liệu.
-6. Hệ thống ghi nhận sự kiện Escalation và chuyển Ticket đến phạm vi/cấp xử lý đã chọn.
-7. Ticket giữ trạng thái nghiệp vụ hiện tại phù hợp.
-8. Các bên liên quan nhận thông báo trong hệ thống.
+6. Hệ thống ghi nhận sự kiện Escalation và phạm vi/cấp xử lý được chọn.
+7. Escalation không tự động thay đổi phòng ban hoặc người phụ trách hiện tại; nếu cần thay đổi trách nhiệm xử lý, người dùng thực hiện Transfer hoặc phân công lại theo FR-STF-02.
+8. Ticket giữ nguyên trạng thái nghiệp vụ hiện tại.
+9. Phạm vi/cấp xử lý được escalation và các bên liên quan nhận thông báo trong hệ thống.
 
 #### 6. Luồng ngoại lệ
 - Transfer không có lý do, lý do dưới 10 ký tự hoặc vượt 1.000 ký tự: từ chối.
@@ -306,13 +307,15 @@ Cho phép chuyển Ticket sang người/phòng ban phù hợp khác hoặc thự
 #### 7. Quy tắc nghiệp vụ
 - Tuân thủ `BR-OWN-02` và `BR-OWN-03`.
 - Transfer/Escalation phải giữ nguyên mã Ticket, nội dung, file và lịch sử đã có.
+- Transfer không tạo trạng thái mới và luôn thay đổi phòng ban chịu trách nhiệm.
+- Escalation không tạo trạng thái mới, không tự đổi phòng ban/người phụ trách và chỉ thay đổi trách nhiệm xử lý khi có thao tác Transfer hoặc phân công lại tương ứng.
 - Transfer/Escalation không tự động chuyển Ticket sang `RESOLVED` hoặc `CLOSED`.
 
 #### 8. Tiêu chí nghiệm thu
 - **AC-05-01:** Transfer hợp lệ đưa Ticket vào phạm vi phòng ban mới mà không thay đổi mã Ticket.
-- **AC-05-02:** Người phụ trách cũ được gỡ khi không còn phù hợp với phòng ban mới.
+- **AC-05-02:** Transfer sang phòng ban khác luôn gỡ người phụ trách hiện tại để phòng ban mới tiếp nhận hoặc phân công lại.
 - **AC-05-03:** Transfer không tạo state `TRANSFERRED`.
-- **AC-05-04:** Escalation hợp lệ được ghi nhận thành sự kiện riêng trong lịch sử.
+- **AC-05-04:** Escalation hợp lệ được ghi nhận thành sự kiện riêng trong lịch sử và không tự thay đổi phòng ban/người phụ trách.
 - **AC-05-05:** Lịch sử trước Transfer/Escalation được giữ nguyên.
 
 ---
@@ -328,7 +331,7 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 
 #### 3. Quy tắc Dữ liệu & Validation
 - **Nội dung kết quả xử lý:** bắt buộc, từ **20 đến 2.000 ký tự**, không chấp nhận nội dung chỉ chứa khoảng trắng.
-- **Tài liệu kết quả:** không bắt buộc; nếu có phải tuân thủ quy tắc file dùng chung.
+- **Tài liệu kết quả:** không bắt buộc; tối đa 03 file/lần, mỗi file tối đa 10 MB, định dạng PDF/PNG/JPG/JPEG.
 - Chỉ Ticket ở `IN_PROGRESS` mới được chuyển sang `RESOLVED` theo luồng này.
 
 #### 4. Luồng xử lý chi tiết
