@@ -19,14 +19,14 @@ flowchart TD
     H --> I[Thông báo cho sinh viên]
 
     I --> J[Sinh viên mở Ticket]
-    J --> K[Nhập nội dung và hoặc đính kèm file]
+    J --> K[Nhập nội dung và/hoặc đính kèm file]
     K --> L{Có ít nhất nội dung hoặc file hợp lệ?}
     L -->|Không| M[Hiển thị lỗi]
     M --> K
     L -->|Có| N[Lưu bổ sung và ghi lịch sử]
     N --> O[Chuyển về IN_PROGRESS]
     O --> P[Tiếp tục đồng hồ từ thời gian còn lại]
-    P --> Q[Thông báo người phụ trách]
+    P --> Q[Ticket trở lại danh sách xử lý phù hợp]
     Q --> R[Nhân viên tiếp tục xử lý]
 ```
 
