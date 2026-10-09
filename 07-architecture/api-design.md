@@ -21,7 +21,7 @@ API có thể được tổ chức theo:
 - Management account/configuration/dashboard/report/audit;
 - attachment.
 
-Cấu trúc route cụ thể không phải baseline nghiệp vụ và có thể thay đổi khi triển khai.
+Cấu trúc route cụ thể được xác định trong giai đoạn triển khai và không làm thay đổi hành vi nghiệp vụ.
 
 ## 4. Lỗi Và Validation
 
