@@ -1,61 +1,35 @@
-# [ARC-05] Thiết kế Bảo mật & Phân quyền (Security & RBAC Design)
+# ARC-05 - Thiết Kế Bảo Mật
 
-Tài liệu này chi tiết hóa kiến trúc bảo mật của hệ thống **UniSupport**, mô hình phân quyền dựa trên vai trò (Role-Based Access Control - RBAC), cơ chế mã hóa và phương án bảo vệ tài nguyên tệp đính kèm.
+## 1. Mục Tiêu
 
----
+Thực thi các yêu cầu tại NFR Security, Product Roles và Business Rules mà không mở rộng phạm vi thành hệ thống bảo mật chuyên sâu.
 
-## 🔒 1. Cơ chế Xác thực & Quản lý Phiên (Authentication & Session)
+## 2. Xác Thực
 
-1. **Phương thức xác thực:**
-   * Hệ thống áp dụng cơ chế xác thực **JSON Web Token (JWT)** Stateless hoặc **Session Token**.
-   * Khi đăng nhập thành công qua `/api/v1/auth/login`, Backend trả về `AccessToken` kèm thời gian hết hạn (Expiration Time).
-2. **Quản lý Token:**
-   * Token được gửi kèm trong HTTP Header của mỗi request dưới dạng: `Authorization: Bearer <JWT_TOKEN>`.
-   * Mật khẩu lưu trữ trong Cơ sở dữ liệu bắt buộc phải mã hóa bằng thuật toán băm an toàn **Bcrypt** (với Salt Factor >= 10).
+- Người dùng xác thực bằng tài khoản/mật khẩu.
+- Backend duy trì phiên đăng nhập bằng cơ chế kỹ thuật phù hợp.
+- Tài khoản bị khóa/vô hiệu hóa không được tạo hoặc tiếp tục phiên hợp lệ.
+- Mật khẩu phải được lưu bằng cơ chế một chiều phù hợp; thuật toán cụ thể do đội kỹ thuật lựa chọn.
 
----
+## 3. Phân Quyền
 
-## 👥 2. Ma trận Phân quyền Vai trò (RBAC Matrix)
+Kiểm tra quyền phải gồm:
+- **Vai trò/chức năng:** người dùng có được phép thực hiện hành động hay không.
+- **Phạm vi dữ liệu:** Ticket/tài khoản/phòng ban có nằm trong phạm vi được phép hay không.
+- **Điều kiện nghiệp vụ:** state, assignee, Category, thời hạn hoặc điều kiện liên quan có hợp lệ hay không.
 
-Hệ thống UniSupport định nghĩa các vai trò chính với phạm vi quyền thao tác rõ ràng:
+Ba nhóm người dùng chính là `STUDENT`, `STAFF`, `MANAGEMENT`.
 
-| Phân hệ / Chức năng | Sinh viên (`STUDENT`) | Nhân viên (`STAFF`) | Quản lý (`MANAGER`) |
-| :--- | :---: | :---: | :---: | :---: |
-| **Đăng nhập hệ thống** | Có | Có | Có | Có |
-| **Gửi Ticket & Upload file** | Có (chỉ của mình) | Không | Không | Không |
-| **Xem danh sách Ticket** | Chỉ Ticket của mình | Thuộc phòng ban | Theo phạm vi quản lý | Toàn hệ thống |
-| **Tiếp nhận / Phân loại** | Không | Có | Có | Có |
-| **Chuyển phòng ban** | Không | Có | Có | Có |
-| **Yêu cầu bổ sung hồ sơ** | Không | Có | Có | Có |
-| **Cập nhật kết quả / Đóng**| Không | Có | Có | Có |
-| **Đánh giá hài lòng** | Có (Ticket của mình) | Không | Không | Không |
-| **Xem Dashboard Báo cáo** | Không | Không | Có | Có |
-| **Quản trị Tài khoản/Quyền**| Không | Không | Theo quyền được cấp | Có |
+## 4. File Đính Kèm
 
----
+- File không được cung cấp cho người không có quyền.
+- Mọi yêu cầu xem/tải file phải kiểm tra quyền đối với Ticket liên quan.
+- Cách lưu file vật lý có thể thay đổi nhưng không được làm mất kiểm soát quyền.
 
-## 📎 3. Bảo mật Tệp đính kèm (File Attachment Security)
+## 5. Audit
 
-Tệp đính kèm (Ảnh/PDF) do sinh viên gửi chứa các thông tin cá nhân và giấy tờ quan trọng. Hệ thống thực hiện phương án bảo mật 3 lớp:
+Các thao tác quan trọng phải sinh Audit theo M03/`BR-AUD`. Audit không sửa/xóa bằng chức năng thông thường của ứng dụng.
 
-1. **Lưu trữ An toàn (Static Storage Isolation):**
-   * Tệp đính kèm không lưu trong thư mục Web công khai (`public/`).
-   * Tên tệp được mã hóa ngẫu nhiên bằng **UUIDv4** khi ghi vào đĩa đĩa để tránh dò tìm tệp (Directory Traversal attack).
-2. **Kiểm tra Quyền xem tệp (Access Control Middleware):**
-   * Mọi yêu cầu xem/tải tệp đính kèm phải thông qua API Proxy: `GET /api/v1/attachments/{file_id}`.
-   * Middleware sẽ verify JWT Token và kiểm tra người dùng có quyền truy cập:
-     * **Sinh viên:** Chỉ xem được tệp thuộc Ticket do chính mình tạo.
-     * **Nhân viên:** Chỉ xem được tệp thuộc Ticket gán cho phòng ban của mình.
-     * **Quản lý:** Có quyền xem tra soát toàn bộ.
-3. **Validate Định dạng & Dung lượng (Input Sanitization):**
-   * Chỉ chấp nhận các định dạng MIME allowed: `image/png`, `image/jpeg`, `application/pdf`.
-   * Chặn hoàn toàn các file thực thi (`.exe`, `.php`, `.js`, `.sh`...).
-   * Giới hạn dung lượng tối đa 10MB/file (hoặc theo cấu hình thống nhất).
+## 6. Giới Hạn
 
----
-
-## 📜 4. Nhật ký Tra soát (Audit Logging)
-
-Để phục vụ công tác tra soát khi có khiếu nại hoặc sự cố bảo mật, hệ thống ghi chép **Audit Log** cơ bản đối với các thao tác quan trọng vào bảng `audit_logs`:
-* **Các sự kiện được Log:** Đăng nhập thất bại/thành công, Chuyển tiếp phòng ban, Xóa/Khóa tài khoản, Thay đổi quyền hạn.
-* **Thông tin ghi nhận:** `User_ID`, `IP_Address`, `Action_Type`, `Timestamp`, `Old_Value`, `New_Value`.
+Không bao gồm penetration testing chuyên sâu hoặc chứng nhận bảo mật quốc tế trong baseline dự án.
