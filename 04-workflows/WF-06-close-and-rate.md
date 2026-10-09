@@ -1,42 +1,69 @@
-# [WF-06] Sinh viên nhận kết quả & Đánh giá mức độ hài lòng (Close and Rate)
+# WF-06 - Phản Hồi Kết Quả, Mở Lại, Đóng Và Đánh Giá
 
-### [FR-STU-05] Sinh viên xem kết quả và đánh giá chất lượng dịch vụ
+## 1. Mục Đích Và Phạm Vi
 
-**Mô tả**
-Hệ thống cho phép sinh viên xem chi tiết kết quả xử lý của Ticket và gửi đánh giá mức độ hài lòng (số sao và góp ý) sau khi yêu cầu đã hoàn thành.
+Mô tả toàn bộ hành vi sau khi Ticket ở `RESOLVED`: sinh viên chấp nhận kết quả hoặc yêu cầu mở lại; hệ thống tự đóng khi hết thời hạn; sau khi `CLOSED`, sinh viên có thể đánh giá mức độ hài lòng.
 
-**Actor**
-Sinh viên sở hữu Ticket (Student).
+## 2. Vai Trò Và Điều Kiện Bắt Đầu
 
-**Preconditions**
-- Ticket đang ở trạng thái `Hoàn thành` (Resolved / Closed).
-- Sinh viên đã đăng nhập vào hệ thống.
+- **Vai trò:** Sinh viên, Nhân viên và Hệ thống.
+- Ticket thuộc sinh viên và đang ở `RESOLVED` để phản hồi kết quả.
+- Đánh giá chỉ áp dụng khi Ticket đã ở `CLOSED`.
 
-**Luồng chính**
-1. Sinh viên nhận thông báo hoặc truy cập danh sách Ticket cá nhân, chọn Ticket đã hoàn thành.
-2. Sinh viên xem nội dung kết quả giải quyết và các tệp đính kèm (nếu có) từ nhân viên.
-3. Sinh viên chọn mức **Đánh giá hài lòng** (thang điểm từ 1 đến 5 sao).
-4. Sinh viên nhập **Nhận xét / Góp ý** (không bắt buộc).
-5. Sinh viên nhấn nút **Gửi đánh giá**.
-6. Hệ thống lưu nhận xét, số sao đánh giá gắn liền với Ticket và cập nhật trạng thái đánh giá.
-7. Hệ thống hiển thị thông báo cảm ơn sinh viên và khóa form đánh giá cho Ticket này.
+## 3. Luồng Nghiệp Vụ Chính
 
-**Business Rules**
-- Mỗi Ticket chỉ được phép gửi đánh giá **duy nhất 1 lần**.
-- Việc đánh giá là tự nguyện, sinh viên có thể xem kết quả mà không bắt buộc phải đánh giá ngay.
-- Kết quả đánh giá được tổng hợp tự động vào Dashboard báo cáo cho Ban quản lý.
+**Luồng A — Sinh viên chấp nhận kết quả**
+1. Sinh viên mở Ticket `RESOLVED` và xem kết quả.
+2. Sinh viên xác nhận vấn đề đã được giải quyết.
+3. Hệ thống chuyển Ticket sang `CLOSED`, ghi nhận thời điểm đóng và lịch sử.
 
-**Alternative / Error Flows**
-- **Sinh viên gửi đánh giá lại cho Ticket đã đánh giá:** Hệ thống ẩn form đánh giá và chỉ hiển thị kết quả đánh giá đã gửi trước đó.
-- **Mất kết nối khi gửi đánh giá:** Hệ thống hiển thị thông báo thử lại và không ghi nhận dữ liệu lỗi.
+**Luồng B — Sinh viên yêu cầu mở lại**
+1. Sinh viên mở Ticket `RESOLVED` còn trong thời hạn 03 ngày làm việc.
+2. Sinh viên chọn **Vấn đề chưa được giải quyết** và nhập lý do mở lại.
+3. Hệ thống kiểm tra trạng thái, thời hạn và lý do.
+4. Ticket chuyển từ `RESOLVED` về `IN_PROGRESS`.
+5. Nếu người phụ trách cũ vẫn hoạt động và còn thuộc phòng ban hiện tại, Ticket tiếp tục được giao cho người đó và người đó nhận thông báo.
+6. Nếu người phụ trách cũ không còn hợp lệ, Ticket được đưa về hàng chờ chưa có người phụ trách của phòng ban hiện tại.
+7. Nhân viên tiếp tục xử lý theo M02; khi có kết quả mới, thực hiện lại WF-05.
+8. Kết quả và lịch sử của vòng xử lý trước được giữ nguyên.
 
-**Acceptance Criteria**
-- **AC-01:** Sinh viên chọn số sao (1–5 sao), nhập nhận xét và bấm **Gửi đánh giá** -> Hệ thống lưu đánh giá thành công và hiển thị thông báo ghi nhận.
-- **AC-02:** Sinh viên chọn số sao và để trống nhận xét -> Hệ thống vẫn chấp nhận và lưu đánh giá thành công.
-- **AC-03:** Sau khi đã gửi đánh giá, giao diện Ticket hiển thị đánh giá cũ và không cho phép chỉnh sửa/gửi lại.
-- **AC-04:** Sinh viên khác không sở hữu Ticket không thể thực hiện đánh giá (HTTP 403).
+**Luồng C — Hệ thống tự động đóng**
+1. Ticket ở `RESOLVED`.
+2. Hết 03 ngày làm việc mà sinh viên không yêu cầu xử lý tiếp.
+3. Hệ thống chuyển Ticket sang `CLOSED` và ghi nhận thời điểm đóng.
 
-**Ví dụ Edge Case**
-Sinh viên mở hai tab trình duyệt cùng lúc cho Ticket đã hoàn thành và bấm **Gửi đánh giá** trên cả hai tab.
+**Luồng D — Sinh viên đánh giá**
+1. Ticket đã ở `CLOSED` và còn trong 07 ngày theo lịch kể từ thời điểm đóng.
+2. Sinh viên chọn điểm 1–5 sao và nhập nhận xét nếu muốn.
+3. Hệ thống kiểm tra Ticket chưa từng được đánh giá.
+4. Hệ thống lưu đánh giá và không cho gửi đánh giá lần thứ hai.
 
-**Expected Result:** Tab gửi đầu tiên ghi nhận đánh giá thành công. Tab thứ hai gửi sau sẽ nhận thông báo "Ticket này đã được đánh giá trước đó" và tự động làm mới lại giao diện hiển thị đánh giá cũ.
+## 4. Luồng Ngoại Lệ
+
+- Ticket đã `CLOSED` hoặc hết thời hạn phản hồi: không cho mở lại.
+- Lý do mở lại thiếu hoặc không hợp lệ: từ chối.
+- Ticket không thuộc sinh viên: từ chối truy cập/thao tác.
+- Ticket đã có đánh giá hoặc đã hết 07 ngày đánh giá: không nhận đánh giá mới.
+
+## 5. Quy Tắc Nghiệp Vụ
+
+- Reopen chỉ có chuyển đổi `RESOLVED → IN_PROGRESS`.
+- Staff không có thao tác đóng hoặc mở lại độc lập.
+- `CLOSED` là trạng thái kết thúc vòng đời; vấn đề mới phải tạo Ticket mới.
+- Mỗi Ticket chỉ có tối đa một đánh giá 1–5 sao.
+- Nhận xét CSAT là không bắt buộc.
+- Mọi lần mở lại và đóng Ticket phải được ghi nhận trong lịch sử.
+
+## 6. Tiêu Chí Nghiệm Thu
+
+- Xác nhận kết quả hợp lệ chuyển `RESOLVED → CLOSED`.
+- Reopen hợp lệ trong 03 ngày làm việc chuyển `RESOLVED → IN_PROGRESS`.
+- Reopen giữ assignee cũ nếu hợp lệ; nếu không Ticket về đúng hàng chờ phòng ban.
+- Ticket tự động đóng khi hết thời hạn phản hồi mà không có yêu cầu xử lý tiếp.
+- CSAT chỉ nhận khi Ticket `CLOSED`, trong 07 ngày và tối đa một lần.
+
+## 7. Tài Liệu Liên Quan
+
+- M01: `FR-STU-06`, `FR-STU-07`.
+- M02: `FR-STF-01`, `FR-STF-06`.
+- Domain: `BR-LIFE-02`, `BR-LIFE-03`, `BR-CSAT-01`.
