@@ -1,6 +1,6 @@
 # 04 - Quy Trình Nghiệp Vụ (Workflows)
 
-Thư mục `04-workflows` mô tả các **luồng nghiệp vụ xuyên chức năng hoặc xuyên phân hệ** của UniSupport. Workflow không tạo thêm chức năng mới; mỗi bước phải truy xuất được về Functional Requirements và Business Rules đã xác lập trong M01, M02, M03 và `02-domain`.
+Thư mục `04-workflows` mô tả các **luồng nghiệp vụ xuyên chức năng hoặc xuyên phân hệ** của UniSupport bằng sơ đồ Mermaid. Workflow không tạo thêm chức năng mới; mọi bước trong sơ đồ phải truy xuất được về Functional Requirements và Business Rules đã xác lập trong M01, M02, M03 và `02-domain`.
 
 ## 1. Danh Sách Workflow
 
@@ -16,18 +16,17 @@ Thư mục `04-workflows` mô tả các **luồng nghiệp vụ xuyên chức n�
 
 ## 2. Nguyên Tắc Sử Dụng
 
+- Mỗi file Workflow sử dụng **Mermaid flowchart** làm nội dung chính.
+- Sơ đồ thể hiện **luồng nghiệp vụ**, không phải mô hình kỹ thuật hoặc sơ đồ API.
 - Bộ trạng thái Ticket chỉ gồm `NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED`, `CLOSED`.
-- Chuyển xử lý (Transfer) và chuyển cấp hỗ trợ (Escalation) là **hành động nghiệp vụ**, không phải trạng thái.
-- Workflow chỉ mô tả trình tự phối hợp giữa các chức năng; điều kiện chi tiết về dữ liệu, quyền, thời hạn, file, mở lại và CSAT tuân theo tài liệu Domain và PRD.
-- Không đưa API, HTTP status, JWT, cấu trúc database hoặc cơ chế khóa kỹ thuật vào Workflow.
+- Chuyển xử lý (Transfer) và chuyển cấp hỗ trợ (Escalation) là hành động nghiệp vụ, không phải trạng thái.
+- Điều kiện chi tiết về dữ liệu, quyền, thời hạn, file, mở lại và CSAT vẫn tuân theo PRD và Domain.
+- Không đưa API, HTTP status, JWT, cấu trúc database hoặc cơ chế kỹ thuật vào Workflow.
 
 ## 3. Cấu Trúc Mỗi Workflow
 
-Mỗi Workflow gồm:
+Mỗi file Workflow gồm:
 1. Mục đích và phạm vi.
-2. Vai trò và điều kiện bắt đầu.
-3. Luồng nghiệp vụ chính.
-4. Luồng ngoại lệ.
-5. Quy tắc nghiệp vụ.
-6. Tiêu chí nghiệm thu.
-7. Tài liệu liên quan.
+2. Sơ đồ Mermaid.
+3. Ghi chú nghiệp vụ quan trọng.
+4. Tài liệu tham chiếu.
