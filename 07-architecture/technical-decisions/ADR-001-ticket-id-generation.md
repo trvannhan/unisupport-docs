@@ -2,9 +2,9 @@
 
 ## Bối Cảnh
 
-Proposal yêu cầu sinh viên nhận mã Ticket để theo dõi. Domain yêu cầu mã Ticket duy nhất trong hệ thống.
+Mỗi Ticket cần có một mã nhận diện duy nhất để phục vụ tra cứu và trao đổi trong suốt vòng đời xử lý.
 
-## Quyết Định Baseline
+## Quyết Định
 
 - Mỗi Ticket phải có **một mã Ticket duy nhất**, hiển thị được cho Sinh viên/Staff/Management khi có quyền.
 - Mã phải ổn định trong suốt vòng đời Ticket và không thay đổi khi Transfer, reopen hoặc đóng Ticket.
@@ -12,4 +12,4 @@ Proposal yêu cầu sinh viên nhận mã Ticket để theo dõi. Domain yêu c�
 
 ## Hệ Quả
 
-Đội phát triển phải bảo đảm tính duy nhất nhưng không bị khóa vào một format mã cụ thể trước khi thiết kế kỹ thuật được chốt.
+Giải pháp triển khai phải bảo đảm tính duy nhất của mã Ticket nhưng không phụ thuộc vào một định dạng hiển thị hoặc kiểu khóa chính cố định.
