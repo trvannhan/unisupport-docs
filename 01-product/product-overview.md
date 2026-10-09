@@ -48,15 +48,15 @@ UniSupport gồm **3 phân hệ chính**:
 | Mã phân hệ | Tên phân hệ | Chức năng cốt lõi |
 | :--- | :--- | :--- |
 | **M01** | **Sinh viên (Student Portal)** | Đăng nhập, gửi yêu cầu hỗ trợ, đính kèm file ảnh/PDF, nhận mã Ticket, theo dõi tiến độ, bổ sung hồ sơ, nhận thông báo, xem kết quả và đánh giá mức độ hài lòng. |
-| **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, tiếp nhận và tìm kiếm yêu cầu, phân loại, xác định mức độ ưu tiên, phân công/chuyển xử lý, cập nhật tiến độ, yêu cầu bổ sung, ghi nhận kết quả và đóng/mở lại Ticket theo rule đã chốt. |
-| **M03** | **Quản lý (Management Dashboard)** | Đăng nhập, theo dõi Dashboard và báo cáo, giám sát khối lượng/SLA, quản lý tài khoản và quyền, quản lý danh mục/cấu hình, tra soát hoạt động và các chức năng quản trị thuộc phạm vi Management. |
+| **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, tiếp nhận và tìm kiếm yêu cầu, phân loại, xác định mức độ ưu tiên, phân công/chuyển xử lý, cập nhật tiến độ, yêu cầu bổ sung, ghi nhận kết quả và đóng/mở lại Ticket theo quy định nghiệp vụ. |
+| **M03** | **Quản lý (Management Dashboard)** | Đăng nhập, theo dõi Dashboard và báo cáo, giám sát khối lượng công việc và thời hạn xử lý, quản lý tài khoản và quyền, quản lý danh mục/cấu hình, tra soát hoạt động và các chức năng quản trị thuộc phạm vi Management. |
 
 ### Năng lực dùng chung
 
 - **Thông báo trong hệ thống**: hỗ trợ người dùng nhận các thông tin liên quan đến quá trình xử lý Ticket.
 - **Xác thực, bảo mật & phân quyền**: dùng chung cho cả 3 phân hệ; giới hạn truy cập theo vai trò/phạm vi dữ liệu, bảo vệ file đính kèm và ghi nhận các thao tác quan trọng.
 
-> **Admin không phải là phân hệ hoặc nhóm người dùng thứ tư.** Các chức năng quản trị hệ thống thuộc phạm vi của phân hệ **Management** và chỉ khả dụng đối với tài khoản Quản lý được cấp quyền tương ứng.
+> Các chức năng quản trị hệ thống thuộc phạm vi của phân hệ **Management** và được phân quyền cho các tài khoản Quản lý phù hợp.
 
 ---
 
@@ -65,7 +65,7 @@ UniSupport gồm **3 phân hệ chính**:
 - Mobile App độc lập cho iOS/Android.
 - Tích hợp bên thứ ba ngoài phạm vi đã thống nhất.
 - Thiết lập sao lưu tự động, theo dõi vận hành máy chủ và hỗ trợ hạ tầng lâu dài.
-- Hệ thống phân quyền nhiều cấp hoặc permission builder phức tạp ngoài nhu cầu baseline.
+- Cơ chế phân quyền tùy biến nhiều cấp hoặc mô hình phân quyền phức tạp ngoài phạm vi đã xác định.
 - Audit/kiểm toán chuyên sâu ngoài phạm vi nhật ký thao tác cần thiết.
 - Chat trực tiếp hoặc gọi thoại trong hệ thống.
 - Tối ưu chịu tải lớn vượt quá quy mô khoảng 3.000 sinh viên.
