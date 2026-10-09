@@ -23,8 +23,8 @@ Cho phép sinh viên đăng nhập vào UniSupport bằng tài khoản hợp l�
 - **Preconditions:** Tài khoản sinh viên tồn tại và đang hoạt động.
 
 #### 3. Quy tắc Dữ liệu & Validation
-- Tài khoản đăng nhập: bắt buộc.
-- Mật khẩu: bắt buộc.
+- **Tên đăng nhập:** bắt buộc, sử dụng tài khoản do nhà trường cấp cho sinh viên.
+- **Mật khẩu:** bắt buộc.
 - Không chấp nhận dữ liệu chỉ chứa khoảng trắng.
 
 #### 4. Luồng xử lý chi tiết
@@ -102,7 +102,7 @@ Cho phép sinh viên tạo Ticket mới bằng cách chọn một **Nhóm vấn 
   - Sinh viên không được tự tạo, sửa hoặc nhập tự do Nhóm vấn đề khi tạo Ticket.
   - Mỗi Nhóm vấn đề được cấu hình với một phòng ban tiếp nhận phù hợp.
   - Hệ thống sử dụng Nhóm vấn đề đã chọn để xác định phòng ban tiếp nhận Ticket.
-- **Nội dung yêu cầu:** bắt buộc, không chấp nhận nội dung chỉ chứa khoảng trắng.
+- **Nội dung yêu cầu:** bắt buộc, từ **20 đến 2.000 ký tự**, không chấp nhận nội dung chỉ chứa khoảng trắng.
 - **File đính kèm:** không bắt buộc.
 - Tối đa **03 file/lần**.
 - Dung lượng tối đa **10 MB/file**.
@@ -162,7 +162,7 @@ Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng th�
 2. Hệ thống hiển thị các Ticket thuộc sinh viên, ưu tiên Ticket cập nhật gần nhất.
 3. Mỗi Ticket hiển thị tối thiểu mã Ticket, nhóm vấn đề, thời điểm tạo và trạng thái hiện tại.
 4. Sinh viên mở một Ticket để xem chi tiết.
-5. Hệ thống hiển thị nội dung yêu cầu, phòng ban/người phụ trách nếu đã được phân công, mức độ ưu tiên, thời hạn xử lý, file được phép truy cập, kết quả nếu đã có và lịch sử xử lý phù hợp với sinh viên.
+5. Hệ thống hiển thị nội dung yêu cầu, phòng ban/người phụ trách nếu đã được phân công, thời hạn xử lý dự kiến, file được phép truy cập, kết quả nếu đã có và lịch sử xử lý được phép hiển thị cho sinh viên.
 
 #### 5. Luồng ngoại lệ
 - Không có Ticket: hiển thị trạng thái danh sách trống.
@@ -170,7 +170,8 @@ Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng th�
 
 #### 6. Quy tắc nghiệp vụ
 - Transfer và Escalation được thể hiện trong lịch sử xử lý, không phải trạng thái Ticket.
-- Sinh viên chỉ xem các hoạt động được phép công khai theo phạm vi quyền.
+- Lịch sử hiển thị cho sinh viên tối thiểu gồm: tạo Ticket, thay đổi trạng thái, yêu cầu bổ sung, sinh viên bổ sung thông tin/tài liệu, chuyển phòng ban, ghi nhận kết quả, mở lại và đóng Ticket.
+- Các sự kiện quản trị hoặc Audit Trail không liên quan trực tiếp đến quá trình hỗ trợ của sinh viên không hiển thị trong Student Portal.
 
 #### 7. Tiêu chí nghiệm thu
 - **AC-03-01:** Danh sách chỉ chứa Ticket thuộc sinh viên đang đăng nhập.
@@ -216,7 +217,7 @@ Các sự kiện chính gồm:
 #### 6. Quy tắc nghiệp vụ
 - Chỉ gửi thông báo đến sinh viên sở hữu Ticket.
 - Thông báo không được làm lộ dữ liệu của Ticket khác.
-- Phạm vi cơ bản sử dụng thông báo trong hệ thống; không mặc định yêu cầu SMS hoặc push notification bên ngoài hệ thống.
+- Thông báo của M01 là **thông báo trong hệ thống (in-app notification)**.
 
 #### 7. Tiêu chí nghiệm thu
 - **AC-04-01:** Sự kiện hợp lệ tạo thông báo cho đúng sinh viên.
@@ -237,6 +238,7 @@ Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi n
 
 #### 3. Quy tắc Dữ liệu & Validation
 - Phải có ít nhất một trong hai: nội dung bổ sung hoặc file đính kèm.
+- Nội dung bổ sung, nếu có: tối đa **2.000 ký tự**, không chấp nhận nội dung chỉ chứa khoảng trắng.
 - File đính kèm: PDF/PNG/JPG/JPEG, tối đa 10 MB/file và tối đa 03 file/lần.
 
 #### 4. Luồng xử lý chi tiết
@@ -269,7 +271,7 @@ Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi n
 ### [FR-STU-06] Xem kết quả, phản hồi và yêu cầu mở lại
 
 #### 1. Mô tả & Phạm vi
-Cho phép sinh viên xem kết quả xử lý và xác nhận Ticket đã được giải quyết hoặc phản hồi rằng vấn đề vẫn chưa được giải quyết.
+Cho phép sinh viên xem nội dung kết quả xử lý và tài liệu kết quả nếu có, sau đó xác nhận Ticket đã được giải quyết hoặc phản hồi rằng vấn đề vẫn chưa được giải quyết.
 
 #### 2. Actors & Điều kiện tiên quyết
 - **Actor:** Sinh viên đã đăng nhập.
@@ -279,14 +281,14 @@ Cho phép sinh viên xem kết quả xử lý và xác nhận Ticket đã đư�
 
 #### 3. Quy tắc Dữ liệu & Validation
 - Xác nhận kết quả: không yêu cầu nội dung bổ sung.
-- Yêu cầu mở lại: bắt buộc có lý do.
+- Yêu cầu mở lại: bắt buộc có lý do từ **10 đến 1.000 ký tự**, không chấp nhận nội dung chỉ chứa khoảng trắng.
 - Hệ thống phải kiểm tra trạng thái Ticket và thời hạn phản hồi trước khi chấp nhận thao tác.
 
 #### 4. Luồng xử lý chi tiết
 
 **Luồng A — Chấp nhận kết quả**
 1. Sinh viên mở Ticket `RESOLVED`.
-2. Hệ thống hiển thị kết quả xử lý và thời hạn phản hồi còn lại.
+2. Hệ thống hiển thị nội dung kết quả xử lý, tài liệu kết quả nếu có và thời hạn phản hồi còn lại.
 3. Sinh viên xác nhận kết quả đã giải quyết vấn đề.
 4. Hệ thống chuyển Ticket sang `CLOSED` và ghi nhận thời điểm đóng.
 
@@ -296,7 +298,7 @@ Cho phép sinh viên xem kết quả xử lý và xác nhận Ticket đã đư�
 3. Sinh viên nhập lý do mở lại.
 4. Hệ thống kiểm tra trạng thái và thời hạn phản hồi.
 5. Nếu hợp lệ, hệ thống ghi nhận lý do và chuyển Ticket về `IN_PROGRESS`.
-6. Hệ thống thông báo cho phạm vi xử lý liên quan.
+6. Hệ thống thông báo cho người phụ trách hiện tại hoặc phòng ban đang phụ trách Ticket.
 
 **Luồng C — Tự động đóng**
 1. Ticket ở `RESOLVED`.
@@ -334,7 +336,7 @@ Ghi nhận mức độ hài lòng của sinh viên sau khi Ticket đã kết th�
 
 #### 3. Quy tắc Dữ liệu & Validation
 - Điểm đánh giá: bắt buộc, từ 1 đến 5 sao.
-- Nhận xét: không bắt buộc.
+- Nhận xét: không bắt buộc, tối đa **500 ký tự**.
 - Mỗi Ticket chỉ được đánh giá một lần.
 
 #### 4. Luồng xử lý chi tiết
