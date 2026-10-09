@@ -63,7 +63,7 @@ UniSupport gồm **3 phân hệ chính**:
 ## 5. Ngoài Phạm Vi (Non-Goals)
 
 - Mobile App độc lập cho iOS/Android.
-- Tích hợp bên thứ ba ngoài phạm vi đã thống nhất.
+- Tích hợp hệ thống bên thứ ba ngoài phạm vi sản phẩm.
 - Thiết lập sao lưu tự động, theo dõi vận hành máy chủ và hỗ trợ hạ tầng lâu dài.
 - Cơ chế phân quyền tùy biến nhiều cấp hoặc mô hình phân quyền phức tạp ngoài phạm vi đã xác định.
 - Audit/kiểm toán chuyên sâu ngoài phạm vi nhật ký thao tác cần thiết.
