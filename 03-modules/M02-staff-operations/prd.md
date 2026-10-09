@@ -6,8 +6,8 @@ Phân hệ **Staff Operations** cung cấp không gian làm việc để nhân v
 
 - **Actor chính:** Nhân viên (Staff).
 - **Phạm vi dữ liệu:** Nhân viên chỉ được truy cập Ticket thuộc phòng ban hoặc phạm vi trách nhiệm được cấp.
-- **Người phụ trách:** Một Ticket chỉ có một người phụ trách chính tại một thời điểm.
-- **Phân công:** Các thao tác phân công/phân công lại chỉ dành cho người dùng có quyền phù hợp.
+- **Người phụ trách:** Một Ticket có tối đa một người phụ trách chính tại một thời điểm. Ticket chưa được tiếp nhận/phân công hoặc vừa Transfer có thể chưa có người phụ trách chính.
+- **Phân công:** Các thao tác phân công/phân công lại chỉ dành cho Staff hoặc Management có quyền tương ứng theo [Actors & Roles](../../01-product/actors-and-roles.md).
 - **Phạm vi vòng đời:** Các thao tác xử lý chính của M02 kết thúc khi Ticket được ghi nhận `RESOLVED`. Nhân viên vẫn có thể xem Ticket `RESOLVED`/`CLOSED` trong phạm vi quyền; nếu Ticket được mở lại hợp lệ về `IN_PROGRESS`, M02 tiếp tục xử lý Ticket đó.
 
 ---
@@ -106,7 +106,7 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 
 #### 2. Actors & Điều kiện tiên quyết
 - **Actor:** Nhân viên đã đăng nhập.
-- **Actor bổ sung:** Người dùng có quyền phân công.
+- **Actor bổ sung:** Staff hoặc Management có quyền phân công theo ma trận quyền tại [Actors & Roles](../../01-product/actors-and-roles.md).
 - **Preconditions:** Ticket thuộc phạm vi phòng ban được phép xử lý.
 
 #### 3. Quy tắc Dữ liệu & Validation
@@ -164,7 +164,7 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 Cho phép người dùng có quyền thiết lập mức độ ưu tiên của Ticket và theo dõi thời hạn xử lý tương ứng.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** Nhân viên phụ trách Ticket hoặc người dùng có quyền điều phối/điều chỉnh mức độ ưu tiên.
+- **Actor:** Nhân viên phụ trách Ticket hoặc Staff/Management có quyền điều chỉnh Priority theo [Actors & Roles](../../01-product/actors-and-roles.md).
 - **Preconditions:** Ticket thuộc phạm vi xử lý của người dùng và đang ở một trong các trạng thái `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT`.
 
 #### 3. Quy tắc Dữ liệu & Validation
@@ -195,7 +195,7 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
 #### 6. Quy tắc nghiệp vụ
 - Tuân thủ `BR-DUE-01` và `BR-DUE-02`.
 - Thời gian Ticket ở `WAITING_STUDENT` không tính vào thời gian xử lý.
-- Khi Priority thay đổi, Deadline được tính lại theo mức mới nhưng vẫn giữ phần thời gian xử lý hợp lệ đã sử dụng.
+- Khi Priority thay đổi, Deadline được tính lại theo công thức tại `BR-DUE-01` và `BR-DUE-02`; đồng hồ không được đặt lại từ đầu.
 
 #### 7. Tiêu chí nghiệm thu
 - **AC-03-01:** Mỗi Priority tạo ra Deadline đúng theo Business Rules.
@@ -262,61 +262,68 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn vị chịu trách nhiệm, hoặc thực hiện Escalation khi Ticket cần hỗ trợ/chuyển cấp xử lý. Việc đổi người phụ trách trong cùng phòng ban được thực hiện bằng luồng phân công lại tại FR-STF-02.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** Nhân viên có quyền xử lý Ticket.
+- **Actor:** Staff có quyền Transfer/Escalation hoặc Management có quyền Transfer theo [Actors & Roles](../../01-product/actors-and-roles.md).
 - **Preconditions:** Ticket thuộc phạm vi xử lý hiện tại và đang ở một trong các trạng thái `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT`.
 
 #### 3. Quy tắc Dữ liệu & Validation
 - **Transfer sang phòng ban khác:**
-  - Phòng ban đích phải được chọn từ danh sách phòng ban đang hoạt động do hệ thống cung cấp.
-  - Phòng ban đích phải khác phòng ban hiện tại.
+  - Người dùng phải chọn **Category đích** từ danh mục Category đang hoạt động.
+  - Hệ thống hiển thị phòng ban được cấu hình cho từng Category và tự xác định **phòng ban đích** từ Category đã chọn.
+  - Category đích phải ánh xạ tới phòng ban khác phòng ban hiện tại.
   - Lý do Transfer bắt buộc, từ **10 đến 1.000 ký tự**.
+  - Category mới và phòng ban mới chỉ được lưu khi toàn bộ thao tác Transfer thành công.
 - **Escalation:**
-  - Đích Escalation phải được chọn từ danh sách phạm vi/cấp xử lý hợp lệ đã được cấu hình cho phòng ban hiện tại.
+  - Đích Escalation là **tài khoản Management có quyền tiếp nhận escalation trong phạm vi quản lý liên quan**.
+  - Hệ thống chỉ hiển thị các tài khoản Management hợp lệ cho Ticket hiện tại.
   - Lý do Escalation bắt buộc, từ **10 đến 1.000 ký tự**.
+  - Escalation không thay đổi Category, phòng ban, người phụ trách chính hoặc trạng thái Ticket.
 - Transfer và Escalation không tạo trạng thái Ticket mới.
 
 #### 4. Luồng A — Transfer
 1. Nhân viên mở Ticket.
 2. Nhân viên chọn **Chuyển xử lý**.
-3. Hệ thống hiển thị danh sách phòng ban đang hoạt động mà người dùng được phép chuyển Ticket tới.
-4. Nhân viên chọn phòng ban đích và nhập lý do Transfer.
-5. Hệ thống kiểm tra quyền, trạng thái và dữ liệu.
-6. Hệ thống thay đổi phòng ban phụ trách.
+3. Hệ thống hiển thị danh mục Category đang hoạt động kèm phòng ban được cấu hình cho từng Category.
+4. Nhân viên chọn Category đích phù hợp và nhập lý do Transfer.
+5. Hệ thống xác định phòng ban đích từ Category đã chọn và kiểm tra quyền, trạng thái, Category/phòng ban hợp lệ.
+6. Khi toàn bộ kiểm tra hợp lệ, hệ thống cập nhật **Category và phòng ban** trong cùng một thao tác.
 7. Người phụ trách hiện tại được gỡ khỏi Ticket vì Ticket đã chuyển sang phòng ban khác.
 8. Ticket giữ trạng thái nghiệp vụ hiện tại phù hợp và xuất hiện trong hàng chờ của phòng ban mới.
-9. Hệ thống ghi nhận phòng ban trước, phòng ban sau, lý do và người thực hiện vào lịch sử.
+9. Hệ thống ghi nhận Category trước/sau, phòng ban trước/sau, lý do và người thực hiện vào lịch sử.
+10. Hệ thống tạo thông báo trong hệ thống cho sinh viên và phạm vi phòng ban mới.
 
 #### 5. Luồng B — Escalation
 1. Nhân viên xác định Ticket vượt thẩm quyền hiện tại, cần hỗ trợ hoặc có nguy cơ quá hạn.
 2. Nhân viên chọn **Escalation**.
-3. Hệ thống hiển thị các phạm vi/cấp xử lý hợp lệ đã được cấu hình.
-4. Nhân viên chọn đích Escalation và nhập lý do.
+3. Hệ thống hiển thị các tài khoản Management hợp lệ có quyền tiếp nhận escalation trong phạm vi quản lý liên quan.
+4. Nhân viên chọn người nhận escalation và nhập lý do.
 5. Hệ thống kiểm tra quyền, trạng thái và dữ liệu.
-6. Hệ thống ghi nhận sự kiện Escalation và phạm vi/cấp xử lý được chọn.
-7. Escalation không tự động thay đổi phòng ban hoặc người phụ trách hiện tại; nếu cần thay đổi trách nhiệm xử lý, người dùng thực hiện Transfer hoặc phân công lại theo FR-STF-02.
-8. Ticket giữ nguyên trạng thái nghiệp vụ hiện tại.
-9. Phạm vi/cấp xử lý được escalation và các bên liên quan nhận thông báo trong hệ thống.
+6. Hệ thống ghi nhận người gửi, người nhận, lý do và thời điểm Escalation vào lịch sử Ticket.
+7. Category, phòng ban, người phụ trách chính và trạng thái Ticket được giữ nguyên.
+8. Người phụ trách hiện tại tiếp tục chịu trách nhiệm xử lý Ticket.
+9. Hệ thống gửi thông báo trong hệ thống cho người nhận Management và người phụ trách hiện tại. Sinh viên không nhận thông báo chỉ vì sự kiện Escalation nội bộ.
 
 #### 6. Luồng ngoại lệ
-- Transfer không có lý do, lý do dưới 10 ký tự hoặc vượt 1.000 ký tự: từ chối.
-- Escalation không có đích hợp lệ hoặc lý do không hợp lệ: từ chối.
-- Chọn chính phòng ban hiện tại làm đích Transfer: từ chối.
+- Transfer không có Category đích hợp lệ, Category đích vẫn thuộc phòng ban hiện tại hoặc lý do không hợp lệ: từ chối.
+- Escalation không có người nhận Management hợp lệ hoặc lý do không hợp lệ: từ chối.
 - Người dùng không đủ quyền: từ chối thao tác.
 - Ticket đã thay đổi phạm vi/trạng thái không còn phù hợp trước khi xác nhận: từ chối và hiển thị dữ liệu mới nhất.
 
 #### 7. Quy tắc nghiệp vụ
 - Tuân thủ `BR-OWN-02` và `BR-OWN-03`.
 - Transfer/Escalation phải giữ nguyên mã Ticket, nội dung, file và lịch sử đã có.
-- Transfer không tạo trạng thái mới và luôn thay đổi phòng ban chịu trách nhiệm.
-- Escalation không tạo trạng thái mới, không tự đổi phòng ban/người phụ trách và chỉ thay đổi trách nhiệm xử lý khi có thao tác Transfer hoặc phân công lại tương ứng.
+- Transfer không tạo trạng thái mới; Category và phòng ban chịu trách nhiệm phải được cập nhật nhất quán trong cùng một thao tác.
+- Transfer thành công phải gửi thông báo trong hệ thống cho sinh viên và phạm vi phòng ban mới.
+- Escalation không tạo trạng thái mới, không đổi Category/phòng ban/người phụ trách và không thay thế Transfer.
+- Escalation thành công phải thông báo trong hệ thống cho Management nhận escalation và người phụ trách hiện tại.
 - Transfer/Escalation không tự động chuyển Ticket sang `RESOLVED` hoặc `CLOSED`.
 
 #### 8. Tiêu chí nghiệm thu
-- **AC-05-01:** Transfer hợp lệ đưa Ticket vào phạm vi phòng ban mới mà không thay đổi mã Ticket.
+- **AC-05-01:** Transfer hợp lệ cập nhật đồng thời Category và phòng ban theo cấu hình, không thay đổi mã Ticket.
 - **AC-05-02:** Transfer sang phòng ban khác luôn gỡ người phụ trách hiện tại để phòng ban mới tiếp nhận hoặc phân công lại.
-- **AC-05-03:** Transfer không tạo state `TRANSFERRED`.
-- **AC-05-04:** Escalation hợp lệ được ghi nhận thành sự kiện riêng trong lịch sử và không tự thay đổi phòng ban/người phụ trách.
-- **AC-05-05:** Lịch sử trước Transfer/Escalation được giữ nguyên.
+- **AC-05-03:** Lịch sử Transfer ghi nhận Category trước/sau, phòng ban trước/sau, lý do và người thực hiện; sinh viên và phòng ban mới nhận thông báo trong hệ thống.
+- **AC-05-04:** Escalation hợp lệ được gửi tới đúng Management được chọn, giữ nguyên Category/phòng ban/người phụ trách/trạng thái và được ghi nhận trong lịch sử.
+- **AC-05-05:** Management nhận escalation và người phụ trách hiện tại nhận thông báo; sinh viên không nhận thông báo chỉ vì escalation.
+- **AC-05-06:** Lịch sử trước Transfer/Escalation được giữ nguyên.
 
 ---
 
@@ -326,7 +333,7 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
 Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket và chuyển Ticket sang `RESOLVED` để sinh viên xem và phản hồi.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** Nhân viên phụ trách Ticket hoặc người dùng có quyền hoàn tất xử lý.
+- **Actor:** Nhân viên phụ trách Ticket hoặc Staff/Management có quyền ghi nhận kết quả theo [Actors & Roles](../../01-product/actors-and-roles.md).
 - **Preconditions:** Ticket đang ở `IN_PROGRESS` và đã đáp ứng điều kiện nghiệp vụ để có thể ghi nhận kết quả.
 
 #### 3. Quy tắc Dữ liệu & Validation
@@ -368,7 +375,15 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 
 ---
 
-## III. QUY TẮC THAM CHIẾU
+## III. TRACEABILITY VÒNG ĐỜI
+
+- Phạm vi **WP-STF-06 - Đóng & mở lại yêu cầu** được thực hiện xuyên suốt giữa các phân hệ:
+  - M01 thực hiện hành vi sinh viên xác nhận kết quả hoặc yêu cầu mở lại.
+  - Quy tắc vòng đời dùng chung thực hiện tự động chuyển `RESOLVED -> CLOSED` khi hết thời hạn phản hồi.
+  - M02 tiếp nhận lại Ticket đã reopen, khôi phục Ticket vào hàng chờ xử lý phù hợp và tiếp tục xử lý đến lần `RESOLVED` tiếp theo.
+- Staff không có thao tác đóng hoặc mở lại Ticket độc lập ngoài các quy tắc trên.
+
+## IV. QUY TẮC THAM CHIẾU
 
 Các Functional Requirements của M02 phải tuân thủ thống nhất với:
 
