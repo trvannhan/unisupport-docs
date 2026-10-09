@@ -24,8 +24,8 @@ Một số hành động nghiệp vụ có thể làm thay đổi trách nhiệm
 | Hành động | Ảnh hưởng đến trạng thái | Quy tắc |
 | :--- | :--- | :--- |
 | **Phân công lại** | Giữ nguyên trạng thái hiện tại | Thay đổi người phụ trách và ghi nhận lịch sử. |
-| **Chuyển xử lý (Transfer)** | Giữ nguyên trạng thái phù hợp với giai đoạn xử lý | Thay đổi người/phòng ban phụ trách và bảo toàn lịch sử trước đó. |
-| **Escalation** | Giữ nguyên trạng thái phù hợp với giai đoạn xử lý | Chuyển Ticket lên phạm vi xử lý phù hợp hơn và ghi nhận sự kiện escalation. |
+| **Chuyển xử lý (Transfer)** | Giữ nguyên trạng thái nghiệp vụ hiện tại phù hợp | Cập nhật Nhóm vấn đề và phòng ban theo cấu hình, gỡ người phụ trách hiện tại và bảo toàn lịch sử trước đó. |
+| **Escalation** | Giữ nguyên trạng thái hiện tại | Gửi yêu cầu hỗ trợ tới Quản lý phù hợp; không tự thay đổi Nhóm vấn đề, phòng ban hoặc người phụ trách và phải ghi nhận sự kiện chuyển cấp. |
 | **Thay đổi mức độ ưu tiên** | Giữ nguyên trạng thái hiện tại | Cập nhật mức độ ưu tiên theo quyền và quy tắc nghiệp vụ. |
 | **Cập nhật thời hạn xử lý** | Giữ nguyên trạng thái hiện tại | Thời hạn mới phải tuân thủ quy tắc nghiệp vụ và được ghi nhận trong lịch sử. |
 
