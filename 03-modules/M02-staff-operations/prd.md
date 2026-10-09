@@ -1,238 +1,356 @@
-# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Nhân Viên (PRD - M02 Staff Operations)
+# Phân Hệ Nhân Viên (M02 - Staff Operations)
 
-## 1. Tổng Quan Phân Hệ & Cơ Cấu Effort Theo Bảng Chi Phí Nội Bộ
+## I. TỔNG QUAN PHÂN HỆ
 
-Phân hệ **Nhân viên (Staff Operations)** là không gian làm việc dành cho cán bộ/phòng ban của Aurora University để tiếp nhận, tìm kiếm, phân loại, phân công, xử lý, chuyển tiếp, cập nhật tiến độ và hoàn tất các Ticket hỗ trợ sinh viên.
+Phân hệ **Staff Operations** cung cấp không gian làm việc để nhân viên Aurora University tiếp nhận, phân loại, phân công, xử lý, chuyển xử lý và ghi nhận kết quả các Ticket hỗ trợ sinh viên.
 
-### Bảng Phân Rã Chức Năng & Effort Đã Chốt (Tổng: 197h)
-
-| Mã gói việc | Tên chức năng theo bảng chi phí | Tóm tắt scope nghiệp vụ | Effort kế hoạch |
-| :--- | :--- | :--- | :---: |
-| **WP-STF-01** | Tiếp nhận, tìm kiếm & lọc yêu cầu | Xem danh sách yêu cầu mới/được giao, tìm kiếm, lọc theo trạng thái, phòng ban, mức ưu tiên và người phụ trách. | **33h** |
-| **WP-STF-02** | Phân loại & phân công xử lý | Claim Ticket chưa có người nhận, phân công cho nhân viên phù hợp, chuẩn hóa nhóm vấn đề/phân loại xử lý. | **38h** |
-| **WP-STF-03** | Quản lý ưu tiên & thời hạn | Thiết lập mức ưu tiên, tính/hiển thị SLA, cảnh báo yêu cầu sắp hoặc đã quá hạn. | **29h** |
-| **WP-STF-04** | Xử lý & cập nhật yêu cầu | Ghi nhận tiến độ xử lý, trao đổi với sinh viên, yêu cầu bổ sung thông tin/hồ sơ và lưu lịch sử xử lý. | **39h** |
-| **WP-STF-05** | Chuyển xử lý, Escalation & hoàn tất | Chuyển phòng ban/người phụ trách khi cần, escalation các trường hợp khó/quá hạn và cập nhật kết quả hoàn tất. | **32h** |
-| **WP-STF-06** | Đóng & mở lại yêu cầu | Đóng yêu cầu sau khi hoàn tất hoặc mở lại khi sinh viên phản hồi/chưa hài lòng trong thời hạn cho phép. | **26h** |
-| **TỔNG M2 - Staff** | | | **197h** |
+- **Actor chính:** Nhân viên (Staff).
+- **Phạm vi dữ liệu:** Nhân viên chỉ được truy cập Ticket thuộc phòng ban hoặc phạm vi trách nhiệm được cấp.
+- **Người phụ trách:** Một Ticket chỉ có một người phụ trách chính tại một thời điểm.
+- **Phân công:** Các thao tác phân công/phân công lại chỉ dành cho người dùng có quyền phù hợp.
+- **Phạm vi vòng đời:** M02 xử lý Ticket đến khi ghi nhận kết quả ở `RESOLVED`; việc đóng hoặc mở lại tuân theo vòng đời Ticket dùng chung.
 
 ---
 
+## II. CHI TIẾT CÁC CHỨC NĂNG (FUNCTIONAL REQUIREMENTS)
 
+### [FR-STF-00] Đăng nhập và truy cập Staff Operations
 
-### [FR-STF-02] Tiếp nhận (Claim) & Phân công xử lý (Assign)
+#### 1. Mô tả & Phạm vi
+Cho phép nhân viên đăng nhập vào UniSupport và truy cập không gian làm việc phù hợp với phòng ban và quyền được cấp.
 
-**Mô tả**
-Cho phép Nhân viên tự nhận xử lý một Ticket chưa có người phụ trách hoặc cho phép Trưởng phòng/Quản lý phân công Ticket cho nhân viên phù hợp trong cùng phòng ban.
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Nhân viên.
+- **Preconditions:** Tài khoản tồn tại, đang hoạt động và được gắn với phạm vi phòng ban phù hợp.
 
-**Actor**
-Nhân viên phòng ban / Trưởng phòng / Quản lý được phân quyền.
+#### 3. Quy tắc Dữ liệu & Validation
+- **Tên đăng nhập:** bắt buộc, sử dụng tài khoản do nhà trường cấp.
+- **Mật khẩu:** bắt buộc.
+- Không chấp nhận dữ liệu chỉ chứa khoảng trắng.
 
-**Preconditions**
-- Người dùng đã đăng nhập bằng tài khoản Staff/Manager hợp lệ.
-- Ticket thuộc phòng ban của người dùng.
-- Ticket đang ở trạng thái `NEW` hoặc đang `IN_PROGRESS` nhưng chưa có `assigned_staff_id`.
+#### 4. Luồng xử lý chi tiết
+1. Nhân viên truy cập UniSupport.
+2. Hệ thống yêu cầu đăng nhập nếu chưa có phiên hợp lệ.
+3. Nhân viên nhập thông tin đăng nhập.
+4. Hệ thống xác thực tài khoản, trạng thái hoạt động và phạm vi quyền.
+5. Nếu hợp lệ, hệ thống cho phép truy cập Staff Operations và chỉ hiển thị dữ liệu thuộc phạm vi được cấp.
 
-**Luồng chính - Claim Ticket**
-1. Nhân viên mở **Hòm thư công việc của Phòng ban**.
-2. Hệ thống hiển thị danh sách Ticket chưa có người phụ trách.
-3. Nhân viên chọn một Ticket và nhấn **Tiếp nhận (Claim)**.
-4. Hệ thống kiểm tra Ticket còn thuộc phòng ban hiện tại và chưa có người phụ trách.
-5. Hệ thống cập nhật `assigned_staff_id` bằng ID của nhân viên đang thao tác.
-6. Nếu Ticket đang ở trạng thái `NEW`, hệ thống chuyển trạng thái sang `IN_PROGRESS`.
-7. Hệ thống ghi nhận lịch sử xử lý và Audit Log.
+#### 5. Luồng ngoại lệ
+- Thông tin đăng nhập không hợp lệ: từ chối truy cập.
+- Tài khoản bị khóa hoặc vô hiệu hóa: không tạo phiên đăng nhập.
+- Tài khoản chưa được gắn phạm vi phòng ban cần thiết: không cho phép truy cập dữ liệu Ticket của phòng ban.
+- Phiên hết hạn: yêu cầu xác thực lại.
 
-**Luồng chính - Assign Ticket**
-1. Trưởng phòng/Quản lý mở chi tiết Ticket hoặc danh sách Ticket của phòng ban.
-2. Người dùng chọn **Phân công (Assign)**.
-3. Hệ thống hiển thị danh sách nhân viên thuộc cùng phòng ban.
-4. Người dùng chọn nhân viên phụ trách và nhấn **Xác nhận phân công**.
-5. Hệ thống cập nhật `assigned_staff_id` và chuyển Ticket sang `IN_PROGRESS` nếu cần.
-6. Hệ thống gửi thông báo nội bộ tới nhân viên được phân công.
+#### 6. Quy tắc nghiệp vụ
+- Nhân viên không được truy cập Ticket ngoài phạm vi được cấp.
+- Cơ chế xác thực và quản lý phiên được dùng chung với các phân hệ khác.
 
-**Business Rules**
-- Một Ticket tại một thời điểm chỉ có **01 nhân viên phụ trách chính**.
-- Không cho phép Claim Ticket đã có người phụ trách, trừ khi người có quyền Manager thực hiện phân công lại.
-- Phân công chỉ được thực hiện cho nhân viên thuộc cùng phòng ban với Ticket.
-- Khi chuyển phòng ban, hệ thống phải xóa `assigned_staff_id` để phòng ban mới Claim/Assign lại.
-
-**Alternative / Error Flows**
-- **Hai nhân viên Claim cùng lúc**: Hệ thống chỉ chấp nhận request đến trước và báo cho request còn lại rằng Ticket đã có người phụ trách.
-- **Assign cho nhân viên khác phòng ban**: Hệ thống từ chối và hiển thị lỗi "Nhân viên được phân công không thuộc phòng ban xử lý Ticket".
-
-**Acceptance Criteria**
-- **AC-01**: Nhân viên Claim Ticket chưa có người phụ trách -> Ticket gán đúng người phụ trách và chuyển sang `IN_PROGRESS`.
-- **AC-02**: Hai nhân viên Claim cùng Ticket gần như đồng thời -> Chỉ một người Claim thành công.
-- **AC-03**: Trưởng phòng Assign Ticket cho nhân viên trong phòng ban -> Nhân viên được phân công nhận thông báo và thấy Ticket trong danh sách việc của mình.
-- **AC-04**: Nhân viên thường không thể Assign Ticket cho người khác nếu không có quyền phù hợp.
-
-**Ví dụ Edge Case**
-Nhân viên A và Nhân viên B cùng nhấn **Claim** trên Ticket `TK-20261004-001`.
--> **Expected Result**: Hệ thống khóa thao tác theo giao dịch, chỉ một nhân viên trở thành người phụ trách; người còn lại nhận thông báo Ticket đã được tiếp nhận.
+#### 7. Tiêu chí nghiệm thu
+- **AC-00-01:** Tài khoản Staff hợp lệ truy cập được Staff Operations.
+- **AC-00-02:** Nhân viên chỉ xem dữ liệu thuộc phạm vi phòng ban/quyền được cấp.
+- **AC-00-03:** Tài khoản không hợp lệ hoặc bị vô hiệu hóa không truy cập được chức năng được bảo vệ.
+- **AC-00-04:** Phiên hết hạn yêu cầu xác thực lại.
 
 ---
 
-### [FR-STF-03] Phân loại (Triage) & Đánh giá mức độ ưu tiên
+### [FR-STF-01] Xem hàng chờ, tìm kiếm và lọc Ticket
 
-**Mô tả**
-Cho phép nhân viên xem xét chi tiết nội dung Ticket để điều chỉnh đúng Nhóm vấn đề / Phân loại chi tiết và thiết lập Mức độ ưu tiên để tính toán thời hạn SLA xử lý.
+#### 1. Mô tả & Phạm vi
+Cung cấp danh sách công việc để nhân viên xem Ticket mới, Ticket được giao và Ticket đang cần xử lý trong phạm vi của mình.
 
-**Actor**
-Nhân viên phụ trách Ticket (Assigned Staff).
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Nhân viên đã đăng nhập.
+- **Preconditions:** Nhân viên có quyền truy cập ít nhất một phạm vi Ticket.
 
-**Preconditions**
-- Ticket đã được tiếp nhận (`IN_PROGRESS`) và do nhân viên đó phụ trách.
+#### 3. Quy tắc Dữ liệu & Validation
+- Tìm kiếm theo **Mã Ticket**.
+- Bộ lọc hỗ trợ tối thiểu: **Trạng thái, Nhóm vấn đề, Mức độ ưu tiên, Người phụ trách**.
+- Nhân viên chỉ nhận kết quả thuộc phạm vi dữ liệu được phép truy cập.
+- Ticket được mở lại từ `RESOLVED` về `IN_PROGRESS` phải xuất hiện lại trong danh sách xử lý phù hợp.
 
-**Luồng chính**
-1. Nhân viên mở màn hình Chi tiết Ticket đang phụ trách.
-2. Nhân viên chọn chức năng **Phân loại & Mức độ ưu tiên**.
-3. Nhân viên chọn lại **Phân loại chi tiết (Sub-category)** phù hợp với nội dung thực tế.
-4. Nhân viên thiết lập **Mức độ ưu tiên**: `Thấp (Low)`, `Trung bình (Medium)`, `Cao (High)`, hoặc `Khẩn cấp (Urgent)`.
-5. Nhân viên nhấn **Lưu thay đổi**.
-6. Hệ thống cập nhật thông tin phân loại và mức độ ưu tiên.
-7. Hệ thống tự động tính toán lại mốc thời gian hoàn thành cam kết (`sla_due_at`) dựa trên mức độ ưu tiên mới.
-8. Ghi nhận thay đổi vào nhật ký hệ thống.
+#### 4. Luồng xử lý chi tiết
+1. Nhân viên mở Staff Operations.
+2. Hệ thống hiển thị hàng chờ Ticket thuộc phạm vi phòng ban/người dùng.
+3. Nhân viên nhập Mã Ticket hoặc áp dụng một hay nhiều bộ lọc.
+4. Hệ thống trả về danh sách Ticket phù hợp.
+5. Nhân viên mở một Ticket để xem chi tiết trước khi tiếp nhận hoặc xử lý.
+6. Hệ thống hiển thị thông tin Ticket, sinh viên gửi yêu cầu, Category, trạng thái, Priority, Deadline, người phụ trách, file được phép truy cập và lịch sử xử lý.
 
-**Business Rules**
-- Mặc định khi khởi tạo, Ticket có mức độ ưu tiên là `Trung bình (Medium)`.
-- Khi thay đổi Mức độ ưu tiên, mốc thời gian SLA (`sla_due_at`) được tính lại tự động từ thời điểm khởi tạo Ticket gốc.
-- Mức độ `Khẩn cấp (Urgent)` chỉ áp dụng cho các sự cố gián đoạn hệ thống nghiêm trọng hoặc trùng lịch thi sát giờ.
+#### 5. Luồng ngoại lệ
+- Không có Ticket phù hợp: hiển thị danh sách trống.
+- Ticket ngoài phạm vi quyền: từ chối truy cập và không hiển thị dữ liệu.
+- Mã Ticket không tồn tại: hiển thị trạng thái không tìm thấy.
 
-**Alternative / Error Flows**
-- **Không có quyền chỉnh sửa**: Nếu nhân viên không phải là người phụ trách Ticket đó, các trường chỉnh sửa bị khóa dạng Read-only.
+#### 6. Quy tắc nghiệp vụ
+- Kết quả tìm kiếm và lọc luôn phải tuân thủ phạm vi quyền của người dùng.
+- Transfer hoặc phân công lại có thể làm Ticket không còn xuất hiện trong danh sách của người dùng cũ.
+- Danh sách phải phản ánh trạng thái và người phụ trách hiện tại của Ticket.
 
-**Acceptance Criteria**
-- **AC-01**: Nhân viên đổi mức ưu tiên từ `Medium` sang `Urgent` -> Mốc thời gian `sla_due_at` rút ngắn tương ứng và hiển thị nhãn màu đỏ cảnh báo.
-- **AC-02**: Mọi thay đổi về phân loại và độ ưu tiên được lưu chính xác và ghi vết vào Audit Log.
-
-**Ví dụ Edge Case**
-Nhân viên hạ độ ưu tiên từ `High` xuống `Low` khi Ticket đã gần hết hạn SLA `High`.
--> **Expected Result**: Hệ thống cập nhật lại thời hạn `sla_due_at` theo chuẩn `Low` và ghi lại lý do điều chỉnh trong nhật ký.
-
----
-
-### [FR-STF-05] Chuyển xử lý, Escalation & hoàn tất
-
-**Mô tả**
-Khi phát hiện sinh viên gửi nhầm phòng ban hoặc nội dung cần sự giải quyết của đơn vị/cấp quản lý khác, nhân viên có quyền chuyển (Transfer) hoặc leo thang (Escalate) Ticket sang Phòng ban/Người phụ trách chuyên trách kèm theo lý do.
-
-**Actor**
-Nhân viên phụ trách Ticket.
-
-**Preconditions**
-- Ticket đang ở trạng thái `IN_PROGRESS`.
-- Sinh viên gửi không đúng phòng ban chuyên trách.
-
-**Luồng chính**
-1. Nhân viên mở màn hình Chi tiết Ticket.
-2. Nhân viên chọn chức năng **Chuyển phòng ban / Escalation**.
-3. Hệ thống hiển thị danh sách các Phòng ban chức năng khác trong trường.
-4. Nhân viên chọn **Phòng ban đích** cần chuyển tới.
-5. Nhân viên nhập **Lý do chuyển phòng ban** (Bắt buộc).
-6. Nhân viên nhấn nút **Xác nhận chuyển**.
-7. Hệ thống kiểm tra dữ liệu đầu vào.
-8. Hệ thống cập nhật `department_id` mới cho Ticket.
-9. Hệ thống tự động đặt `assigned_staff_id = NULL` (gỡ bỏ người phụ trách cũ).
-10. Trạng thái Ticket vẫn giữ nguyên `IN_PROGRESS`, nhưng Ticket quay về hàng chờ chưa có người phụ trách của Phòng ban mới.
-11. Hệ thống phát thông báo In-app tới Hòm thư công việc của Phòng ban mới và ghi log sự kiện.
-
-**Business Rules**
-- Bắt buộc nhập Lý do chuyển (Tối thiểu 10 ký tự) theo quy định `BR-XFR-01`.
-- Sau khi chuyển, nhân viên phòng ban cũ **mất quyền chỉnh sửa** Ticket đó (chỉ còn quyền xem dạng nhật ký nếu được cấp phép).
-- Người phụ trách cũ bị gỡ bỏ để nhân viên phòng ban mới Claim/Assign lại từ đầu.
-
-**Alternative / Error Flows**
-- **Để trống lý do chuyển hoặc nhập ngắn hơn 10 ký tự**: Hệ thống từ chối chuyển và báo lỗi "Vui lòng nhập lý do chuyển chi tiết (tối thiểu 10 ký tự)".
-- **Chọn trùng phòng ban hiện tại**: Hệ thống báo lỗi "Phòng ban đích phải khác phòng ban hiện tại".
-
-**Acceptance Criteria**
-- **AC-01**: Nhân viên nhập đủ lý do hợp lệ và chọn Phòng ban mới -> Ticket chuyển sang Hòm thư phòng ban mới, trường `assigned_staff_id` trở về `NULL`.
-- **AC-02**: Nhập lý do dưới 10 ký tự -> Hệ thống không cho phép thực hiện chuyển và hiển thị cảnh báo.
-- **AC-03**: Lý do chuyển phòng ban hiển thị công khai trong nhật ký lịch sử để phòng ban mới nắm bối cảnh.
-
-**Ví dụ Edge Case**
-Sinh viên gửi nhầm thắc mắc về Học phí vào Phòng Đào tạo. Chuyên viên Phòng Đào tạo chọn chuyển sang Phòng Tài chính - Kế toán với lý do "Nội dung liên quan đến hóa đơn học phí kìm giữ".
--> **Expected Result**: Ticket xuất hiện ngay trong Hòm thư chung của Phòng Tài chính - Kế toán, chuyên viên Phòng Đào tạo không còn là người thụ lý.
+#### 7. Tiêu chí nghiệm thu
+- **AC-01-01:** Tìm kiếm bằng Mã Ticket hợp lệ trả về đúng Ticket nếu người dùng có quyền.
+- **AC-01-02:** Bộ lọc chỉ trả về Ticket thỏa điều kiện đã chọn.
+- **AC-01-03:** Ticket ngoài phạm vi không xuất hiện trong danh sách và không thể mở trực tiếp.
+- **AC-01-04:** Ticket được mở lại xuất hiện lại trong danh sách xử lý phù hợp ở trạng thái `IN_PROGRESS`.
 
 ---
 
-### [FR-STF-04] Yêu cầu sinh viên bổ sung thông tin / hồ sơ
+### [FR-STF-02] Phân loại, tiếp nhận và phân công Ticket
 
-**Mô tả**
-Khi hồ sơ sinh viên gửi kèm bị thiếu, mờ, không hợp lệ hoặc cần làm rõ, nhân viên phát yêu cầu bổ sung thông tin tới sinh viên và hệ thống tạm dừng bộ đếm SLA.
+#### 1. Mô tả & Phạm vi
+Cho phép nhân viên kiểm tra Category của Ticket, tiếp nhận Ticket chưa có người phụ trách và cho phép người dùng có quyền phân công hoặc phân công lại Ticket cho nhân viên phù hợp.
 
-**Actor**
-Nhân viên phụ trách Ticket.
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Nhân viên đã đăng nhập.
+- **Actor bổ sung:** Người dùng có quyền phân công.
+- **Preconditions:** Ticket thuộc phạm vi phòng ban được phép xử lý.
 
-**Preconditions**
-- Ticket đang ở trạng thái `IN_PROGRESS`.
+#### 3. Quy tắc Dữ liệu & Validation
+- **Category:** phải là một giá trị đang hoạt động trong danh mục Category của hệ thống.
+- Nếu Category hiện tại không phù hợp, người có quyền xử lý có thể chọn lại Category từ danh mục có sẵn.
+- Nếu Category mới thuộc phòng ban khác, Ticket phải được xử lý theo luồng **Transfer** thay vì chỉ thay đổi phòng ban ngầm.
+- **Người phụ trách:** phải là nhân viên hợp lệ thuộc phòng ban đang phụ trách Ticket.
+- Một Ticket chỉ có **01 người phụ trách chính tại một thời điểm**.
 
-**Luồng chính**
-1. Nhân viên mở chi tiết Ticket.
-2. Nhân viên chọn chức năng **Yêu cầu bổ sung**.
-3. Nhân viên nhập chi tiết nội dung/danh mục giấy tờ cần sinh viên cung cấp thêm.
-4. Nhân viên nhấn nút **Gửi yêu cầu bổ sung**.
-5. Hệ thống lưu nội dung yêu cầu vào lịch sử trao đổi.
-6. Hệ thống chuyển trạng thái Ticket từ `IN_PROGRESS` sang `WAITING_STUDENT`.
-7. Hệ thống **TẠM DỪNG** bộ đếm thời gian SLA xử lý theo quy tắc `BR-SUP-01`.
-8. Hệ thống phát thông báo In-app cho Sinh viên.
+#### 4. Luồng A — Tiếp nhận Ticket
+1. Nhân viên mở Ticket chưa có người phụ trách trong hàng chờ phòng ban.
+2. Hệ thống hiển thị nội dung yêu cầu và Category hiện tại.
+3. Nhân viên kiểm tra Category và điều chỉnh nếu cần.
+4. Nhân viên chọn **Tiếp nhận**.
+5. Hệ thống kiểm tra Ticket vẫn chưa có người phụ trách và còn thuộc phạm vi của nhân viên.
+6. Hệ thống ghi nhận nhân viên là người phụ trách chính.
+7. Nếu Ticket đang ở `NEW`, hệ thống chuyển Ticket sang `IN_PROGRESS`.
+8. Hệ thống ghi nhận sự kiện tiếp nhận/phân công vào lịch sử Ticket.
 
-**Business Rules**
-- Nội dung yêu cầu bổ sung là bắt buộc.
-- Trạng thái Ticket **bắt buộc** chuyển sang `WAITING_STUDENT`.
-- Trong thời gian `WAITING_STUDENT`, thời gian chậm trễ không tính vào chỉ số KPI/SLA của nhân viên.
+#### 5. Luồng B — Phân công hoặc phân công lại
+1. Người dùng có quyền phân công mở Ticket.
+2. Hệ thống hiển thị danh sách nhân viên hợp lệ thuộc phòng ban đang phụ trách Ticket.
+3. Người dùng chọn một nhân viên.
+4. Hệ thống kiểm tra quyền và phạm vi phòng ban.
+5. Hệ thống cập nhật người phụ trách chính.
+6. Nếu Ticket đang ở `NEW`, Ticket chuyển sang `IN_PROGRESS`.
+7. Hệ thống ghi nhận người phụ trách trước, người phụ trách mới và người thực hiện thao tác vào lịch sử.
 
-**Alternative / Error Flows**
-- **Nội dung yêu cầu để trống**: Hệ thống dừng thao tác và báo lỗi "Nội dung yêu cầu bổ sung không được để trống".
+#### 6. Luồng ngoại lệ
+- Hai nhân viên cùng tiếp nhận một Ticket: chỉ một người được trở thành người phụ trách chính; người còn lại nhận thông báo Ticket đã được tiếp nhận.
+- Phân công cho người không thuộc phòng ban hiện tại: từ chối thao tác.
+- Ticket đã được Transfer sang phòng ban khác trước khi thao tác hoàn tất: từ chối và hiển thị dữ liệu mới nhất.
 
-**Acceptance Criteria**
-- **AC-01**: Nhân viên gửi yêu cầu bổ sung -> Trạng thái chuyển thành `WAITING_STUDENT`, bộ đếm SLA tạm dừng, sinh viên nhận được thông báo.
-- **AC-02**: Khung nhập liệu bị ẩn nếu Ticket không còn ở trạng thái `IN_PROGRESS`.
+#### 7. Quy tắc nghiệp vụ
+- Tuân thủ `BR-OWN-01`.
+- Phân loại và phân công phải được ghi nhận trong lịch sử Ticket.
+- Nhân viên không được tự tạo Category mới trong luồng xử lý Ticket.
 
-**Ví dụ Edge Case**
-Nhân viên yêu cầu sinh viên chụp lại mặt sau Thẻ sinh viên do ảnh cũ bị nhòe.
--> **Expected Result**: Trạng thái chuyển `WAITING_STUDENT`, đồng hồ đếm ngược SLA dừng lại cho đến khi sinh viên upload ảnh mới lên.
+#### 8. Tiêu chí nghiệm thu
+- **AC-02-01:** Tiếp nhận Ticket `NEW` hợp lệ gán đúng người phụ trách và chuyển sang `IN_PROGRESS`.
+- **AC-02-02:** Không thể có hai người phụ trách chính đồng thời cho cùng một Ticket.
+- **AC-02-03:** Phân công chỉ chấp nhận nhân viên hợp lệ thuộc phòng ban đang xử lý.
+- **AC-02-04:** Thay đổi Category hợp lệ được ghi nhận trong lịch sử.
+- **AC-02-05:** Category dẫn đến phòng ban khác phải sử dụng Transfer.
 
 ---
 
-### [FR-STF-06] Cập nhật kết quả giải quyết & Đóng / Mở lại Ticket (Resolve, Close & Reopen)
+### [FR-STF-03] Quản lý mức độ ưu tiên và thời hạn xử lý
 
-**Mô tả**
-Cho phép nhân viên nhập nội dung trả lời chính thức, đính kèm file kết quả (nếu có) và đánh dấu Ticket là đã giải quyết hoàn tất.
+#### 1. Mô tả & Phạm vi
+Cho phép người dùng có quyền thiết lập mức độ ưu tiên của Ticket và theo dõi thời hạn xử lý tương ứng.
 
-**Actor**
-Nhân viên phụ trách Ticket.
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Nhân viên hoặc người dùng có quyền điều chỉnh Priority.
+- **Preconditions:** Ticket thuộc phạm vi xử lý của người dùng.
 
-**Preconditions**
-- Ticket đang ở trạng thái `IN_PROGRESS`.
-- Nhân viên đã hoàn tất các bước kiểm tra/xử lý nghiệp vụ.
+#### 3. Quy tắc Dữ liệu & Validation
+- Priority chỉ nhận một trong bốn giá trị: `LOW`, `MEDIUM`, `HIGH`, `URGENT`.
+- Ticket mới có Priority mặc định `MEDIUM`.
+- Thời hạn mục tiêu:
+  - `LOW`: 05 ngày làm việc.
+  - `MEDIUM`: 03 ngày làm việc.
+  - `HIGH`: 02 ngày làm việc.
+  - `URGENT`: 01 ngày làm việc.
+- Ticket được xem là sắp quá hạn khi đã sử dụng từ 80% thời gian xử lý mục tiêu trở lên.
 
-**Luồng chính**
-1. Nhân viên mở chi tiết Ticket.
-2. Nhân viên chọn chức năng **Hoàn thành & Cập nhật kết quả**.
-3. Nhân viên nhập **Nội dung kết quả giải quyết** (Phản hồi chính thức cho sinh viên).
-4. Nhân viên đính kèm file kết quả (nếu có, ví dụ: Giấy xác nhận dạng PDF có con dấu, Bảng điểm...).
-5. Nhân viên chọn **Ghi nhận hoàn thành (Resolve)**.
-6. Hệ thống kiểm tra tính hợp lệ của dữ liệu.
-7. Hệ thống lưu nội dung kết quả và file đính kèm.
-8. Hệ thống cập nhật trạng thái Ticket sang `RESOLVED`.
-9. Hệ thống ghi nhận mốc thời gian `resolved_at` bằng thời gian hiện tại.
-10. Hệ thống gửi thông báo kết quả cho Sinh viên và mở form để sinh viên đánh giá CSAT.
+#### 4. Luồng xử lý chi tiết
+1. Người dùng mở Ticket thuộc phạm vi xử lý.
+2. Hệ thống hiển thị Priority và Deadline hiện tại.
+3. Người dùng chọn Priority phù hợp.
+4. Hệ thống kiểm tra quyền thực hiện.
+5. Hệ thống lưu Priority mới và tính lại Deadline theo quy tắc dùng chung.
+6. Hệ thống ghi nhận thay đổi Priority/Deadline vào lịch sử Ticket.
+7. Danh sách công việc phản ánh trạng thái sắp quá hạn hoặc quá hạn tương ứng.
 
-**Business Rules**
-- Nội dung kết quả giải quyết là trường thông tin bắt buộc.
-- File đính kèm kết quả tuân thủ `BR-FILE-01` & `BR-FILE-02` (chỉ người tạo và nhân viên phòng ban mới tải được).
-- Sau **03 ngày làm việc** kể từ khi ở `RESOLVED`, nếu sinh viên không có khiếu nại hoặc không đánh giá, hệ thống tự động chuyển trạng thái sang `CLOSED`.
+#### 5. Luồng ngoại lệ
+- Người dùng không có quyền thay đổi Priority: từ chối thao tác.
+- Ticket đã chuyển sang phạm vi khác trước khi lưu: từ chối và yêu cầu tải lại dữ liệu.
+- Giá trị Priority không thuộc danh sách cho phép: không chấp nhận.
 
-**Alternative / Error Flows**
-- **Thiếu nội dung kết quả**: Hệ thống không cho hoàn thành và báo lỗi "Vui lòng nhập nội dung giải quyết trước khi đóng Ticket".
-- **Upload file sai định dạng hoặc >10MB**: Hiển thị lỗi file và dừng hoàn tất.
+#### 6. Quy tắc nghiệp vụ
+- Tuân thủ `BR-DUE-01` và `BR-DUE-02`.
+- Thời gian Ticket ở `WAITING_STUDENT` không tính vào thời gian xử lý.
+- Khi Priority thay đổi, Deadline được tính lại theo mức mới nhưng vẫn giữ phần thời gian xử lý hợp lệ đã sử dụng.
 
-**Acceptance Criteria**
-- **AC-01**: Nhân viên nhập kết quả, đính kèm file PDF xác nhận và chọn Resolve -> Ticket chuyển sang `RESOLVED`, mốc thời gian `resolved_at` được lưu, sinh viên nhận thông báo kết quả.
-- **AC-02**: Để trống nội dung kết quả -> Hệ thống hiển thị cảnh báo yêu cầu nhập liệu.
-- **AC-03**: Ticket ở trạng thái `RESOLVED` sau 3 ngày không có tương tác mới -> Hệ thống tự động chuyển trạng thái thành `CLOSED`.
+#### 7. Tiêu chí nghiệm thu
+- **AC-03-01:** Mỗi Priority tạo ra Deadline đúng theo Business Rules.
+- **AC-03-02:** Thay đổi Priority hợp lệ cập nhật Deadline và lịch sử Ticket.
+- **AC-03-03:** Ticket đạt ngưỡng 80% được nhận diện là sắp quá hạn.
+- **AC-03-04:** Ticket vượt Deadline và chưa `RESOLVED`/`CLOSED` được nhận diện là quá hạn.
+- **AC-03-05:** Khoảng thời gian `WAITING_STUDENT` không làm tiêu hao thời gian xử lý còn lại.
 
-**Ví dụ Edge Case**
-Nhân viên xử lý xong yêu cầu cấp lại mật khẩu Portal, nhập kết quả "Đã đặt lại mật khẩu mặc định và gửi hướng dẫn cho sinh viên", bấm Resolve.
--> **Expected Result**: Ticket chuyển sang `RESOLVED`, sinh viên thấy nội dung phản hồi và nút chấm điểm CSAT.
+---
+
+### [FR-STF-04] Xử lý Ticket và yêu cầu sinh viên bổ sung
+
+#### 1. Mô tả & Phạm vi
+Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến độ và yêu cầu sinh viên bổ sung thông tin hoặc tài liệu khi dữ liệu hiện có chưa đủ để tiếp tục xử lý.
+
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Nhân viên phụ trách Ticket.
+- **Preconditions:** Ticket đang ở `IN_PROGRESS` và thuộc phạm vi của nhân viên.
+
+#### 3. Quy tắc Dữ liệu & Validation
+- Nội dung cập nhật tiến độ: nếu được ghi nhận, không được chỉ chứa khoảng trắng.
+- Yêu cầu bổ sung: bắt buộc có nội dung mô tả rõ thông tin hoặc tài liệu cần cung cấp.
+- Nội dung yêu cầu bổ sung: từ **10 đến 1.000 ký tự**.
+- Nhân viên chỉ được yêu cầu bổ sung khi Ticket đang ở `IN_PROGRESS`.
+
+#### 4. Luồng A — Cập nhật tiến độ
+1. Nhân viên mở Ticket đang phụ trách.
+2. Nhân viên ghi nhận nội dung tiến độ xử lý khi cần.
+3. Hệ thống lưu cập nhật vào lịch sử Ticket.
+4. Ticket tiếp tục ở `IN_PROGRESS`.
+
+#### 5. Luồng B — Yêu cầu bổ sung
+1. Nhân viên mở Ticket đang phụ trách.
+2. Nhân viên chọn **Yêu cầu bổ sung**.
+3. Nhân viên nhập nội dung cần sinh viên cung cấp.
+4. Hệ thống kiểm tra dữ liệu và trạng thái hiện tại.
+5. Hệ thống lưu yêu cầu bổ sung vào lịch sử.
+6. Ticket chuyển từ `IN_PROGRESS` sang `WAITING_STUDENT`.
+7. Thời gian xử lý được tạm dừng.
+8. Hệ thống tạo thông báo trong hệ thống cho sinh viên.
+
+#### 6. Luồng ngoại lệ
+- Nội dung yêu cầu bổ sung không hợp lệ: không gửi yêu cầu.
+- Ticket không còn ở `IN_PROGRESS`: từ chối thao tác.
+- Nhân viên không còn là người phụ trách hoặc không còn quyền xử lý: từ chối cập nhật.
+
+#### 7. Quy tắc nghiệp vụ
+- Tuân thủ `BR-SUP-01` và `BR-DUE-02`.
+- Yêu cầu bổ sung và phản hồi sau đó của sinh viên phải được bảo toàn trong lịch sử Ticket.
+- Khi sinh viên bổ sung hợp lệ, Ticket quay về `IN_PROGRESS`.
+
+#### 8. Tiêu chí nghiệm thu
+- **AC-04-01:** Cập nhật tiến độ hợp lệ được lưu vào đúng Ticket.
+- **AC-04-02:** Yêu cầu bổ sung hợp lệ chuyển Ticket sang `WAITING_STUDENT`.
+- **AC-04-03:** Sinh viên nhận được thông báo và xem được nội dung cần bổ sung.
+- **AC-04-04:** Thời gian xử lý tạm dừng trong `WAITING_STUDENT` và tiếp tục khi Ticket quay về `IN_PROGRESS`.
+- **AC-04-05:** Ticket ngoài `IN_PROGRESS` không thể phát sinh yêu cầu bổ sung mới.
+
+---
+
+### [FR-STF-05] Chuyển xử lý và Escalation
+
+#### 1. Mô tả & Phạm vi
+Cho phép chuyển Ticket sang người/phòng ban phù hợp khác hoặc thực hiện Escalation khi Ticket cần phạm vi xử lý cao hơn, cần hỗ trợ hoặc có nguy cơ không đáp ứng thời hạn.
+
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Nhân viên có quyền xử lý Ticket.
+- **Preconditions:** Ticket thuộc phạm vi xử lý hiện tại và chưa ở `CLOSED`.
+
+#### 3. Quy tắc Dữ liệu & Validation
+- **Transfer sang phòng ban khác:** bắt buộc chọn phòng ban đích khác phòng ban hiện tại.
+- **Lý do Transfer:** bắt buộc, tối thiểu 10 ký tự.
+- **Escalation:** bắt buộc có lý do mô tả nguyên nhân cần chuyển cấp xử lý.
+- Transfer và Escalation không tạo trạng thái Ticket mới.
+
+#### 4. Luồng A — Transfer
+1. Nhân viên mở Ticket.
+2. Nhân viên chọn **Chuyển xử lý**.
+3. Hệ thống hiển thị các phòng ban đích hợp lệ.
+4. Nhân viên chọn phòng ban và nhập lý do.
+5. Hệ thống kiểm tra quyền, trạng thái và dữ liệu.
+6. Hệ thống thay đổi phòng ban phụ trách.
+7. Người phụ trách hiện tại được gỡ khỏi Ticket nếu không còn thuộc phạm vi phù hợp.
+8. Ticket giữ trạng thái nghiệp vụ hiện tại phù hợp và xuất hiện trong hàng chờ của phòng ban mới.
+9. Hệ thống ghi nhận phòng ban trước, phòng ban sau, lý do và người thực hiện vào lịch sử.
+
+#### 5. Luồng B — Escalation
+1. Nhân viên xác định Ticket vượt thẩm quyền hiện tại, cần hỗ trợ hoặc có nguy cơ quá hạn.
+2. Nhân viên chọn **Escalation** và nhập lý do.
+3. Hệ thống kiểm tra quyền và dữ liệu.
+4. Hệ thống ghi nhận sự kiện Escalation và chuyển Ticket đến phạm vi xử lý phù hợp theo quyền được cấu hình.
+5. Ticket giữ trạng thái nghiệp vụ phù hợp.
+6. Các bên liên quan nhận thông báo trong hệ thống.
+
+#### 6. Luồng ngoại lệ
+- Transfer không có lý do hoặc lý do dưới 10 ký tự: từ chối.
+- Chọn chính phòng ban hiện tại làm đích Transfer: từ chối.
+- Người dùng không đủ quyền: từ chối thao tác.
+- Ticket đã thay đổi phạm vi/trạng thái không còn phù hợp trước khi xác nhận: từ chối và hiển thị dữ liệu mới nhất.
+
+#### 7. Quy tắc nghiệp vụ
+- Tuân thủ `BR-OWN-02` và `BR-OWN-03`.
+- Transfer/Escalation phải giữ nguyên mã Ticket, nội dung, file và lịch sử đã có.
+- Transfer/Escalation không tự động chuyển Ticket sang `RESOLVED` hoặc `CLOSED`.
+
+#### 8. Tiêu chí nghiệm thu
+- **AC-05-01:** Transfer hợp lệ đưa Ticket vào phạm vi phòng ban mới mà không thay đổi mã Ticket.
+- **AC-05-02:** Người phụ trách cũ được gỡ khi không còn phù hợp với phòng ban mới.
+- **AC-05-03:** Transfer không tạo state `TRANSFERRED`.
+- **AC-05-04:** Escalation hợp lệ được ghi nhận thành sự kiện riêng trong lịch sử.
+- **AC-05-05:** Lịch sử trước Transfer/Escalation được giữ nguyên.
+
+---
+
+### [FR-STF-06] Ghi nhận kết quả và hoàn tất phần xử lý
+
+#### 1. Mô tả & Phạm vi
+Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket và chuyển Ticket sang `RESOLVED` để sinh viên xem và phản hồi.
+
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Nhân viên phụ trách Ticket hoặc người dùng có quyền hoàn tất xử lý.
+- **Preconditions:** Ticket đang ở `IN_PROGRESS` và đã đáp ứng điều kiện nghiệp vụ để có thể ghi nhận kết quả.
+
+#### 3. Quy tắc Dữ liệu & Validation
+- **Nội dung kết quả xử lý:** bắt buộc, từ **20 đến 2.000 ký tự**, không chấp nhận nội dung chỉ chứa khoảng trắng.
+- **Tài liệu kết quả:** không bắt buộc; nếu có phải tuân thủ quy tắc file dùng chung.
+- Chỉ Ticket ở `IN_PROGRESS` mới được chuyển sang `RESOLVED` theo luồng này.
+
+#### 4. Luồng xử lý chi tiết
+1. Nhân viên mở Ticket đang xử lý.
+2. Nhân viên chọn **Ghi nhận kết quả**.
+3. Nhân viên nhập nội dung kết quả và đính kèm tài liệu nếu có.
+4. Hệ thống kiểm tra quyền, trạng thái và dữ liệu.
+5. Hệ thống lưu kết quả xử lý.
+6. Ticket chuyển từ `IN_PROGRESS` sang `RESOLVED`.
+7. Hệ thống ghi nhận thời điểm giải quyết.
+8. Kết quả và sự kiện thay đổi trạng thái được ghi vào lịch sử Ticket.
+9. Hệ thống gửi thông báo trong hệ thống cho sinh viên.
+
+#### 5. Luồng ngoại lệ
+- Thiếu nội dung kết quả hoặc nội dung không hợp lệ: không cho phép hoàn tất.
+- File kết quả không đáp ứng quy tắc file: từ chối file không hợp lệ.
+- Ticket không còn ở `IN_PROGRESS`: từ chối thao tác.
+- Người dùng không có quyền hoàn tất Ticket: từ chối.
+
+#### 6. Quy tắc nghiệp vụ
+- Tuân thủ `BR-LIFE-01`, `BR-FILE-01` và `BR-FILE-02`.
+- `RESOLVED` chưa phải trạng thái kết thúc vòng đời.
+- Sinh viên có 03 ngày làm việc để chấp nhận kết quả hoặc yêu cầu mở lại.
+- M02 không tự mở form CSAT tại `RESOLVED`; CSAT chỉ áp dụng khi Ticket đã `CLOSED`.
+- Nếu Ticket được mở lại hợp lệ, Ticket quay về `IN_PROGRESS` và tiếp tục quá trình xử lý.
+
+#### 7. Tiêu chí nghiệm thu
+- **AC-06-01:** Kết quả hợp lệ chuyển Ticket từ `IN_PROGRESS` sang `RESOLVED`.
+- **AC-06-02:** Sinh viên nhận thông báo và xem được nội dung/tài liệu kết quả thuộc Ticket của mình.
+- **AC-06-03:** Thiếu nội dung kết quả không làm Ticket chuyển trạng thái.
+- **AC-06-04:** Ghi nhận kết quả không làm mất lịch sử xử lý trước đó.
+- **AC-06-05:** Ticket được mở lại hợp lệ quay về `IN_PROGRESS` và xuất hiện lại trong phạm vi xử lý phù hợp.
+
+---
+
+## III. QUY TẮC THAM CHIẾU
+
+Các Functional Requirements của M02 phải tuân thủ thống nhất với:
+
+- [Ticket Lifecycle](../../02-domain/ticket-lifecycle.md)
+- [State Transition](../../02-domain/state-transition.md)
+- [Business Rules](../../02-domain/business-rules.md)
