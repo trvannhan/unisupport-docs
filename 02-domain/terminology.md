@@ -21,12 +21,16 @@ Tài liệu này chuẩn hóa các thuật ngữ nghiệp vụ được sử d�
 | **Supplement Request** | Yêu cầu bổ sung | Yêu cầu do nhân viên gửi cho sinh viên để bổ sung thông tin hoặc tài liệu còn thiếu trước khi tiếp tục xử lý Ticket. |
 | **Priority** | Mức độ ưu tiên | Mức thể hiện độ ưu tiên xử lý của Ticket, gồm **Thấp, Trung bình, Cao và Khẩn cấp**. |
 | **Processing Deadline** | Thời hạn xử lý | Mốc thời gian được sử dụng để theo dõi tiến độ xử lý Ticket và xác định tình trạng sắp quá hạn hoặc quá hạn. |
+| **Working Day** | Ngày làm việc | Ngày từ thứ Hai đến thứ Sáu, không bao gồm ngày nghỉ lễ hoặc ngày nghỉ chính thức của Aurora University. |
 | **Overdue** | Quá hạn | Tình trạng Ticket chưa hoàn tất xử lý khi đã vượt quá thời hạn xử lý được xác định cho Ticket đó. |
 | **Resolution** | Kết quả xử lý | Nội dung hoặc tài liệu phản hồi được ghi nhận sau khi nhân viên hoàn tất phần xử lý nghiệp vụ của Ticket. |
+| **NEW** | Yêu cầu mới | Trạng thái của Ticket sau khi được tạo thành công và đang chờ tiếp nhận hoặc phân công xử lý. |
+| **IN_PROGRESS** | Đang xử lý | Trạng thái của Ticket khi yêu cầu đang được nhân viên hoặc phòng ban phụ trách xử lý. |
+| **WAITING_STUDENT** | Chờ sinh viên bổ sung | Trạng thái của Ticket khi quá trình xử lý đang chờ sinh viên cung cấp thêm thông tin hoặc tài liệu. |
 | **RESOLVED** | Đã giải quyết | Trạng thái cho biết Ticket đã có kết quả xử lý và đang trong thời hạn để sinh viên xem, phản hồi hoặc xác nhận kết quả. |
 | **CLOSED** | Đã đóng | Trạng thái kết thúc vòng đời xử lý khi sinh viên chấp nhận kết quả hoặc hết thời hạn phản hồi theo quy định. |
-| **Reopen** | Mở lại Ticket | Hành động đưa Ticket từ giai đoạn đã có kết quả trở lại quá trình xử lý khi sinh viên phản hồi rằng vấn đề chưa được giải quyết và đáp ứng điều kiện mở lại. |
-| **CSAT (Customer Satisfaction)** | Mức độ hài lòng | Chỉ số đánh giá chất lượng hỗ trợ do sinh viên chấm theo thang **1 đến 5 sao** sau khi Ticket hoàn tất và đủ điều kiện đánh giá. |
+| **Reopen** | Mở lại Ticket | Hành động đưa Ticket từ `RESOLVED` trở lại `IN_PROGRESS` khi sinh viên phản hồi rằng vấn đề chưa được giải quyết và đáp ứng điều kiện mở lại. |
+| **CSAT (Customer Satisfaction)** | Mức độ hài lòng | Chỉ số đánh giá chất lượng hỗ trợ do sinh viên chấm theo thang **1 đến 5 sao** sau khi Ticket đã đóng và còn trong thời hạn đánh giá. |
 | **Activity History** | Lịch sử xử lý | Chuỗi các hoạt động và thay đổi quan trọng phát sinh trong suốt vòng đời Ticket, bao gồm cập nhật trạng thái, phân công, chuyển xử lý, yêu cầu bổ sung và ghi nhận kết quả. |
 | **Audit Trail** | Nhật ký tra soát | Dữ liệu ghi nhận các thao tác quan trọng nhằm phục vụ kiểm tra, đối chiếu và tra soát khi cần. |
 | **UAT (User Acceptance Testing)** | Kiểm thử chấp nhận người dùng | Giai đoạn kiểm thử nhằm xác nhận hệ thống đáp ứng yêu cầu nghiệp vụ và tiêu chí nghiệm thu trước khi bàn giao chính thức. |
@@ -35,6 +39,8 @@ Tài liệu này chuẩn hóa các thuật ngữ nghiệp vụ được sử d�
 
 - **Ticket** là thuật ngữ thống nhất để chỉ yêu cầu hỗ trợ trong toàn bộ tài liệu dự án.
 - **Staff** và **Management** là hai nhóm người dùng độc lập về phạm vi chức năng; các chức năng quản trị hệ thống thuộc phạm vi Management và được kiểm soát theo quyền.
-- **Transfer** và **Escalation** là hai hành động khác nhau: Transfer thay đổi người/phòng ban xử lý, trong khi Escalation chuyển Ticket lên phạm vi xử lý phù hợp hơn khi cần hỗ trợ hoặc vượt thẩm quyền hiện tại.
+- Bộ trạng thái nghiệp vụ thống nhất gồm `NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED` và `CLOSED`.
+- **Transfer** và **Escalation** là hành động nghiệp vụ, không phải trạng thái Ticket.
+- **Transfer** thay đổi người/phòng ban xử lý; **Escalation** chuyển Ticket lên phạm vi xử lý phù hợp hơn khi cần hỗ trợ hoặc vượt thẩm quyền hiện tại.
 - Các trạng thái và điều kiện chuyển trạng thái được quy định chi tiết tại `ticket-lifecycle.md` và `state-transition.md`.
 - Các giá trị và điều kiện nghiệp vụ chi tiết như thời hạn xử lý, giới hạn file, điều kiện mở lại Ticket và quy tắc đánh giá được quy định tại `business-rules.md`.
