@@ -36,22 +36,33 @@ flowchart TD
     B --> C[Tìm kiếm / lọc / mở Ticket]
     C --> D[Phân loại và tiếp nhận / phân công]
     D --> E[IN_PROGRESS]
-    E --> F[Thiết lập / điều chỉnh Priority và Deadline]
+    E --> F[Thiết lập / điều chỉnh mức ưu tiên và thời hạn]
     F --> G[Xử lý Ticket]
 
-    G --> H{Cần bổ sung thông tin?}
+    G --> H{Cần sinh viên bổ sung?}
     H -->|Có| I[WAITING_STUDENT]
     I --> J[Sinh viên bổ sung]
     J --> E
 
-    H -->|Không| K{Cần chuyển / Escalation?}
-    K -->|Có| L[Transfer / Escalation]
-    L --> O[Giữ trạng thái nghiệp vụ phù hợp]
-    O --> G
+    H -->|Không| K{Cần điều phối xử lý?}
 
-    K -->|Không| M[Ghi nhận kết quả]
-    M --> N[RESOLVED]
+    K -->|Chuyển phòng ban| L[Chuyển xử lý - Transfer]
+    L --> M[Cập nhật Nhóm vấn đề và phòng ban]
+    M --> N[Gỡ người phụ trách hiện tại]
+    N --> O[Hàng chờ phòng ban mới]
+    O --> P[Tiếp nhận / phân công tại phòng ban mới]
+    P --> G
+
+    K -->|Chuyển cấp hỗ trợ| Q[Escalation tới Quản lý]
+    Q --> R[Giữ nguyên phòng ban và người phụ trách]
+    R --> S[Quản lý nhận thông báo / hỗ trợ điều phối]
+    S --> G
+
+    K -->|Không| T[Ghi nhận kết quả]
+    T --> U[RESOLVED]
 ```
+
+Sơ đồ trên mô tả **luồng nghiệp vụ chính** để thể hiện cách nhân viên xử lý Ticket. Đây không phải sơ đồ đầy đủ mọi khả năng chuyển trạng thái. Điều kiện cho phép Transfer và Escalation tại `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT` được quy định chi tiết trong FR-STF-05 và các quy tắc Domain.
 
 Ticket ở `RESOLVED` được đóng hoặc mở lại theo quy tắc vòng đời dùng chung. Khi được mở lại, Ticket quay về `IN_PROGRESS` và tiếp tục xuất hiện trong phạm vi xử lý phù hợp.
 
