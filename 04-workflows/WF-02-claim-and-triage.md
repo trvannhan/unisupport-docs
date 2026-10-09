@@ -16,7 +16,8 @@ flowchart TD
     D -->|Không| E[Chọn Nhóm vấn đề mới]
     E --> F{Nhóm vấn đề mới thuộc phòng ban hiện tại?}
     F -->|Không| G[Chuyển sang WF-04 Transfer]
-    F -->|Có| H
+    F -->|Có| S[Cập nhật Nhóm vấn đề và ghi lịch sử]
+    S --> H
 
     H -->|Tiếp nhận| I[Nhân viên nhận Ticket cho mình]
     H -->|Phân công| J[Chọn nhân viên hợp lệ trong phòng ban]
@@ -30,16 +31,21 @@ flowchart TD
     L -->|Có| N
 
     N --> P[Chuyển NEW thành IN_PROGRESS]
-    P --> Q[Ghi lịch sử phân loại/phân công]
-    Q --> R[Ticket xuất hiện trong danh sách xử lý]
+    P --> Q{Cần điều chỉnh mức ưu tiên?}
+    Q -->|Không| R[Ghi lịch sử phân loại/phân công]
+    Q -->|Có và có quyền| T[Điều chỉnh mức ưu tiên]
+    T --> U[Tính lại thời hạn theo Business Rules]
+    U --> R
+    R --> V[Ticket xuất hiện trong danh sách xử lý]
 ```
 
 ## 3. Ghi Chú Nghiệp Vụ
 
 - Một Ticket có tối đa một người phụ trách chính tại một thời điểm.
 - Nhân viên được phân công phải đang hoạt động và thuộc phòng ban hiện tại.
-- Nếu Nhóm vấn đề mới thuộc phòng ban khác, phải dùng WF-04; không lưu Category mới riêng lẻ.
-- Mức độ ưu tiên và thời hạn tuân theo `BR-DUE-01` và `BR-DUE-02`.
+- Nếu Nhóm vấn đề mới vẫn thuộc phòng ban hiện tại, thay đổi phải được lưu và ghi nhận lịch sử trước khi tiếp tục tiếp nhận/phân công.
+- Nếu Nhóm vấn đề mới thuộc phòng ban khác, phải dùng WF-04; không lưu Nhóm vấn đề mới riêng lẻ.
+- Mức độ ưu tiên chỉ được điều chỉnh bởi người có quyền; thời hạn phải được tính lại theo `BR-DUE-01` và `BR-DUE-02`, không đặt lại đồng hồ từ đầu.
 
 ## 4. Tài Liệu Tham Chiếu
 
