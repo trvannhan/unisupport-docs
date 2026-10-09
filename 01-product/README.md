@@ -14,7 +14,7 @@ Mục tiêu của phần này là giúp thành viên dự án nhanh chóng hiể
 | :--- | :--- |
 | [Product Overview](./product-overview.md) | Tổng quan sản phẩm, bài toán nghiệp vụ, mục tiêu, 3 phân hệ chính và các hạng mục ngoài phạm vi. |
 | [Actors & Roles](./actors-and-roles.md) | Mô tả 3 vai trò chính: Sinh viên, Nhân viên, Quản lý và phạm vi quyền của từng vai trò trong hệ thống. |
-| [Product Scope & Assumptions](./product-scope.md) | Phạm vi chức năng cấp cao, shared capabilities, assumptions và project constraints. |
+| [Product Scope & Assumptions](./product-scope.md) | Phạm vi chức năng cấp cao, năng lực dùng chung, giả định và ràng buộc chính của dự án. |
 
 ## Thứ tự đọc đề xuất
 
