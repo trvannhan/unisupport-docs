@@ -367,5 +367,3 @@ Các Functional Requirements của M01 phải tuân thủ thống nhất với:
 - [Ticket Lifecycle](../../02-domain/ticket-lifecycle.md)
 - [State Transition](../../02-domain/state-transition.md)
 - [Business Rules](../../02-domain/business-rules.md)
-
-Các chi tiết triển khai kỹ thuật như API endpoint, HTTP status code, JWT/token, database schema, cơ chế idempotency cụ thể, route giao diện và component UI không thuộc phạm vi PRD này và được đặc tả tại tài liệu kỹ thuật tương ứng.
