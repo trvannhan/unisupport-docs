@@ -1,28 +1,26 @@
-# 06-acceptance: Tiêu chí & Kịch bản Nghiệm thu UniSupport
+# 06 - Nghiệm Thu Và Truy Xuất Yêu Cầu
 
-Thư mục này đóng vai trò làm bộ tài liệu căn cứ phục vụ cho quá trình kiểm thử nội bộ và **giai đoạn Nghiệm thu UAT 10 ngày làm việc** của Aurora University (được quy định tại Mục 5.2 của Project Proposal).
+Thư mục này dùng để đối chiếu phạm vi đã cam kết, Resource nội bộ, Functional Requirements và kịch bản UAT của UniSupport.
 
----
+## 1. Tài Liệu
 
-## Danh mục Tài liệu
-
-| Tên File | Nội dung chính |
+| Tài liệu | Mục đích |
 | :--- | :--- |
-| **[traceability-matrix.md](./traceability-matrix.md)** | Ma trận truy xuất yêu cầu (RTM) liên kết giữa Yêu cầu nghiệp vụ, Quy trình, Phân hệ và Test Scenario. |
-| **[test-scenarios.md](./test-scenarios.md)** | Chi tiết các kịch bản kiểm thử UAT cho 3 phân hệ (Sinh viên, Nhân viên, Quản lý) và Bảo mật. |
+| [traceability-matrix.md](./traceability-matrix.md) | Liên kết Resource WP → FR/Flow → Workflow → UAT. |
+| [test-scenarios.md](./test-scenarios.md) | Các kịch bản UAT đại diện cho ba phân hệ và năng lực dùng chung. |
 
----
+## 2. Nguyên Tắc Nghiệm Thu
 
-## Quy trình & Tiêu chí Nghiệm thu (Acceptance Process)
+- Aurora University có **10 ngày làm việc sau bàn giao chính thức** để thực hiện nghiệm thu theo Proposal.
+- Các luồng chính của M01, M02, M03 phải hoạt động đúng.
+- Phân quyền phải đúng theo vai trò và phạm vi dữ liệu.
+- Không còn lỗi làm gián đoạn chức năng chính.
+- Tài liệu bàn giao phải đầy đủ theo cam kết.
+- Lỗi kỹ thuật không ảnh hưởng chức năng chính được ghi nhận và có kế hoạch khắc phục, không tự động trở thành điều kiện từ chối nghiệm thu.
 
-### 1. Thời gian Nghiệm thu
-- Quý trường (Aurora University) có **10 ngày làm việc** kể từ ngày bàn giao chính thức để tiến hành kiểm thử UAT trên môi trường Staging/Production.
+## 3. Nguyên Tắc Truy Xuất
 
-### 2. Tiêu chí Đạt Nghiệm thu (Pass Criteria)
-- Các luồng chính của 3 phân hệ (Sinh viên, Nhân viên, Quản lý) hoạt động đúng kịch bản và ổn định.
-- Phân quyền RBAC hoạt động chính xác theo từng vai trò; bảo mật tệp đính kèm được đảm bảo.
-- Không còn lỗi làm gián đoạn chức năng chính (Blocking/Critical bugs).
-- Bàn giao đầy đủ tài liệu hướng dẫn sử dụng, tài liệu cài đặt, ERD và mã nguồn theo cam kết.
-
-### 3. Quy định xử lý lỗi phát sinh
-- Các lỗi kỹ thuật nhỏ phát sinh do phía đơn vị phát triển (nếu có) được ghi nhận và có kế hoạch khắc phục cụ thể, không tính là điều kiện từ chối nghiệm thu nếu không ảnh hưởng trực tiếp đến chức năng chính của hệ thống.
+- Không thay đổi effort hoặc các dòng Resource đã chốt.
+- Một Work Package có thể ánh xạ tới nhiều FR/Flow.
+- Đăng nhập/xác thực là năng lực dùng chung; không nhân đôi effort chỉ vì mỗi phân hệ đều có FR truy cập.
+- Nhãn **M3 – Admin** trong Resource là tên nhóm công việc quản trị, không tạo vai trò `ADMIN` thứ tư.
