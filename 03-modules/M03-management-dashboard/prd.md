@@ -98,7 +98,7 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 1. Management chọn tài khoản.
 2. Người dùng chọn khóa hoặc mở khóa và nhập lý do.
 3. Hệ thống kiểm tra quyền và điều kiện khóa.
-4. Nếu tài khoản Staff đang là người phụ trách chính của Ticket ở `IN_PROGRESS` hoặc `WAITING_STUDENT`, hệ thống không cho khóa cho đến khi các Ticket đó được phân công lại hoặc chuyển xử lý.
+4. Trước khi khóa tài khoản Staff, hệ thống kiểm tra mọi Ticket chưa hoàn tất mà tài khoản đang được gán là người phụ trách chính. Nếu tồn tại Ticket ở trạng thái NEW, IN_PROGRESS hoặc WAITING_STUDENT, hệ thống từ chối khóa cho đến khi các Ticket này được phân công lại hoặc chuyển xử lý hợp lệ.
 5. Nếu hợp lệ, hệ thống cập nhật trạng thái tài khoản và ghi nhận lịch sử.
 
 #### 5. Luồng ngoại lệ
