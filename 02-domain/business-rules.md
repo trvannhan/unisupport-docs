@@ -26,24 +26,31 @@ Tài liệu này quy định các Business Rules dùng chung cho **UniSupport**.
 ### `BR-OWN-01` — Phân công người phụ trách
 
 - Ticket phải xác định được phòng ban phụ trách trong quá trình xử lý.
-- Một Ticket chỉ có **01 người phụ trách chính tại một thời điểm**.
-- Ticket có thể chưa có người phụ trách cụ thể khi vừa được tạo hoặc sau khi được chuyển sang phòng ban khác.
+- Một Ticket có **tối đa 01 người phụ trách chính tại một thời điểm**.
+- Ticket có thể chưa có người phụ trách cụ thể khi vừa được tạo, khi chưa được tiếp nhận/phân công hoặc sau khi được chuyển sang phòng ban khác.
 - Mọi thay đổi người phụ trách phải được ghi nhận trong lịch sử Ticket.
 
 ### `BR-OWN-02` — Chuyển xử lý
 
-- Ticket được phép chuyển sang người phụ trách hoặc phòng ban khác khi yêu cầu không thuộc phạm vi hiện tại hoặc cần đơn vị phù hợp hơn xử lý.
-- Người thực hiện chuyển phải nhập **lý do chuyển tối thiểu 10 ký tự**.
-- Khi chuyển sang phòng ban khác, người phụ trách hiện tại được gỡ khỏi Ticket và phòng ban mới thực hiện phân công lại.
-- Chuyển xử lý không làm mất nội dung, file đính kèm, kết quả trung gian hoặc lịch sử trước đó.
-- Việc chuyển xử lý không tự tạo trạng thái vòng đời mới; Ticket tiếp tục ở trạng thái nghiệp vụ phù hợp.
+- Transfer được sử dụng khi Ticket cần chuyển sang **phòng ban khác** chịu trách nhiệm xử lý.
+- Mỗi Category được cấu hình với một phòng ban tiếp nhận mặc định. Khi Transfer sang phòng ban khác, người thực hiện phải chọn **Category đích** phù hợp; hệ thống xác định phòng ban đích từ cấu hình của Category đó.
+- Category đích phải đang hoạt động và phải ánh xạ tới phòng ban khác phòng ban hiện tại.
+- Category mới và phòng ban mới chỉ được cập nhật khi toàn bộ thao tác Transfer thành công; không được lưu trạng thái Category/phòng ban không nhất quán.
+- Người thực hiện chuyển phải nhập **lý do từ 10 đến 1.000 ký tự**.
+- Khi Transfer thành công, người phụ trách hiện tại được gỡ khỏi Ticket và phòng ban mới thực hiện tiếp nhận/phân công lại.
+- Lịch sử Transfer phải ghi nhận tối thiểu: Category trước/sau, phòng ban trước/sau, lý do và người thực hiện.
+- Transfer không làm mất nội dung, file đính kèm, kết quả trung gian hoặc lịch sử trước đó.
+- Transfer không tạo trạng thái vòng đời mới; Ticket giữ trạng thái nghiệp vụ hiện tại phù hợp.
 
 ### `BR-OWN-03` — Escalation
 
-- Escalation được sử dụng khi Ticket vượt quá thẩm quyền xử lý hiện tại, cần hỗ trợ từ cấp phù hợp hơn hoặc có nguy cơ không đáp ứng thời hạn xử lý.
-- Người thực hiện phải ghi nhận lý do escalation.
-- Escalation phải giữ nguyên toàn bộ lịch sử xử lý và được ghi nhận như một sự kiện riêng trong Ticket.
-- Escalation không tự động đóng Ticket và không làm mất trách nhiệm theo dõi cho đến khi phạm vi xử lý mới được xác lập.
+- Escalation được sử dụng khi Ticket vượt quá thẩm quyền xử lý hiện tại, cần hỗ trợ từ cấp quản lý hoặc có nguy cơ không đáp ứng thời hạn xử lý.
+- Đích Escalation là **tài khoản Management có quyền tiếp nhận escalation trong phạm vi quản lý liên quan**. Hệ thống chỉ hiển thị các đích Management hợp lệ cho Ticket hiện tại.
+- Người thực hiện phải chọn đích Escalation và nhập **lý do từ 10 đến 1.000 ký tự**.
+- Escalation **không thay đổi Category, phòng ban phụ trách, người phụ trách chính hoặc trạng thái Ticket**.
+- Người phụ trách hiện tại tiếp tục chịu trách nhiệm xử lý Ticket cho đến khi có một thao tác Transfer hoặc phân công lại riêng biệt.
+- Escalation phải giữ nguyên toàn bộ lịch sử và được ghi nhận như một sự kiện riêng, bao gồm người gửi escalation, người nhận escalation, lý do và thời điểm.
+- Khi Escalation thành công, thông báo trong hệ thống được gửi cho người nhận Management và người phụ trách hiện tại. Sinh viên không nhận thông báo chỉ vì sự kiện Escalation nội bộ.
 
 ---
 
@@ -60,19 +67,33 @@ UniSupport sử dụng bốn mức độ ưu tiên:
 | **Cao (HIGH)** | 02 ngày làm việc |
 | **Khẩn cấp (URGENT)** | 01 ngày làm việc |
 
-- Ticket mới được áp dụng mức **Trung bình (MEDIUM)** mặc định cho đến khi được người có quyền điều chỉnh.
-- Thời hạn xử lý ban đầu được xác định từ mức độ ưu tiên hiện tại của Ticket.
-- Khi mức độ ưu tiên được thay đổi, thời hạn xử lý phải được tính lại theo mức mới nhưng vẫn giữ nguyên phần thời gian xử lý hợp lệ đã sử dụng trước đó.
-- Việc thay đổi mức độ ưu tiên phải có quyền phù hợp và được ghi nhận trong lịch sử Ticket.
+- Ticket mới được áp dụng mức **Trung bình (MEDIUM)** mặc định.
+- Đồng hồ thời hạn bắt đầu từ **thời điểm Ticket được tạo thành công**, không phải từ thời điểm nhân viên tiếp nhận.
+- Thời gian xử lý mục tiêu hiện tại được xác định theo Priority hiện tại của Ticket.
+- Khi Priority thay đổi, hệ thống **không đặt lại đồng hồ về 0**. Hệ thống giữ nguyên tổng thời gian xử lý hợp lệ đã sử dụng và tính lại thời gian còn lại theo công thức:
+
+  **Thời gian còn lại = Thời gian mục tiêu của Priority mới − Thời gian xử lý hợp lệ đã sử dụng**
+
+- Nếu thời gian còn lại lớn hơn 0, Deadline mới được xác định bằng cách cộng phần thời gian còn lại vào lịch làm việc kể từ thời điểm thay đổi Priority.
+- Nếu thời gian còn lại nhỏ hơn hoặc bằng 0, Ticket được xem là **quá hạn ngay tại thời điểm thay đổi Priority**.
+- Ví dụ: Ticket `MEDIUM` có mục tiêu 03 ngày làm việc và đã sử dụng 01 ngày làm việc hợp lệ. Khi đổi sang `HIGH` có mục tiêu 02 ngày, Ticket còn **01 ngày làm việc** để xử lý.
+- Việc thay đổi Priority phải có quyền phù hợp và được ghi nhận trong lịch sử Ticket.
 
 ### `BR-DUE-02` — Cách tính ngày làm việc và tình trạng thời hạn
 
-- **Ngày làm việc** là từ thứ Hai đến thứ Sáu, không bao gồm ngày nghỉ lễ hoặc ngày nghỉ chính thức của Aurora University.
-- Thời hạn xử lý được tính từ thời điểm Ticket được tạo thành công theo số ngày làm việc tương ứng với mức độ ưu tiên.
-- Khoảng thời gian Ticket ở trạng thái `WAITING_STUDENT` không được tính vào thời gian xử lý.
-- Khi sinh viên bổ sung thông tin hợp lệ và Ticket quay lại `IN_PROGRESS`, thời gian xử lý tiếp tục được tính từ phần thời gian còn lại.
-- Ticket được xem là **sắp quá hạn** khi đã sử dụng từ **80% thời gian xử lý mục tiêu** trở lên nhưng chưa vượt thời hạn.
-- Ticket được xem là **quá hạn** khi vượt quá thời hạn xử lý và chưa chuyển sang `RESOLVED` hoặc `CLOSED`.
+- UniSupport sử dụng lịch làm việc của Aurora University theo múi giờ Việt Nam.
+- **Ngày làm việc** là thứ Hai đến thứ Sáu, không bao gồm ngày nghỉ lễ hoặc ngày nghỉ chính thức của Aurora University.
+- Một ngày làm việc được quy đổi thành **08 giờ làm việc** để tính thời lượng SLA.
+- **Thời gian xử lý hợp lệ đã sử dụng** là tổng thời gian làm việc từ lúc Ticket được tạo đến thời điểm hiện tại, sau khi loại trừ toàn bộ khoảng thời gian Ticket ở `WAITING_STUDENT` và các khoảng thời gian ngoài lịch làm việc.
+- Khi Ticket chuyển sang `WAITING_STUDENT`, đồng hồ thời hạn tạm dừng tại thời điểm chuyển trạng thái.
+- Khi sinh viên bổ sung hợp lệ và Ticket quay lại `IN_PROGRESS`, đồng hồ tiếp tục từ đúng lượng thời gian còn lại trước khi tạm dừng; thời gian chờ sinh viên không được cộng vào thời gian đã sử dụng.
+- Tỷ lệ sử dụng thời hạn được tính theo công thức:
+
+  **Tỷ lệ sử dụng = Thời gian xử lý hợp lệ đã sử dụng / Thời gian mục tiêu hiện tại**
+
+- Ticket được xem là **sắp quá hạn** khi tỷ lệ sử dụng đạt từ **80% đến dưới 100%**.
+- Ticket được xem là **quá hạn** khi tỷ lệ sử dụng đạt từ **100% trở lên** và Ticket chưa chuyển sang `RESOLVED` hoặc `CLOSED`.
+- Các phép tính Deadline, sắp quá hạn và quá hạn phải sử dụng cùng một lịch làm việc và cùng cách loại trừ thời gian `WAITING_STUDENT`.
 
 ---
 
