@@ -1,31 +1,33 @@
 # 02 - Domain
 
-Thư mục này mô tả các khái niệm nghiệp vụ cốt lõi, mô hình Ticket, vòng đời xử lý và các quy tắc dùng chung trong hệ thống **UniSupport**.
+Thư mục `02-domain` định nghĩa miền nghiệp vụ của **UniSupport**, bao gồm các khái niệm cốt lõi, mô hình Ticket, vòng đời xử lý, chuyển đổi trạng thái và các quy tắc nghiệp vụ dùng chung.
 
-Mục tiêu của phần Domain là giúp BA, Dev và QA hiểu thống nhất:
-- Ticket là gì và gồm những thông tin nghiệp vụ nào.
-- Các thuật ngữ được sử dụng trong hệ thống.
-- Ticket thay đổi trạng thái như thế nào trong quá trình xử lý.
-- Những quy tắc nghiệp vụ nào được áp dụng xuyên suốt các phân hệ.
+Các nội dung trong phần này là cơ sở để đặc tả Functional Requirements, Workflows, Acceptance Criteria và thiết kế hệ thống ở các phần tiếp theo.
 
-## Tài liệu trong thư mục
+## Phạm Vi Tài Liệu
+
+Phần Domain bao gồm:
+
+- Các thực thể và khái niệm nghiệp vụ cốt lõi.
+- Thuật ngữ sử dụng thống nhất trong toàn hệ thống.
+- Mô hình thông tin nghiệp vụ của Ticket và các dữ liệu liên quan.
+- Vòng đời Ticket và các trạng thái xử lý.
+- Quy tắc chuyển đổi trạng thái hợp lệ.
+- Các quy tắc nghiệp vụ áp dụng xuyên suốt các phân hệ.
+
+## Cấu Trúc Tài Liệu
 
 | Tài liệu | Nội dung |
 | :--- | :--- |
 | [Domain Overview](./domain-overview.md) | Tổng quan miền nghiệp vụ, các khái niệm cốt lõi và luồng xử lý Ticket ở mức tổng quan. |
 | [Terminology](./terminology.md) | Định nghĩa các thuật ngữ nghiệp vụ được sử dụng thống nhất trong toàn hệ thống. |
 | [Ticket Model](./ticket-model.md) | Mô tả các thông tin nghiệp vụ chính của Ticket và các dữ liệu liên quan. |
-| [Ticket Lifecycle](./ticket-lifecycle.md) | Mô tả các giai đoạn mà Ticket trải qua từ khi được tạo đến khi hoàn tất. |
-| [State Transition](./state-transition.md) | Quy định các trạng thái Ticket và những chuyển đổi trạng thái hợp lệ. |
+| [Ticket Lifecycle](./ticket-lifecycle.md) | Mô tả các giai đoạn của Ticket từ khi được tạo đến khi hoàn tất xử lý. |
+| [State Transition](./state-transition.md) | Quy định các trạng thái của Ticket và các chuyển đổi trạng thái hợp lệ. |
 | [Business Rules](./business-rules.md) | Tổng hợp các quy tắc nghiệp vụ dùng chung như file đính kèm, phân công/chuyển xử lý, bổ sung thông tin, thời hạn xử lý, CSAT và Audit. |
 
-## Thứ tự đọc đề xuất
+## Quan Hệ Giữa Các Tài Liệu
 
-1. [Domain Overview](./domain-overview.md)
-2. [Terminology](./terminology.md)
-3. [Ticket Model](./ticket-model.md)
-4. [Ticket Lifecycle](./ticket-lifecycle.md)
-5. [State Transition](./state-transition.md)
-6. [Business Rules](./business-rules.md)
+`Domain Overview` xác lập bối cảnh và các khái niệm nghiệp vụ chung. `Terminology` chuẩn hóa thuật ngữ sử dụng trong toàn bộ tài liệu. `Ticket Model`, `Ticket Lifecycle` và `State Transition` đặc tả cấu trúc và quá trình xử lý Ticket. `Business Rules` tập hợp các quy tắc nghiệp vụ áp dụng xuyên suốt các phân hệ.
 
-Sau khi hoàn thành phần Domain, tiếp tục với [03-modules](../03-modules/) để xem Functional Requirements và Acceptance Criteria của từng phân hệ.
+Các yêu cầu chức năng chi tiết của từng phân hệ được đặc tả tại [03-modules](../03-modules/).
