@@ -19,8 +19,8 @@ flowchart TD
     I --> J[Giữ nguyên trạng thái nghiệp vụ hiện tại]
     J --> K[Ghi lịch sử trước/sau và lý do]
     K --> L[Ticket vào hàng chờ phòng ban mới]
-    L --> M[Thông báo sinh viên và phòng ban mới]
-    M --> N[Phòng ban mới tiếp nhận hoặc phân công]
+    L --> M[Thông báo sinh viên và phạm vi phòng ban mới]
+    M --> N[Phòng ban mới tiếp nhận hoặc phân công theo trạng thái hiện tại]
 ```
 
 ## 3. Ghi Chú Nghiệp Vụ
