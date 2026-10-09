@@ -70,10 +70,13 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 - **Họ tên:** bắt buộc.
 - **Nhóm người dùng:** bắt buộc chọn một trong Sinh viên (`STUDENT`), Nhân viên (`STAFF`) hoặc Quản lý (`MANAGEMENT`).
 - **Trạng thái tài khoản:** đang hoạt động hoặc bị khóa.
+- **Mật khẩu khởi tạo:** bắt buộc khi tạo tài khoản mới; do người có quyền quản lý tài khoản thiết lập và bàn giao cho người dùng theo quy trình của nhà trường.
 - Tài khoản Nhân viên phải được gắn với **một phòng ban đang hoạt động**.
 - Tài khoản Quản lý phải được xác định phạm vi **toàn trường** hoặc **một phòng ban đang hoạt động**.
 - **Lý do khóa tài khoản:** bắt buộc, từ **10 đến 500 ký tự**.
 - Người thực hiện không được tự khóa chính tài khoản đang đăng nhập.
+- Hệ thống phải luôn còn ít nhất **một tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản và phân quyền**.
+- Người quản trị không được cấp cho tài khoản khác quyền hoặc phạm vi quản lý vượt quá quyền/phạm vi mà chính mình được phép quản lý.
 
 #### 4. Luồng xử lý chi tiết
 
@@ -81,8 +84,8 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 1. Management mở chức năng **Quản lý tài khoản**.
 2. Hệ thống hiển thị danh sách tài khoản trong phạm vi được phép quản trị.
 3. Người dùng chọn **Tạo tài khoản**.
-4. Người dùng nhập thông tin bắt buộc, chọn nhóm người dùng và cấu hình phòng ban/phạm vi nếu cần.
-5. Hệ thống kiểm tra dữ liệu, tính duy nhất và quyền thao tác.
+4. Người dùng nhập thông tin bắt buộc, thiết lập mật khẩu khởi tạo, chọn nhóm người dùng và cấu hình phòng ban/phạm vi nếu cần.
+5. Hệ thống kiểm tra dữ liệu, tính duy nhất, phạm vi được phép cấp và quyền thao tác.
 6. Hệ thống tạo tài khoản ở trạng thái hoạt động.
 7. Hệ thống ghi nhận thao tác vào nhật ký tra soát.
 
@@ -90,37 +93,44 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 1. Management chọn một tài khoản được phép quản trị.
 2. Hệ thống hiển thị thông tin hiện tại.
 3. Người dùng thay đổi nhóm người dùng, phòng ban hoặc phạm vi quyền.
-4. Hệ thống kiểm tra cấu hình mới.
+4. Hệ thống kiểm tra cấu hình mới, bảo đảm người thực hiện không cấp quyền vượt quá phạm vi của mình và thao tác không làm mất toàn bộ tài khoản Quản lý có quyền quản lý tài khoản/phân quyền.
 5. Nếu hợp lệ, hệ thống lưu thay đổi và áp dụng phạm vi quyền mới.
 6. Hệ thống ghi nhận giá trị trước/sau và người thực hiện vào nhật ký tra soát.
 
 **Luồng C — Khóa hoặc mở khóa**
 1. Management chọn tài khoản.
 2. Người dùng chọn khóa hoặc mở khóa và nhập lý do.
-3. Hệ thống kiểm tra quyền và điều kiện khóa.
-4. Trước khi khóa tài khoản Staff, hệ thống kiểm tra mọi Ticket chưa hoàn tất mà tài khoản đang được gán là người phụ trách chính. Nếu tồn tại Ticket ở trạng thái NEW, IN_PROGRESS hoặc WAITING_STUDENT, hệ thống từ chối khóa cho đến khi các Ticket này được phân công lại hoặc chuyển xử lý hợp lệ.
-5. Nếu hợp lệ, hệ thống cập nhật trạng thái tài khoản và ghi nhận lịch sử.
+3. Hệ thống kiểm tra quyền, điều kiện thao tác và bảo đảm việc khóa không làm mất tài khoản Quản lý cuối cùng có quyền quản lý tài khoản/phân quyền.
+4. Khi khóa tài khoản Nhân viên, hệ thống kiểm tra các Ticket chưa hoàn tất mà tài khoản đang là người phụ trách chính. Nếu có Ticket ở `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT`, hệ thống gỡ người phụ trách hiện tại và đưa các Ticket đó về hàng chờ chưa có người phụ trách của phòng ban đang xử lý để được phân công lại.
+5. Hệ thống khóa tài khoản ngay sau khi hoàn tất việc cập nhật trách nhiệm xử lý Ticket.
+6. Hệ thống ghi nhận lý do khóa, các Ticket bị ảnh hưởng và người thực hiện vào nhật ký tra soát.
+7. Với thao tác mở khóa, hệ thống cập nhật tài khoản về trạng thái hoạt động nhưng không tự động gán lại các Ticket đã được đưa về hàng chờ trước đó.
 
 #### 5. Luồng ngoại lệ
 - Tên đăng nhập/Mã định danh đã tồn tại: từ chối tạo mới.
 - Tài khoản Nhân viên không có phòng ban hợp lệ: từ chối lưu.
 - Người dùng cố tự khóa tài khoản đang đăng nhập: từ chối.
-- Tài khoản Nhân viên còn Ticket đang phụ trách: từ chối khóa và hiển thị các Ticket cần xử lý trước.
+- Thao tác khóa/hạ quyền sẽ làm hệ thống không còn tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản/phân quyền: từ chối.
+- Người thực hiện cố cấp quyền hoặc phạm vi vượt quá quyền/phạm vi của chính mình: từ chối.
 - Người dùng không có quyền quản trị tài khoản: từ chối thao tác.
 
 #### 6. Quy tắc nghiệp vụ
 - Tuân thủ ma trận quyền tại [Actors & Roles](../../01-product/actors-and-roles.md).
 - Thay đổi quyền/phạm vi không làm thay đổi lịch sử các Ticket trước đó.
-- Khóa tài khoản không được làm Ticket đang xử lý mất người chịu trách nhiệm mà không có bước phân công/chuyển xử lý phù hợp.
+- Khóa tài khoản Nhân viên có hiệu lực ngay sau khi các Ticket đang được gán cho tài khoản đó được gỡ người phụ trách và đưa về hàng chờ của phòng ban hiện tại.
+- Việc khóa tài khoản không làm thay đổi phòng ban hoặc trạng thái nghiệp vụ của Ticket.
+- Hệ thống luôn phải còn ít nhất một tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản và phân quyền.
+- Người quản trị chỉ được cấp quyền trong giới hạn quyền và phạm vi quản lý của chính mình.
 - Tạo, thay đổi quyền, khóa và mở khóa tài khoản đều phải được ghi nhận để tra soát.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-01-01:** Tài khoản hợp lệ được tạo với đúng nhóm người dùng và phạm vi.
+- **AC-01-01:** Tài khoản hợp lệ được tạo với đúng nhóm người dùng, phạm vi và mật khẩu khởi tạo.
 - **AC-01-02:** Không thể tạo hai tài khoản có cùng Tên đăng nhập/Mã định danh.
 - **AC-01-03:** Tài khoản Nhân viên chỉ được lưu khi được gắn với một phòng ban đang hoạt động.
-- **AC-01-04:** Không thể khóa Staff đang phụ trách Ticket hoạt động nếu chưa xử lý việc phân công lại.
-- **AC-01-05:** Mọi thay đổi vai trò/phạm vi và trạng thái tài khoản được ghi nhận trong nhật ký tra soát.
-- **AC-01-06:** Tài khoản Quản lý chỉ truy cập được dữ liệu trong phạm vi toàn trường hoặc phòng ban đã được cấu hình.
+- **AC-01-04:** Khóa Nhân viên đang phụ trách Ticket hợp lệ sẽ gỡ người phụ trách và đưa các Ticket liên quan về hàng chờ của phòng ban trước khi tài khoản bị khóa.
+- **AC-01-05:** Không thể khóa/hạ quyền nếu thao tác làm hệ thống mất tài khoản Quản lý cuối cùng có quyền quản lý tài khoản và phân quyền.
+- **AC-01-06:** Người quản trị không thể cấp quyền hoặc phạm vi vượt quá quyền/phạm vi của chính mình.
+- **AC-01-07:** Mọi thay đổi vai trò/phạm vi và trạng thái tài khoản được ghi nhận trong nhật ký tra soát.
 
 ---
 
@@ -137,11 +147,13 @@ Cho phép Management có quyền cấu hình quản lý danh sách phòng ban v�
 - **Phòng ban:** có tên duy nhất trong danh sách đang hoạt động.
 - **Nhóm vấn đề (Category):**
   - Có tên hiển thị và trạng thái hoạt động.
+  - Tên Category phải **duy nhất trong toàn bộ danh mục**, bao gồm cả Category đang hoạt động và đã vô hiệu hóa.
+  - Nếu cần sử dụng lại tên của Category đã vô hiệu hóa, phải kích hoạt lại Category cũ thay vì tạo Category mới cùng tên.
   - Mỗi Category đang hoạt động phải được cấu hình với **một phòng ban tiếp nhận mặc định**.
   - Category đang hoạt động mới được hiển thị cho Student khi tạo Ticket và cho Staff khi phân loại/Transfer.
 - Không xóa dữ liệu lịch sử của phòng ban hoặc Category đã từng được Ticket sử dụng; sử dụng trạng thái hoạt động/không hoạt động.
 - Thay đổi ánh xạ Category → phòng ban chỉ áp dụng cho Ticket được tạo hoặc Transfer sau thời điểm thay đổi; Ticket hiện có không tự động chuyển phòng ban.
-- Không cho vô hiệu hóa phòng ban nếu vẫn còn Ticket ở `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT` thuộc phòng ban đó.
+- Không cho vô hiệu hóa phòng ban nếu vẫn còn Ticket ở `NEW`, `IN_PROGRESS`, `WAITING_STUDENT` hoặc Ticket `RESOLVED` vẫn còn trong thời hạn 03 ngày làm việc để sinh viên phản hồi/mở lại thuộc phòng ban đó.
 
 #### 4. Luồng xử lý chi tiết
 
@@ -163,7 +175,7 @@ Cho phép Management có quyền cấu hình quản lý danh sách phòng ban v�
 #### 5. Luồng ngoại lệ
 - Tên phòng ban hoặc Category vi phạm quy tắc duy nhất: từ chối lưu.
 - Category đang hoạt động nhưng không có phòng ban tiếp nhận hợp lệ: từ chối lưu.
-- Vô hiệu hóa phòng ban còn Ticket đang hoạt động: từ chối thao tác.
+- Vô hiệu hóa phòng ban còn Ticket cần tiếp tục xử lý hoặc có thể được mở lại trong thời hạn phản hồi: từ chối thao tác.
 - Phòng ban được gán cho Category đã không còn hoạt động: không cho kích hoạt Category.
 - Người dùng không có quyền cấu hình: từ chối thao tác.
 
@@ -177,7 +189,7 @@ Cho phép Management có quyền cấu hình quản lý danh sách phòng ban v�
 - **AC-02-01:** Category hoạt động luôn có đúng một phòng ban tiếp nhận mặc định.
 - **AC-02-02:** M01 chỉ hiển thị Category đang hoạt động khi sinh viên tạo Ticket.
 - **AC-02-03:** Thay đổi ánh xạ Nhóm vấn đề → phòng ban không tự động thay đổi Ticket đã tồn tại.
-- **AC-02-04:** Không thể vô hiệu hóa phòng ban còn Ticket đang hoạt động.
+- **AC-02-04:** Không thể vô hiệu hóa phòng ban nếu còn Ticket ở `NEW`, `IN_PROGRESS`, `WAITING_STUDENT` hoặc `RESOLVED` vẫn còn thời hạn phản hồi/mở lại.
 - **AC-02-05:** M02 sử dụng cấu hình mới cho các thao tác phân loại/chuyển xử lý phát sinh sau khi cấu hình được cập nhật.
 - **AC-02-06:** Thay đổi phòng ban/Category được ghi nhận để tra soát.
 
@@ -196,7 +208,7 @@ Cho phép Management có quyền tra soát xem các thao tác quan trọng đã 
 - Có thể tìm/lọc tối thiểu theo: khoảng thời gian, người thực hiện, Mã Ticket nếu sự kiện liên quan Ticket và loại sự kiện.
 - Mỗi bản ghi phải xác định tối thiểu: thời điểm, người/hệ thống thực hiện, loại sự kiện và nội dung thay đổi.
 - Với sự kiện thay đổi dữ liệu, lịch sử phải lưu được giá trị trước và sau khi phù hợp.
-- Người dùng thông thường không được sửa hoặc xóa bản ghi lịch sử.
+- Nhật ký tra soát không được sửa hoặc xóa thông qua chức năng thông thường của ứng dụng, kể cả bởi tài khoản Management.
 
 #### 4. Luồng xử lý chi tiết
 1. Management mở **Nhật ký tra soát**.
@@ -222,13 +234,14 @@ Các sự kiện tối thiểu cần tra soát gồm:
 
 #### 6. Quy tắc nghiệp vụ
 - Tuân thủ `BR-AUD-01` và `BR-AUD-02`.
-- Lịch sử tra soát là dữ liệu chỉ đọc đối với người dùng thông thường.
+- Nhật ký tra soát là dữ liệu chỉ đọc trong ứng dụng, kể cả đối với tài khoản Management.
+- Việc xử lý nhật ký đã hết thời hạn lưu trữ chỉ được thực hiện theo chính sách lưu trữ được phê duyệt, không phải bằng thao tác sửa/xóa nhật ký thông thường.
 - Việc tra cứu nhật ký không làm thay đổi Ticket hoặc dữ liệu nghiệp vụ được tra soát.
 
 #### 7. Tiêu chí nghiệm thu
 - **AC-03-01:** Các sự kiện quan trọng bắt buộc có bản ghi tra soát tương ứng.
 - **AC-03-02:** Có thể lọc nhật ký theo khoảng thời gian, tác nhân, Mã Ticket và loại sự kiện.
-- **AC-03-03:** Người dùng không thể sửa/xóa bản ghi tra soát qua chức năng thông thường.
+- **AC-03-03:** Không tài khoản nào, kể cả Management, có thể sửa/xóa bản ghi tra soát qua chức năng thông thường của ứng dụng.
 - **AC-03-04:** Management chỉ xem nhật ký thuộc phạm vi quyền được cấp.
 
 ---
@@ -246,7 +259,10 @@ Cho phép Management có quyền cấu hình thời hạn lưu trữ cơ bản c
 - Chính sách được cấu hình riêng cho: **Ticket đã đóng**, **file đính kèm** và **nhật ký tra soát**.
 - Thời hạn lưu trữ được nhập theo **số tháng nguyên dương**.
 - Giá trị hợp lệ: từ **01 đến 120 tháng**.
-- Ticket chưa ở `CLOSED` không thuộc phạm vi áp dụng của chính sách xóa dữ liệu Ticket.
+- Thời hạn lưu trữ của Ticket được tính từ thời điểm Ticket chuyển sang `CLOSED`.
+- Thời hạn lưu trữ của file đính kèm gắn với Ticket được tính theo thời điểm đóng của Ticket tương ứng.
+- Thời hạn lưu trữ của nhật ký tra soát được tính từ thời điểm bản ghi nhật ký được tạo.
+- Ticket chưa ở `CLOSED` không được xác định là dữ liệu Ticket đã đến hạn lưu trữ.
 - Thay đổi chính sách không được làm mất lịch sử cấu hình trước đó.
 
 #### 4. Luồng xử lý chi tiết
@@ -256,7 +272,7 @@ Cho phép Management có quyền cấu hình thời hạn lưu trữ cơ bản c
 4. Hệ thống kiểm tra giá trị và quyền thực hiện.
 5. Nếu hợp lệ, hệ thống lưu chính sách mới và ghi nhận thời điểm có hiệu lực.
 6. Hệ thống ghi nhận giá trị trước/sau và người thay đổi vào nhật ký tra soát.
-7. Hệ thống sử dụng chính sách hiện hành để xác định dữ liệu đã đạt thời hạn lưu trữ.
+7. Hệ thống sử dụng chính sách hiện hành để xác định và đánh dấu dữ liệu đã đạt thời hạn lưu trữ phục vụ tra soát/xử lý theo quy trình của nhà trường.
 
 #### 5. Luồng ngoại lệ
 - Giá trị không phải số tháng nguyên dương hoặc ngoài khoảng 01–120 tháng: từ chối lưu.
@@ -264,14 +280,16 @@ Cho phép Management có quyền cấu hình thời hạn lưu trữ cơ bản c
 
 #### 6. Quy tắc nghiệp vụ
 - Chính sách lưu trữ chỉ áp dụng cho dữ liệu đáp ứng điều kiện của loại dữ liệu tương ứng.
+- FR-MGT-04 chỉ quản lý thời hạn và xác định dữ liệu đã đến hạn; **không tự động xóa, ẩn danh hoặc di chuyển dữ liệu**.
 - Thay đổi thời hạn không được làm thay đổi nội dung lịch sử nghiệp vụ của Ticket đang hoạt động.
 - Việc thay đổi chính sách phải được ghi nhận để tra soát.
 
 #### 7. Tiêu chí nghiệm thu
 - **AC-04-01:** Chỉ chấp nhận giá trị thời hạn từ 01 đến 120 tháng.
-- **AC-04-02:** Ticket chưa `CLOSED` không bị xác định là dữ liệu Ticket hết hạn lưu trữ.
-- **AC-04-03:** Chính sách mới được lưu cùng thời điểm có hiệu lực.
-- **AC-04-04:** Mọi thay đổi chính sách có lịch sử trước/sau để tra soát.
+- **AC-04-02:** Ticket chưa `CLOSED` không bị xác định là dữ liệu Ticket đã đến hạn lưu trữ.
+- **AC-04-03:** Ticket/file được tính thời hạn từ thời điểm Ticket `CLOSED`; nhật ký được tính từ thời điểm bản ghi được tạo.
+- **AC-04-04:** Dữ liệu đến hạn chỉ được đánh dấu để xử lý theo quy trình được phê duyệt; hệ thống không tự động xóa/ẩn danh/di chuyển dữ liệu.
+- **AC-04-05:** Mọi thay đổi chính sách có lịch sử trước/sau để tra soát.
 
 ---
 
@@ -342,8 +360,8 @@ Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nh
 - Bộ lọc hỗ trợ tối thiểu: phòng ban và Nhóm vấn đề.
 - **Xu hướng Nhóm vấn đề:** đếm Ticket theo Category dựa trên thời điểm Ticket được tạo trong khoảng báo cáo.
 - **Thời gian xử lý:** chỉ tính Ticket có lần chuyển sang `RESOLVED` trong khoảng báo cáo. Với Ticket chưa từng mở lại, thời gian xử lý được tính từ lúc tạo đến `RESOLVED`, loại trừ thời gian `WAITING_STUDENT` và thời gian ngoài lịch làm việc. Với Ticket đã mở lại, tổng thời gian xử lý bằng tổng các khoảng thời gian Ticket thực sự ở quá trình xử lý đến từng lần `RESOLVED`; khoảng thời gian Ticket nằm ở `RESOLVED` để chờ sinh viên phản hồi không được tính là thời gian xử lý của nhân viên.
-- **CSAT trung bình:** trung bình cộng điểm 1–5 của các đánh giá hợp lệ được gửi trong khoảng báo cáo.
-- **Tỷ lệ phản hồi CSAT:** số Ticket có đánh giá / số Ticket `CLOSED` đủ điều kiện đánh giá trong cùng phạm vi báo cáo.
+- **CSAT trung bình:** trung bình cộng điểm 1–5 của các đánh giá hợp lệ có **thời điểm gửi đánh giá** nằm trong khoảng báo cáo.
+- **Tỷ lệ phản hồi CSAT:** được tính trên nhóm Ticket có **thời điểm chuyển sang `CLOSED` nằm trong khoảng báo cáo** và đã hết đủ 07 ngày theo lịch để sinh viên gửi đánh giá. Tỷ lệ = số Ticket trong nhóm này đã có đánh giá / tổng số Ticket trong nhóm này. Ticket chưa hết thời hạn 07 ngày không được đưa vào mẫu số.
 - Dữ liệu xuất phải tuân thủ cùng bộ lọc và phạm vi quyền như dữ liệu đang xem.
 
 #### 4. Luồng xử lý chi tiết
@@ -374,10 +392,12 @@ Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nh
 #### 7. Tiêu chí nghiệm thu
 - **AC-06-01:** Báo cáo xu hướng Category tính đúng Ticket được tạo trong khoảng thời gian đã chọn.
 - **AC-06-02:** Thời gian xử lý trung bình loại trừ thời gian `WAITING_STUDENT`, thời gian ngoài lịch làm việc và khoảng thời gian chờ phản hồi của sinh viên khi Ticket ở `RESOLVED`.
-- **AC-06-03:** Điểm CSAT trung bình chỉ sử dụng đánh giá hợp lệ 1–5 sao.
-- **AC-06-04:** Khoảng thời gian không hợp lệ bị từ chối.
-- **AC-06-05:** Người không có quyền xuất không thể xuất báo cáo.
-- **AC-06-06:** Dữ liệu xuất khớp với bộ lọc và phạm vi quyền của báo cáo đang xem.
+- **AC-06-03:** Điểm CSAT trung bình chỉ sử dụng đánh giá hợp lệ 1–5 sao được gửi trong khoảng báo cáo.
+- **AC-06-04:** Tỷ lệ phản hồi CSAT chỉ sử dụng Ticket `CLOSED` trong khoảng báo cáo đã hết đủ 07 ngày đánh giá; Ticket còn thời hạn đánh giá không được tính vào mẫu số.
+- **AC-06-05:** Khoảng thời gian không hợp lệ bị từ chối.
+- **AC-06-06:** Người không có quyền xuất không thể xuất báo cáo.
+- **AC-06-07:** Dữ liệu xuất khớp với bộ lọc và phạm vi quyền của báo cáo đang xem.
+
 
 ---
 
