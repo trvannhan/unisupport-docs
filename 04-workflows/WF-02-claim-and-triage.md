@@ -1,44 +1,53 @@
-# [WF-02] Tiếp nhận & Phân loại yêu cầu (Claim and Triage)
+# WF-02 - Tiếp Nhận, Phân Loại Và Phân Công
 
-### [FR-STF-02] Nhân viên tiếp nhận và phân loại yêu cầu
+## 1. Mục Đích Và Phạm Vi
 
-**Mô tả**
-Hệ thống cho phép nhân viên phụ trách xem danh sách yêu cầu mới gửi đến, tiếp nhận yêu cầu (claim), phân loại theo từng nhóm vấn đề và đánh giá mức độ ưu tiên để chuẩn bị cho quá trình xử lý.
+Mô tả cách Ticket mới trong hàng chờ phòng ban được kiểm tra Nhóm vấn đề, tiếp nhận hoặc phân công cho một nhân viên và bắt đầu quá trình xử lý.
 
-**Actor**
-Nhân viên phòng ban (Staff) đã đăng nhập vào hệ thống.
+## 2. Vai Trò Và Điều Kiện Bắt Đầu
 
-**Preconditions**
-- Nhân viên đã đăng nhập thành công.
-- Nhân viên có quyền truy cập và xử lý các Ticket thuộc phòng ban của mình.
-- Tồn tại các Ticket ở trạng thái `Mới` (New) hoặc chưa được tiếp nhận.
+- **Vai trò chính:** Nhân viên.
+- **Vai trò bổ sung:** Nhân viên/Quản lý có quyền phân công.
+- Ticket thuộc phạm vi phòng ban và đang ở `NEW` hoặc chưa có người phụ trách.
 
-**Luồng chính**
-1. Nhân viên truy cập danh sách **Tiếp nhận yêu cầu**.
-2. Hệ thống hiển thị danh sách các Ticket mới chưa có người tiếp nhận hoặc đang chờ phân loại.
-3. Nhân viên chọn xem chi tiết một Ticket.
-4. Nhân viên xem xét nội dung, tệp đính kèm và thực hiện thao tác **Tiếp nhận** (Claim) hoặc phân công cho bản thân/đồng nghiệp.
-5. Nhân viên cập nhật **Mức độ ưu tiên** (Priority: Thấp, Trung bình, Cao, Khẩn cấp) và điều chỉnh **Nhóm vấn đề** (nếu sinh viên chọn chưa chính xác).
-6. Nhân viên xác nhận lưu thông tin phân loại.
-7. Hệ thống cập nhật trạng thái Ticket sang `Đang xử lý` (In Progress), ghi nhận người phụ trách (Assignee) và lưu lịch sử thao tác.
-8. Hệ thống gửi thông báo nội bộ cho sinh viên về việc Ticket đã được tiếp nhận.
+## 3. Luồng Nghiệp Vụ Chính
 
-**Business Rules**
-- Một Ticket tại một thời điểm chỉ có tối đa **một nhân viên** chịu trách nhiệm chính (Assignee).
-- Khi nhân viên bấm **Tiếp nhận**, hệ thống phải khóa trạng thái tiếp nhận đối với các nhân viên khác để tránh tranh chấp (race condition).
-- Việc thay đổi mức độ ưu tiên và nhóm vấn đề phải được ghi lại trong lịch sử tra soát (Audit log).
+1. Nhân viên mở hàng chờ Ticket của phòng ban.
+2. Hệ thống hiển thị Ticket mới/chưa có người phụ trách.
+3. Nhân viên mở Ticket và kiểm tra nội dung, file và Category hiện tại.
+4. Nếu Category chưa phù hợp, nhân viên chọn lại một Category đang hoạt động.
+5. Nếu Category mới vẫn thuộc phòng ban hiện tại, hệ thống lưu thay đổi Category và lịch sử tương ứng.
+6. Nhân viên chọn **Tiếp nhận**, hoặc người có quyền chọn một nhân viên hợp lệ để **Phân công**.
+7. Hệ thống kiểm tra Ticket chưa bị người khác tiếp nhận/chuyển xử lý và nhân viên được chọn còn hợp lệ.
+8. Hệ thống ghi nhận tối đa một người phụ trách chính.
+9. Nếu Ticket đang ở `NEW`, hệ thống chuyển Ticket sang `IN_PROGRESS`.
+10. Hệ thống ghi nhận việc phân loại/phân công vào lịch sử và Ticket xuất hiện trong danh sách xử lý của người phụ trách.
 
-**Alternative / Error Flows**
-- **Xảy ra tranh chấp tiếp nhận (Race condition):** Nếu hai nhân viên cùng bấm tiếp nhận một Ticket gần như đồng thời, hệ thống duyệt cho người nhấn trước; người nhấn sau sẽ nhận được thông báo "Ticket đã được tiếp nhận bởi nhân viên khác" và danh sách tự động cập nhật lại.
-- **Thao tác thất bại do mất kết nối:** Hệ thống hiển thị thông báo lỗi và giữ nguyên trạng thái cũ của Ticket.
+Nếu Category mới thuộc phòng ban khác, việc thay đổi chỉ được hoàn tất thông qua **WF-04 - Chuyển xử lý sang phòng ban khác**.
 
-**Acceptance Criteria**
-- **AC-01:** Nhân viên chọn **Tiếp nhận** một Ticket mới -> Hệ thống gán tài khoản nhân viên đó làm người phụ trách và chuyển trạng thái sang `Đang xử lý`.
-- **AC-02:** Nhân viên cập nhật mức độ ưu tiên cho Ticket -> Hệ thống lưu giá trị ưu tiên mới và cập nhật danh sách hiển thị.
-- **AC-03:** Sinh viên nhận được thông báo trong hệ thống ngay khi Ticket chuyển sang trạng thái `Đang xử lý` kèm tên nhân viên/phòng ban phụ trách.
-- **AC-04:** Hai nhân viên tiếp nhận cùng 1 Ticket đồng thời -> Hệ thống chỉ ghi nhận cho 1 người và báo lỗi hợp lệ cho người còn lại.
+## 4. Luồng Ngoại Lệ
 
-**Ví dụ Edge Case**
-Nhân viên A và Nhân viên B cùng mở chi tiết Ticket #TK-1002 và nhấn nút **Tiếp nhận** cách nhau 0.2 giây.
+- Hai nhân viên cùng tiếp nhận: chỉ một người được trở thành người phụ trách chính; người còn lại nhận dữ liệu mới nhất.
+- Nhân viên được chọn không còn hoạt động hoặc không thuộc phòng ban hiện tại: từ chối phân công.
+- Ticket đã được chuyển sang phòng ban khác: không cho hoàn tất thao tác theo dữ liệu cũ.
+- Category mới thuộc phòng ban khác: chuyển sang WF-04 thay vì lưu Category riêng lẻ.
 
-**Expected Result:** Hệ thống phân công Ticket #TK-1002 cho Nhân viên A. Nhân viên B nhận thông báo "Ticket này đã được Nhân viên A tiếp nhận trước đó" và giao diện hiển thị thông tin cập nhật mới nhất.
+## 5. Quy Tắc Nghiệp Vụ
+
+- Một Ticket có tối đa một người phụ trách chính tại một thời điểm.
+- Ticket có thể chưa có người phụ trách trước khi tiếp nhận/phân công.
+- Category phải lấy từ danh mục đang hoạt động.
+- Việc thay đổi Category, người phụ trách và trạng thái phải được ghi nhận trong lịch sử.
+- Mức độ ưu tiên và thời hạn tuân theo `BR-DUE-01` và `BR-DUE-02`.
+
+## 6. Tiêu Chí Nghiệm Thu
+
+- Tiếp nhận Ticket `NEW` hợp lệ gán đúng người phụ trách và chuyển sang `IN_PROGRESS`.
+- Không thể có hai người phụ trách chính đồng thời.
+- Phân công chỉ chấp nhận nhân viên hợp lệ thuộc phòng ban hiện tại.
+- Category thuộc phòng ban khác không được lưu nếu WF-04 chưa hoàn tất.
+
+## 7. Tài Liệu Liên Quan
+
+- M02: `FR-STF-01`, `FR-STF-02`, `FR-STF-03`.
+- Domain: `BR-OWN-01`, `BR-DUE-01`, `BR-DUE-02`.
