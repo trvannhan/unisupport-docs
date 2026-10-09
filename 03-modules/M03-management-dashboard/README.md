@@ -1,70 +1,65 @@
-# Phân Hệ Quản Lý (M03 - Management Dashboard)
+# M03 - Management Dashboard
 
-## 1. Tổng Quan Phân Hệ
+## 1. Phạm Vi Phân Hệ
 
-Phân hệ **Quản lý (Management Dashboard)** là trung tâm điều hành dành riêng cho Ban Giám hiệu và Trưởng/Phó các Phòng ban chức năng tại **Aurora University**.
+**Management Dashboard** là không gian làm việc dành cho người dùng Quản lý của Aurora University để giám sát hoạt động hỗ trợ sinh viên, xem báo cáo và thực hiện các chức năng quản trị được cấp quyền.
 
-Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian thực về tình hình tiếp nhận và giải quyết yêu cầu hỗ trợ sinh viên, đo lường hiệu suất làm việc của từng phòng ban/nhân viên, đồng thời cung cấp công cụ quản trị tài khoản, phân quyền vai trò (RBAC) và tra soát lịch sử thao tác toàn hệ thống.
+Phân hệ bao phủ hai nhóm chức năng chính:
 
----
+- **Giám sát và báo cáo:** theo dõi tình trạng Ticket, khối lượng công việc, thời hạn xử lý, xu hướng nhóm vấn đề, thời gian xử lý và mức độ hài lòng.
+- **Quản trị:** quản lý tài khoản/quyền, phòng ban, Nhóm vấn đề, chính sách lưu trữ và tra soát các thao tác quan trọng.
 
-## 2. Mục Tiêu & Giá Trị Mang Lại
+## 2. Đối Tượng Và Phạm Vi Dữ Liệu
 
-- **Giám sát thời gian thực (Real-time Monitoring)**: Theo dõi các chỉ số KPI vận hành cốt lõi (Tổng số Ticket, Số lượng quá hạn SLA, Thời gian xử lý trung bình, Chỉ số hài lòng CSAT).
-- **Cơ sở điều phối nhân sự**: Giúp nhà trường nhận diện ngay phòng ban nào đang quá tải hoặc nhóm vấn đề nào phát sinh đột biến để kịp thời điều chỉnh quy trình/nhân sự.
-- **Đánh giá chất lượng dịch vụ khách quan**: Tổng hợp phản hồi, điểm đánh giá sao và nhận xét của sinh viên sau khi yêu cầu được hoàn thành.
-- **An toàn & Quản trị tập trung**: Quản lý vòng đời tài khoản người dùng, gán đúng vai trò/phòng ban và đảm bảo tính minh bạch nhờ nhật ký tra soát (Audit Log).
+- **Đối tượng sử dụng:** Quản lý (Management).
+- **Phạm vi dữ liệu:** Người dùng chỉ xem và thao tác trên dữ liệu thuộc phạm vi quản lý được cấp.
+- **Quyền quản trị:** Các chức năng thay đổi tài khoản, quyền, phòng ban, Nhóm vấn đề hoặc chính sách hệ thống chỉ được sử dụng khi tài khoản Management có quyền tương ứng.
+- **Phạm vi Ticket:** Management có thể xem Ticket phục vụ giám sát/tra soát theo quyền nhưng không mặc định trở thành người phụ trách xử lý Ticket.
+- **Vai trò hệ thống:** UniSupport chỉ có ba nhóm người dùng chính: Student, Staff và Management; không tạo thêm một nhóm người dùng Admin độc lập.
 
----
+## 3. Functional Requirements
 
-## 3. Danh Mục Yêu Cầu Chức Năng (Functional Requirements)
+| Mã FR | Yêu cầu chức năng |
+| :--- | :--- |
+| **FR-MGT-00** | Đăng nhập và truy cập Management Dashboard |
+| **FR-MGT-01** | Quản lý tài khoản, vai trò và phạm vi quyền |
+| **FR-MGT-02** | Quản lý phòng ban và Nhóm vấn đề |
+| **FR-MGT-03** | Tra soát lịch sử thao tác |
+| **FR-MGT-04** | Quản lý chính sách lưu trữ dữ liệu |
+| **FR-MGT-05** | Dashboard giám sát hoạt động hỗ trợ |
+| **FR-MGT-06** | Báo cáo, CSAT và xuất dữ liệu |
 
-| Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ |
-| :--- | :--- | :--- |
-| **FR-MGT-01** | Quản lý tài khoản, vai trò & RBAC | Tạo/sửa/khóa tài khoản, gán vai trò, kiểm soát quyền truy cập theo vai trò. |
-| **FR-MGT-02** | Quản lý phòng ban & danh mục | Quản lý phòng ban, nhóm vấn đề/danh mục Ticket và dữ liệu cấu hình. |
-| **FR-MGT-03** | Kiểm soát quyền truy cập & Audit Trail | Áp dụng kiểm soát truy cập, bảo vệ dữ liệu/file theo quyền và ghi nhận nhật ký thao tác. |
-| **FR-MGT-04** | Quản lý thời hạn lưu trữ | Xác định thời hạn lưu trữ dữ liệu Ticket, file đính kèm, log. |
-| **FR-MGT-05** | Dashboard & thống kê quản trị | Dashboard KPI, tổng số Ticket, Ticket đang xử lý, quá hạn. |
-| **FR-MGT-06** | Báo cáo, mức độ hài lòng & xuất dữ liệu | Báo cáo thời gian xử lý, xu hướng nhóm vấn đề, CSAT, phản hồi sinh viên. |
+Chi tiết các yêu cầu chức năng được đặc tả tại [prd.md](./prd.md).
 
-### Effort Theo Bảng Chi Phí Nội Bộ Đã Chốt
+## 4. Luồng Nghiệp Vụ Chính
 
-| Gói việc | Effort |
-| :--- | :---: |
-| Quản lý tài khoản, vai trò & RBAC | **64h** |
-| Quản lý phòng ban & danh mục | **26h** |
-| Kiểm soát quyền truy cập & Audit Trail | **40h** |
-| Quản lý thời hạn lưu trữ | **15h** |
-| Dashboard & thống kê quản trị | **33h** |
-| Báo cáo, mức độ hài lòng & xuất dữ liệu | **37h** |
-| **Tổng M3 - Quản lý** | **215h** |
+```mermaid
+flowchart TD
+    A[Đăng nhập] --> B[Management Dashboard]
 
----
+    B --> C[Giám sát hoạt động]
+    C --> D[NEW / IN_PROGRESS / WAITING_STUDENT]
+    C --> E[Sắp quá hạn / Quá hạn]
+    C --> F[Khối lượng theo phòng ban / nhân viên]
 
-## 4. Sơ Đồ Luồng Tương Tác Của Quản Lý (Management Workflow)
-```
-[Đăng nhập (M05-Security)]
-│
-├───────────────────────────────┬───────────────────────────────┐
-▼                               ▼                               ▼
-[Dashboard KPI FR-MGT-05]     [Báo cáo & Xuất DL FR-MGT-06]   [Quản trị Hệ thống]
-(Tổng Ticket, Overdue,         (Thời gian xử lý trung bình,      │
-Chỉ số CSAT toàn trường)       Top xu hướng vấn đề)              ├──► [Tài khoản & RBAC FR-MGT-01]
-                                                                 ├──► [Phòng ban & Danh mục FR-MGT-02]
-                                                                 ├──► [Audit Trail FR-MGT-03]
-                                                                 └──► [Thời hạn lưu trữ FR-MGT-04]
+    B --> G[Báo cáo]
+    G --> H[Xu hướng Nhóm vấn đề]
+    G --> I[Thời gian xử lý]
+    G --> J[CSAT]
+
+    B --> K[Quản trị theo quyền]
+    K --> L[Tài khoản và quyền]
+    K --> M[Phòng ban và Nhóm vấn đề]
+    K --> N[Nhật ký tra soát]
+    K --> O[Chính sách lưu trữ]
 ```
 
----
+## 5. Quan Hệ Với Các Tài Liệu Khác
 
-## 5. Quy Tắc Vận Hành & Thiết Kế Giao Diện (UI/UX Guidelines)
+Management Dashboard sử dụng các quy tắc dùng chung đã được xác lập tại:
 
-1. **Giao diện Trực quan (Data Visualization)**: Sử dụng các biểu đồ tròn (Pie chart) biểu diễn tỷ lệ trạng thái Ticket, biểu đồ cột (Bar chart) so sánh khối lượng công việc giữa các phòng ban, và biểu đồ đường (Line chart) thể hiện xu hướng theo thời gian.
-2. **Bộ lọc Báo cáo linh hoạt (Filter Options)**: Cho phép lọc dữ liệu theo:
-   - Khoảng thời gian (Hôm nay, Tuần này, Tháng này, Tùy chọn ngày).
-   - Phòng ban chuyên trách.
-   - Nhóm vấn đề (Category).
-3. **Phân vùng dữ liệu xem (Data Scope)**:
-   - **Trưởng phòng ban**: Chỉ xem được Báo cáo & KPI thuộc Phòng ban của mình phụ trách.
-   - **Ban Giám hiệu / MANAGER**: Xem được Báo cáo & KPI toàn trường của tất cả phòng ban.
+- [Actors & Roles](../../01-product/actors-and-roles.md)
+- [Ticket Model](../../02-domain/ticket-model.md)
+- [Ticket Lifecycle](../../02-domain/ticket-lifecycle.md)
+- [State Transition](../../02-domain/state-transition.md)
+- [Business Rules](../../02-domain/business-rules.md)
