@@ -1,28 +1,50 @@
 # Ma Trận Chuyển Đổi Trạng Thái Ticket (State Transition Matrix)
 
-## 1. Bảng Ma Trận Chuyển Trạng Thái (State Transition Table)
+Tài liệu này quy định các chuyển đổi trạng thái hợp lệ của Ticket trong **UniSupport**. Mọi thay đổi trạng thái phải tuân thủ vòng đời Ticket và được ghi nhận trong lịch sử xử lý.
 
-Bảng dưới đây quy định các trạng thái hợp lệ có thể chuyển đổi, Tác nhân thực hiện (Actor) và Điều kiện kích hoạt tương ứng:
+## 1. Ma Trận Chuyển Trạng Thái
 
-| Trạng Thái Hiện Tại (From) | Trạng Thái Đích (To) | Tác Nhân (Actor) | Điều Kiện & Kịch Bản Kích Hoạt |
+| Trạng thái hiện tại | Trạng thái đích | Tác nhân | Điều kiện chuyển trạng thái |
 | :--- | :--- | :--- | :--- |
-| **NONE** | `NEW` | Sinh viên | Sinh viên gửi form tạo Ticket thành công. |
-| `NEW` | `IN_PROGRESS` | Nhân viên | Nhân viên nhấn **Claim** (Tiếp nhận) hoặc Trưởng phòng **Assign** (Phân công). |
-| `NEW` | `CANCELLED` | Sinh viên / System | Sinh viên chủ động hủy yêu cầu khi chưa ai tiếp nhận, hoặc hệ thống hủy do phát hiện vi phạm. |
-| `IN_PROGRESS` | `WAITING_STUDENT` | Nhân viên | Nhân viên gửi nội dung **Yêu cầu bổ sung thông tin/giấy tờ**. |
-| `WAITING_STUDENT` | `IN_PROGRESS` | Sinh viên | Sinh viên đăng tải file hoặc phản hồi câu trả lời bổ sung. |
-| `IN_PROGRESS` | `IN_PROGRESS` | Nhân viên | Nhân viên thực hiện Chuyển phòng ban (Transfer) -> Giữ trạng thái xử lý, cập nhật `department_id` mới, xóa `assigned_staff_id` để phòng ban mới Claim/Assign lại. |
-| `IN_PROGRESS` | `RESOLVED` | Nhân viên | Nhân viên cập nhật nội dung giải quyết thành công và chọn **Hoàn tất**. |
-| `RESOLVED` | `IN_PROGRESS` | Sinh viên | Sinh viên phản hồi chưa hài lòng/khiếu nại kết quả trong thời hạn cho phép. |
-| `RESOLVED` | `CLOSED` | Sinh viên | Sinh viên xác nhận kết quả và thực hiện **Đánh giá hài lòng (CSAT)**. |
-| `RESOLVED` | `CLOSED` | System | Hệ thống tự động đóng sau **03 ngày làm việc** kể từ khi ở trạng thái `RESOLVED`. |
-| `CLOSED` | *Không đổi* | N/A | **Trạng thái kết thúc (Terminal State)**. Không cho phép bất kỳ chuyển đổi nào khác. |
-| `CANCELLED` | *Không đổi* | N/A | **Trạng thái kết thúc (Terminal State)**. Không cho phép bất kỳ chuyển đổi nào khác. |
+| Chưa tồn tại | `NEW` | Sinh viên / Hệ thống | Sinh viên gửi yêu cầu hợp lệ và hệ thống tạo Ticket thành công. |
+| `NEW` | `IN_PROGRESS` | Người dùng có quyền xử lý | Ticket được tiếp nhận hoặc phân công cho phạm vi xử lý phù hợp. |
+| `IN_PROGRESS` | `WAITING_STUDENT` | Người dùng có quyền xử lý | Cần sinh viên bổ sung thông tin hoặc tài liệu trước khi tiếp tục xử lý. |
+| `WAITING_STUDENT` | `IN_PROGRESS` | Sinh viên / Hệ thống | Sinh viên gửi bổ sung hợp lệ và Ticket sẵn sàng tiếp tục xử lý. |
+| `IN_PROGRESS` | `RESOLVED` | Người dùng có quyền xử lý | Kết quả xử lý đã được ghi nhận đầy đủ cho Ticket. |
+| `RESOLVED` | `IN_PROGRESS` | Sinh viên / Hệ thống | Sinh viên phản hồi rằng vấn đề chưa được giải quyết trong thời hạn và đáp ứng điều kiện mở lại. |
+| `RESOLVED` | `CLOSED` | Sinh viên / Hệ thống | Sinh viên chấp nhận kết quả hoặc hết thời hạn phản hồi theo quy định. |
+| `CLOSED` | Không chuyển tiếp | Hệ thống | Ticket đã kết thúc vòng đời xử lý. |
 
 ---
 
-## 2. Quy Tắc Chặn Chuyển Trạng Thái Bất Hợp Lệ (Invalid Transition Rules)
+## 2. Hành Động Không Làm Thay Đổi Trạng Thái
 
-1. **Không cho phép chuyển từ `NEW` thẳng sang `RESOLVED` hoặc `CLOSED`**: Bắt buộc phải qua bước tiếp nhận (`IN_PROGRESS`) để đảm bảo đúng quy trình phân công trách nhiệm.
-2. **Không thể chỉnh sửa Ticket khi ở trạng thái `CLOSED` hoặc `CANCELLED`**: Mọi thao tác gửi phản hồi, upload file đính kèm mới đều bị vô hiệu hóa hoàn toàn.
-3. **Sinh viên không được tự chuyển trạng thái sang `RESOLVED`**: Chỉ có Nhân viên phụ trách mới có quyền ghi nhận kết quả xử lý.
+Một số hành động nghiệp vụ có thể làm thay đổi trách nhiệm xử lý hoặc thông tin của Ticket nhưng không nhất thiết tạo ra trạng thái mới.
+
+| Hành động | Ảnh hưởng đến trạng thái | Quy tắc |
+| :--- | :--- | :--- |
+| **Phân công lại** | Giữ nguyên trạng thái hiện tại | Thay đổi người phụ trách và ghi nhận lịch sử. |
+| **Chuyển xử lý (Transfer)** | Giữ nguyên trạng thái phù hợp với giai đoạn xử lý | Thay đổi người/phòng ban phụ trách và bảo toàn lịch sử trước đó. |
+| **Escalation** | Giữ nguyên trạng thái phù hợp với giai đoạn xử lý | Chuyển Ticket lên phạm vi xử lý phù hợp hơn và ghi nhận sự kiện escalation. |
+| **Thay đổi mức độ ưu tiên** | Giữ nguyên trạng thái hiện tại | Cập nhật mức độ ưu tiên theo quyền và quy tắc nghiệp vụ. |
+| **Cập nhật thời hạn xử lý** | Giữ nguyên trạng thái hiện tại | Thời hạn mới phải tuân thủ quy tắc nghiệp vụ và được ghi nhận trong lịch sử. |
+
+---
+
+## 3. Quy Tắc Chuyển Trạng Thái
+
+1. Ticket chỉ được chuyển giữa các trạng thái được quy định trong ma trận này.
+2. `NEW` không được chuyển trực tiếp sang `RESOLVED` hoặc `CLOSED`; Ticket phải được tiếp nhận và đi vào quá trình xử lý trước khi có thể hoàn tất.
+3. `WAITING_STUDENT` chỉ quay lại `IN_PROGRESS` sau khi sinh viên đã cung cấp thông tin hoặc tài liệu bổ sung hợp lệ.
+4. Chỉ người dùng có quyền xử lý Ticket mới được ghi nhận kết quả và chuyển Ticket từ `IN_PROGRESS` sang `RESOLVED`.
+5. Mở lại Ticket được thực hiện từ `RESOLVED` về `IN_PROGRESS`, không thực hiện từ `CLOSED`.
+6. `CLOSED` là trạng thái kết thúc vòng đời xử lý. Trường hợp phát sinh nhu cầu hỗ trợ mới sau khi Ticket đã đóng được xử lý theo quy tắc nghiệp vụ tương ứng.
+7. Mọi chuyển đổi trạng thái phải ghi nhận trạng thái trước, trạng thái sau, tác nhân thực hiện và thời điểm phát sinh vào lịch sử Ticket.
+
+---
+
+## 4. Quan Hệ Với Các Quy Tắc Nghiệp Vụ
+
+Các điều kiện chi tiết liên quan đến thời hạn phản hồi, mở lại Ticket, thời hạn xử lý, yêu cầu bổ sung và đánh giá mức độ hài lòng được quy định tại `business-rules.md`.
+
+Ma trận này chỉ xác định các chuyển đổi trạng thái hợp lệ; các điều kiện chi tiết để cho phép một chuyển đổi được áp dụng theo các quy tắc nghiệp vụ tương ứng.
