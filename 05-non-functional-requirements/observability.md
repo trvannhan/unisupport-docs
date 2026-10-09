@@ -1,29 +1,30 @@
-# [NFR-OBS] Yêu cầu về Giám sát & Ghi log (Observability & Logging Requirements)
+# NFR-OBS - Ghi Log Và Tra Soát
 
-### 1. Tổng quan
-Tài liệu định nghĩa các yêu cầu về khả năng quan sát, theo dõi trạng thái hoạt động và lưu trữ nhật ký hệ thống (System Logs) nhằm hỗ trợ quản trị viên Aurora University dễ dàng tra soát, phát hiện và chẩn đoán sự cố khi vận hành hệ thống Web Application UniSupport.
+## 1. Phạm Vi
 
-### 2. Cấu trúc và Quy định Ghi Log (Logging Standards)
-Hệ thống triển khai 2 nhóm log chính:
+Tách biệt hai mục đích:
+- **Nhật ký kỹ thuật:** hỗ trợ đội phát triển chẩn đoán lỗi trong quá trình triển khai/bảo hành.
+- **Nhật ký tra soát nghiệp vụ:** ghi các hành động quan trọng theo M03 và `BR-AUD`.
 
-#### 2.1 System & Application Log (Log hệ thống & Ứng dụng)
-- **Cấp độ Log (Log Levels):** `INFO`, `WARN`, `ERROR`.
-- **Định dạng chuẩn:** JSON/Plain text bao gồm các trường bắt buộc:
-  - `timestamp`: Thời gian phát sinh sự cố (định dạng ISO 8601).
-  - `level`: Cấp độ nghiêm trọng.
-  - `module`: Phân hệ phát sinh log (VD: `M01-student-portal`, `M05-rbac`).
-  - `message`: Nội dung mô tả chi tiết.
-  - `stack_trace`: Lỗi kỹ thuật chi tiết (chỉ áp dụng đối với cấp độ `ERROR`).
+## 2. Yêu Cầu
 
-#### 2.2 Audit Log (Log tra soát nghiệp vụ)
-- Tự động ghi lại các thao tác ghi/sửa/xóa dữ liệu quan trọng của người dùng.
-- Thông tin lưu trữ: `User_ID`, `Role`, `Action_Type`, `Resource_Target` (Ticket ID, Account ID), `IP_Address`, `Timestamp`.
+### 2.1 Nhật ký kỹ thuật
+- Ghi đủ thông tin để xác định thời điểm, mức độ lỗi và khu vực chức năng liên quan.
+- Không ghi mật khẩu hoặc nội dung bí mật ở dạng có thể đọc trực tiếp.
+- Cách lưu, định dạng và thời hạn log kỹ thuật là quyết định triển khai, không phải cam kết nghiệp vụ.
 
-### 3. Giám sát Trạng thái (System Monitoring)
-- **Health Check Endpoint:** Cung cấp API `/api/v1/health` công khai ở mức cơ bản để hạ tầng của nhà trường kiểm tra trạng thái hoạt động của Service (Database Connection, File System Storage).
-- **Lưu trữ Log:** Nhật ký ứng dụng được ghi ra file log theo ngày và giữ tối thiểu 30 ngày trên máy chủ triển khai.
+### 2.2 Nhật ký tra soát nghiệp vụ
+Tối thiểu bao gồm các sự kiện đã chốt trong PRD:
+- thay đổi trạng thái Ticket;
+- phân công/phân công lại;
+- thay đổi mức độ ưu tiên/thời hạn;
+- Transfer và Escalation;
+- ghi nhận kết quả, mở lại và đóng Ticket;
+- tạo/thay đổi/khóa tài khoản và quyền;
+- thay đổi phòng ban, Category và chính sách lưu trữ.
 
-### 4. Tiêu chí Kiểm thử & Nghiệm thu
-- **NFR-OBS-01:** Khi phát sinh lỗi kết nối cơ sở dữ liệu hoặc lỗi ứng dụng (5xx), hệ thống phải ghi vết bản ghi `ERROR` kèm chi tiết lỗi vào file log.
-- **NFR-OBS-02:** Truy cập API `/api/v1/health` trả về HTTP status `200 OK` kèm trạng thái hoạt động của cơ sở dữ liệu.
-- **NFR-OBS-03:** Thao tác đổi vai trò tài khoản hoặc đổi trạng thái Ticket đều sinh bản ghi Audit Log tra soát chính xác.
+## 3. Nghiệm Thu
+
+- Các sự kiện Audit bắt buộc có bản ghi tương ứng.
+- Management chỉ xem nhật ký trong phạm vi quyền.
+- Nhật ký Audit không thể sửa/xóa bằng chức năng thông thường của ứng dụng.
