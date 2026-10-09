@@ -94,6 +94,7 @@ UniSupport sử dụng bốn mức độ ưu tiên:
 - Ticket được xem là **sắp quá hạn** khi tỷ lệ sử dụng đạt từ **80% đến dưới 100%**.
 - Ticket được xem là **quá hạn** khi tỷ lệ sử dụng đạt từ **100% trở lên** và Ticket chưa chuyển sang `RESOLVED` hoặc `CLOSED`.
 - Các phép tính Deadline, sắp quá hạn và quá hạn phải sử dụng cùng một lịch làm việc và cùng cách loại trừ thời gian `WAITING_STUDENT`.
+- Khi tính **thời gian xử lý phục vụ báo cáo hiệu quả**, chỉ cộng các khoảng thời gian Ticket thực sự nằm trong quá trình xử lý hợp lệ. Đồng hồ dừng khi Ticket chuyển sang `RESOLVED`; nếu Ticket được mở lại về `IN_PROGRESS`, đồng hồ tiếp tục tính cho vòng xử lý mới. Khoảng thời gian Ticket ở `RESOLVED` để chờ sinh viên phản hồi không được tính vào thời gian xử lý của nhân viên.
 
 ---
 
@@ -145,6 +146,8 @@ UniSupport sử dụng bốn mức độ ưu tiên:
 - Nội dung nhận xét bổ sung là không bắt buộc.
 - Sinh viên có **07 ngày theo lịch** kể từ thời điểm Ticket chuyển sang `CLOSED` để gửi đánh giá.
 - Sau thời hạn trên, Ticket vẫn được lưu phục vụ tra cứu nhưng không còn nhận đánh giá mới.
+- **CSAT trung bình theo kỳ báo cáo** được tính từ các đánh giá hợp lệ có thời điểm gửi đánh giá nằm trong khoảng báo cáo.
+- **Tỷ lệ phản hồi CSAT theo kỳ báo cáo** được tính trên các Ticket có thời điểm chuyển sang `CLOSED` nằm trong khoảng báo cáo và đã hết đủ 07 ngày theo lịch để đánh giá. Ticket chưa hết thời hạn đánh giá không được đưa vào mẫu số.
 
 ---
 
@@ -169,6 +172,6 @@ Mỗi sự kiện phải xác định được nội dung thay đổi, người 
 
 ### `BR-AUD-02` — Tính toàn vẹn của nhật ký tra soát
 
-- Người dùng thông thường không được chỉnh sửa hoặc xóa các bản ghi lịch sử đã phát sinh.
-- Các thao tác quản trị liên quan đến dữ liệu tra soát phải được kiểm soát theo quyền và không được làm mất dấu vết nghiệp vụ đã ghi nhận.
+- Các bản ghi lịch sử/tra soát không được chỉnh sửa hoặc xóa thông qua chức năng thông thường của ứng dụng, kể cả bởi tài khoản Management.
+- Việc xử lý dữ liệu tra soát đã hết thời hạn lưu trữ chỉ được thực hiện theo chính sách lưu trữ được phê duyệt và không được làm mất dấu vết trái với chính sách đó.
 - Lịch sử Ticket phải được bảo toàn khi Ticket được phân công lại, chuyển xử lý, escalation, mở lại hoặc đóng.
