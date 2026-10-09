@@ -55,20 +55,7 @@ flowchart TD
 
 Ticket ở `RESOLVED` được đóng hoặc mở lại theo quy tắc vòng đời dùng chung. Khi được mở lại, Ticket quay về `IN_PROGRESS` và tiếp tục xuất hiện trong phạm vi xử lý phù hợp.
 
-## 5. Traceability Với Baseline Nguồn Lực
-
-| Work Package | Effort baseline | Phạm vi được ánh xạ |
-| :--- | :---: | :--- |
-| **WP-STF-01** — Tiếp nhận, tìm kiếm & lọc yêu cầu | **33h** | FR-STF-01 |
-| **WP-STF-02** — Phân loại & phân công xử lý | **38h** | FR-STF-02 |
-| **WP-STF-03** — Quản lý ưu tiên & thời hạn | **29h** | FR-STF-03 |
-| **WP-STF-04** — Xử lý & cập nhật yêu cầu | **39h** | FR-STF-04 |
-| **WP-STF-05** — Chuyển xử lý, Escalation & hoàn tất | **32h** | FR-STF-05 và phần ghi nhận kết quả tại FR-STF-06 |
-| **WP-STF-06** — Đóng & mở lại yêu cầu | **26h** | Xử lý Ticket sau khi reopen, đồng bộ trạng thái/lịch sử/hàng chờ liên quan tại FR-STF-01 và FR-STF-06; thao tác xác nhận kết quả/reopen thuộc M01, auto-close thuộc vòng đời dùng chung. |
-
-Bảng trên giữ nguyên effort baseline và chỉ làm rõ phạm vi chức năng thực tế để tránh tính trùng giữa M01, M02 và các quy tắc vòng đời dùng chung.
-
-## 6. Quan Hệ Với Các Tài Liệu Khác
+## 5. Quan Hệ Với Các Tài Liệu Khác
 
 Staff Operations tuân thủ các quy tắc nghiệp vụ được xác lập tại:
 
