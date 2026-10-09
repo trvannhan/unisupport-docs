@@ -120,7 +120,9 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 - Một Ticket chỉ có **01 người phụ trách chính tại một thời điểm**.
 - Danh sách nhân viên dùng cho thao tác Assign/Reassign chỉ hiển thị các nhân viên hợp lệ thuộc phòng ban hiện tại.
 
-#### 4. Luồng A — Tiếp nhận Ticket
+#### 4. Luồng xử lý chi tiết
+
+**Luồng A — Tiếp nhận Ticket**
 1. Nhân viên mở Ticket chưa có người phụ trách trong hàng chờ phòng ban.
 2. Hệ thống hiển thị nội dung yêu cầu và Category hiện tại.
 3. Nhân viên kiểm tra Category và điều chỉnh nếu cần.
@@ -130,7 +132,7 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 7. Nếu Ticket đang ở `NEW`, hệ thống chuyển Ticket sang `IN_PROGRESS`.
 8. Hệ thống ghi nhận sự kiện tiếp nhận/phân công vào lịch sử Ticket.
 
-#### 5. Luồng B — Phân công hoặc phân công lại
+**Luồng B — Phân công hoặc phân công lại**
 1. Người dùng có quyền phân công mở Ticket.
 2. Hệ thống hiển thị danh sách nhân viên hợp lệ thuộc phòng ban đang phụ trách Ticket.
 3. Người dùng chọn một nhân viên.
@@ -139,17 +141,17 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 6. Nếu Ticket đang ở `NEW`, Ticket chuyển sang `IN_PROGRESS`.
 7. Hệ thống ghi nhận người phụ trách trước, người phụ trách mới và người thực hiện thao tác vào lịch sử.
 
-#### 6. Luồng ngoại lệ
+#### 5. Luồng ngoại lệ
 - Hai nhân viên cùng tiếp nhận một Ticket: chỉ một người được trở thành người phụ trách chính; người còn lại nhận thông báo Ticket đã được tiếp nhận.
 - Phân công cho người không thuộc phòng ban hiện tại: từ chối thao tác.
 - Ticket đã được Transfer sang phòng ban khác trước khi thao tác hoàn tất: từ chối và hiển thị dữ liệu mới nhất.
 
-#### 7. Quy tắc nghiệp vụ
+#### 6. Quy tắc nghiệp vụ
 - Tuân thủ `BR-OWN-01`.
 - Phân loại và phân công phải được ghi nhận trong lịch sử Ticket.
 - Nhân viên không được tự tạo Category mới trong luồng xử lý Ticket.
 
-#### 8. Tiêu chí nghiệm thu
+#### 7. Tiêu chí nghiệm thu
 - **AC-02-01:** Tiếp nhận Ticket `NEW` hợp lệ gán đúng người phụ trách và chuyển sang `IN_PROGRESS`.
 - **AC-02-02:** Không thể có hai người phụ trách chính đồng thời cho cùng một Ticket.
 - **AC-02-03:** Phân công chỉ chấp nhận nhân viên hợp lệ thuộc phòng ban đang xử lý.
@@ -221,13 +223,15 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 - **Yêu cầu bổ sung:** bắt buộc có nội dung mô tả rõ thông tin hoặc tài liệu cần cung cấp, từ **10 đến 1.000 ký tự**.
 - Nhân viên chỉ được yêu cầu bổ sung khi Ticket đang ở `IN_PROGRESS`.
 
-#### 4. Luồng A — Cập nhật tiến độ
+#### 4. Luồng xử lý chi tiết
+
+**Luồng A — Cập nhật tiến độ**
 1. Nhân viên mở Ticket đang phụ trách.
 2. Nhân viên ghi nhận nội dung tiến độ xử lý khi cần.
 3. Hệ thống lưu cập nhật vào lịch sử Ticket.
 4. Ticket tiếp tục ở `IN_PROGRESS`.
 
-#### 5. Luồng B — Yêu cầu bổ sung
+**Luồng B — Yêu cầu bổ sung**
 1. Nhân viên mở Ticket đang phụ trách.
 2. Nhân viên chọn **Yêu cầu bổ sung**.
 3. Nhân viên nhập nội dung cần sinh viên cung cấp.
@@ -237,17 +241,17 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 7. Thời gian xử lý được tạm dừng.
 8. Hệ thống tạo thông báo trong hệ thống cho sinh viên.
 
-#### 6. Luồng ngoại lệ
+#### 5. Luồng ngoại lệ
 - Nội dung yêu cầu bổ sung không hợp lệ: không gửi yêu cầu.
 - Ticket không còn ở `IN_PROGRESS`: từ chối thao tác.
 - Nhân viên không còn là người phụ trách hoặc không còn quyền xử lý: từ chối cập nhật.
 
-#### 7. Quy tắc nghiệp vụ
+#### 6. Quy tắc nghiệp vụ
 - Tuân thủ `BR-SUP-01` và `BR-DUE-02`.
 - Yêu cầu bổ sung và phản hồi sau đó của sinh viên phải được bảo toàn trong lịch sử Ticket.
 - Khi sinh viên bổ sung hợp lệ, Ticket quay về `IN_PROGRESS`.
 
-#### 8. Tiêu chí nghiệm thu
+#### 7. Tiêu chí nghiệm thu
 - **AC-04-01:** Cập nhật tiến độ hợp lệ được lưu vào đúng Ticket.
 - **AC-04-02:** Yêu cầu bổ sung hợp lệ chuyển Ticket sang `WAITING_STUDENT`.
 - **AC-04-03:** Sinh viên nhận được thông báo và xem được nội dung cần bổ sung.
@@ -279,7 +283,9 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
   - Escalation không thay đổi Category, phòng ban, người phụ trách chính hoặc trạng thái Ticket.
 - Transfer và Escalation không tạo trạng thái Ticket mới.
 
-#### 4. Luồng A — Transfer
+#### 4. Luồng xử lý chi tiết
+
+**Luồng A — Chuyển xử lý (Transfer)**
 1. Nhân viên mở Ticket.
 2. Nhân viên chọn **Chuyển xử lý**.
 3. Hệ thống hiển thị danh mục Category đang hoạt động kèm phòng ban được cấu hình cho từng Category.
@@ -291,7 +297,7 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
 9. Hệ thống ghi nhận Category trước/sau, phòng ban trước/sau, lý do và người thực hiện vào lịch sử.
 10. Hệ thống tạo thông báo trong hệ thống cho sinh viên và phạm vi phòng ban mới.
 
-#### 5. Luồng B — Escalation
+**Luồng B — Chuyển cấp xử lý (Escalation)**
 1. Nhân viên xác định Ticket vượt thẩm quyền hiện tại, cần hỗ trợ hoặc có nguy cơ quá hạn.
 2. Nhân viên chọn **Escalation**.
 3. Hệ thống hiển thị các tài khoản Management hợp lệ có quyền tiếp nhận escalation trong phạm vi quản lý liên quan.
@@ -302,13 +308,13 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
 8. Người phụ trách hiện tại tiếp tục chịu trách nhiệm xử lý Ticket.
 9. Hệ thống gửi thông báo trong hệ thống cho người nhận Management và người phụ trách hiện tại. Sinh viên không nhận thông báo chỉ vì sự kiện Escalation nội bộ.
 
-#### 6. Luồng ngoại lệ
+#### 5. Luồng ngoại lệ
 - Transfer không có Category đích hợp lệ, Category đích vẫn thuộc phòng ban hiện tại hoặc lý do không hợp lệ: từ chối.
 - Escalation không có người nhận Management hợp lệ hoặc lý do không hợp lệ: từ chối.
 - Người dùng không đủ quyền: từ chối thao tác.
 - Ticket đã thay đổi phạm vi/trạng thái không còn phù hợp trước khi xác nhận: từ chối và hiển thị dữ liệu mới nhất.
 
-#### 7. Quy tắc nghiệp vụ
+#### 6. Quy tắc nghiệp vụ
 - Tuân thủ `BR-OWN-02` và `BR-OWN-03`.
 - Transfer/Escalation phải giữ nguyên mã Ticket, nội dung, file và lịch sử đã có.
 - Transfer không tạo trạng thái mới; Category và phòng ban chịu trách nhiệm phải được cập nhật nhất quán trong cùng một thao tác.
@@ -317,7 +323,7 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
 - Escalation thành công phải thông báo trong hệ thống cho Management nhận escalation và người phụ trách hiện tại.
 - Transfer/Escalation không tự động chuyển Ticket sang `RESOLVED` hoặc `CLOSED`.
 
-#### 8. Tiêu chí nghiệm thu
+#### 7. Tiêu chí nghiệm thu
 - **AC-05-01:** Transfer hợp lệ cập nhật đồng thời Category và phòng ban theo cấu hình, không thay đổi mã Ticket.
 - **AC-05-02:** Transfer sang phòng ban khác luôn gỡ người phụ trách hiện tại để phòng ban mới tiếp nhận hoặc phân công lại.
 - **AC-05-03:** Lịch sử Transfer ghi nhận Category trước/sau, phòng ban trước/sau, lý do và người thực hiện; sinh viên và phòng ban mới nhận thông báo trong hệ thống.
@@ -375,15 +381,7 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 
 ---
 
-## III. TRACEABILITY VÒNG ĐỜI
-
-- Phạm vi **WP-STF-06 - Đóng & mở lại yêu cầu** được thực hiện xuyên suốt giữa các phân hệ:
-  - M01 thực hiện hành vi sinh viên xác nhận kết quả hoặc yêu cầu mở lại.
-  - Quy tắc vòng đời dùng chung thực hiện tự động chuyển `RESOLVED -> CLOSED` khi hết thời hạn phản hồi.
-  - M02 tiếp nhận lại Ticket đã reopen, khôi phục Ticket vào hàng chờ xử lý phù hợp và tiếp tục xử lý đến lần `RESOLVED` tiếp theo.
-- Staff không có thao tác đóng hoặc mở lại Ticket độc lập ngoài các quy tắc trên.
-
-## IV. QUY TẮC THAM CHIẾU
+## III. QUY TẮC THAM CHIẾU
 
 Các Functional Requirements của M02 phải tuân thủ thống nhất với:
 
