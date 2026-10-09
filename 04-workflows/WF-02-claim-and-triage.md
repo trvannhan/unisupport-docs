@@ -4,50 +4,44 @@
 
 Mô tả cách Ticket mới trong hàng chờ phòng ban được kiểm tra Nhóm vấn đề, tiếp nhận hoặc phân công cho một nhân viên và bắt đầu quá trình xử lý.
 
-## 2. Vai Trò Và Điều Kiện Bắt Đầu
+## 2. Sơ Đồ Nghiệp Vụ
 
-- **Vai trò chính:** Nhân viên.
-- **Vai trò bổ sung:** Nhân viên/Quản lý có quyền phân công.
-- Ticket thuộc phạm vi phòng ban và đang ở `NEW` hoặc chưa có người phụ trách.
+```mermaid
+flowchart TD
+    A[Ticket NEW trong hàng chờ phòng ban] --> B[Nhân viên mở Ticket]
+    B --> C[Kiểm tra nội dung, file và Nhóm vấn đề]
+    C --> D{Nhóm vấn đề đúng?}
 
-## 3. Luồng Nghiệp Vụ Chính
+    D -->|Có| H{Tiếp nhận hay phân công?}
+    D -->|Không| E[Chọn Nhóm vấn đề mới]
+    E --> F{Nhóm vấn đề mới thuộc phòng ban hiện tại?}
+    F -->|Không| G[Chuyển sang WF-04 Transfer]
+    F -->|Có| H
 
-1. Nhân viên mở hàng chờ Ticket của phòng ban.
-2. Hệ thống hiển thị Ticket mới/chưa có người phụ trách.
-3. Nhân viên mở Ticket và kiểm tra nội dung, file và Category hiện tại.
-4. Nếu Category chưa phù hợp, nhân viên chọn lại một Category đang hoạt động.
-5. Nếu Category mới vẫn thuộc phòng ban hiện tại, hệ thống lưu thay đổi Category và lịch sử tương ứng.
-6. Nhân viên chọn **Tiếp nhận**, hoặc người có quyền chọn một nhân viên hợp lệ để **Phân công**.
-7. Hệ thống kiểm tra Ticket chưa bị người khác tiếp nhận/chuyển xử lý và nhân viên được chọn còn hợp lệ.
-8. Hệ thống ghi nhận tối đa một người phụ trách chính.
-9. Nếu Ticket đang ở `NEW`, hệ thống chuyển Ticket sang `IN_PROGRESS`.
-10. Hệ thống ghi nhận việc phân loại/phân công vào lịch sử và Ticket xuất hiện trong danh sách xử lý của người phụ trách.
+    H -->|Tiếp nhận| I[Nhân viên nhận Ticket cho mình]
+    H -->|Phân công| J[Chọn nhân viên hợp lệ trong phòng ban]
 
-Nếu Category mới thuộc phòng ban khác, việc thay đổi chỉ được hoàn tất thông qua **WF-04 - Chuyển xử lý sang phòng ban khác**.
+    I --> K{Ticket còn chưa có người phụ trách?}
+    J --> L{Nhân viên và quyền hợp lệ?}
 
-## 4. Luồng Ngoại Lệ
+    K -->|Không| M[Tải lại dữ liệu mới nhất]
+    K -->|Có| N[Gán người phụ trách]
+    L -->|Không| O[Từ chối thao tác]
+    L -->|Có| N
 
-- Hai nhân viên cùng tiếp nhận: chỉ một người được trở thành người phụ trách chính; người còn lại nhận dữ liệu mới nhất.
-- Nhân viên được chọn không còn hoạt động hoặc không thuộc phòng ban hiện tại: từ chối phân công.
-- Ticket đã được chuyển sang phòng ban khác: không cho hoàn tất thao tác theo dữ liệu cũ.
-- Category mới thuộc phòng ban khác: chuyển sang WF-04 thay vì lưu Category riêng lẻ.
+    N --> P[Chuyển NEW thành IN_PROGRESS]
+    P --> Q[Ghi lịch sử phân loại/phân công]
+    Q --> R[Ticket xuất hiện trong danh sách xử lý]
+```
 
-## 5. Quy Tắc Nghiệp Vụ
+## 3. Ghi Chú Nghiệp Vụ
 
 - Một Ticket có tối đa một người phụ trách chính tại một thời điểm.
-- Ticket có thể chưa có người phụ trách trước khi tiếp nhận/phân công.
-- Category phải lấy từ danh mục đang hoạt động.
-- Việc thay đổi Category, người phụ trách và trạng thái phải được ghi nhận trong lịch sử.
+- Nhân viên được phân công phải đang hoạt động và thuộc phòng ban hiện tại.
+- Nếu Nhóm vấn đề mới thuộc phòng ban khác, phải dùng WF-04; không lưu Category mới riêng lẻ.
 - Mức độ ưu tiên và thời hạn tuân theo `BR-DUE-01` và `BR-DUE-02`.
 
-## 6. Tiêu Chí Nghiệm Thu
-
-- Tiếp nhận Ticket `NEW` hợp lệ gán đúng người phụ trách và chuyển sang `IN_PROGRESS`.
-- Không thể có hai người phụ trách chính đồng thời.
-- Phân công chỉ chấp nhận nhân viên hợp lệ thuộc phòng ban hiện tại.
-- Category thuộc phòng ban khác không được lưu nếu WF-04 chưa hoàn tất.
-
-## 7. Tài Liệu Liên Quan
+## 4. Tài Liệu Tham Chiếu
 
 - M02: `FR-STF-01`, `FR-STF-02`, `FR-STF-03`.
 - Domain: `BR-OWN-01`, `BR-DUE-01`, `BR-DUE-02`.
