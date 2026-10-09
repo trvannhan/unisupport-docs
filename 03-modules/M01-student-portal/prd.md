@@ -90,14 +90,18 @@ Giúp sinh viên tra cứu các vấn đề thường gặp và thông tin cần
 ### [FR-STU-02] Tạo và gửi yêu cầu hỗ trợ
 
 #### 1. Mô tả & Phạm vi
-Cho phép sinh viên tạo Ticket mới bằng cách chọn nhóm vấn đề, nhập nội dung yêu cầu và đính kèm tài liệu minh chứng khi cần.
+Cho phép sinh viên tạo Ticket mới bằng cách chọn một **Nhóm vấn đề (Category)** từ danh mục có sẵn do hệ thống cung cấp, nhập nội dung mô tả chi tiết vấn đề và đính kèm tài liệu minh chứng khi cần. Mỗi Nhóm vấn đề được cấu hình gắn với phòng ban tiếp nhận phù hợp để hệ thống xác định nơi tiếp nhận Ticket sau khi gửi.
 
 #### 2. Actors & Điều kiện tiên quyết
 - **Actor:** Sinh viên đã đăng nhập.
 - **Preconditions:** Danh mục nhóm vấn đề và ánh xạ phòng ban phụ trách đang hoạt động.
 
 #### 3. Quy tắc Dữ liệu & Validation
-- **Nhóm vấn đề:** bắt buộc.
+- **Nhóm vấn đề (Category):**
+  - Bắt buộc chọn một giá trị từ danh mục Nhóm vấn đề đang hoạt động do hệ thống cung cấp.
+  - Sinh viên không được tự tạo, sửa hoặc nhập tự do Nhóm vấn đề khi tạo Ticket.
+  - Mỗi Nhóm vấn đề được cấu hình với một phòng ban tiếp nhận phù hợp.
+  - Hệ thống sử dụng Nhóm vấn đề đã chọn để xác định phòng ban tiếp nhận Ticket.
 - **Nội dung yêu cầu:** bắt buộc, không chấp nhận nội dung chỉ chứa khoảng trắng.
 - **File đính kèm:** không bắt buộc.
 - Tối đa **03 file/lần**.
@@ -107,11 +111,11 @@ Cho phép sinh viên tạo Ticket mới bằng cách chọn nhóm vấn đề, n
 #### 4. Luồng xử lý chi tiết
 1. Sinh viên mở chức năng **Tạo yêu cầu**.
 2. Hệ thống hiển thị biểu mẫu tạo Ticket.
-3. Sinh viên chọn nhóm vấn đề và nhập nội dung yêu cầu.
+3. Sinh viên chọn một Nhóm vấn đề từ danh mục có sẵn và nhập nội dung mô tả chi tiết yêu cầu.
 4. Sinh viên đính kèm file minh chứng nếu cần.
 5. Sinh viên xác nhận gửi.
 6. Hệ thống kiểm tra dữ liệu bắt buộc và file đính kèm.
-7. Hệ thống xác định phòng ban tiếp nhận theo nhóm vấn đề.
+7. Hệ thống xác định phòng ban tiếp nhận dựa trên cấu hình của Nhóm vấn đề đã chọn.
 8. Hệ thống tạo Ticket, cấp mã Ticket duy nhất và ghi nhận thời điểm tạo.
 9. Ticket được khởi tạo ở trạng thái `NEW`, mức ưu tiên mặc định `MEDIUM` và thời hạn xử lý tương ứng.
 10. Hệ thống thông báo tạo Ticket thành công và hiển thị mã Ticket cho sinh viên.
