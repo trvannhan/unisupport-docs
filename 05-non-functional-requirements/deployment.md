@@ -1,25 +1,30 @@
-# [NFR-DEP] Yêu cầu về Triển khai & Hạ tầng (Deployment Requirements)
+# NFR-DEP - Triển Khai Và Bàn Giao
 
-### 1. Tổng quan
-Tài liệu quy định các điều kiện hạ tầng, môi trường chạy và quy trình triển khai ứng dụng Web UniSupport lên hệ thống của Aurora University theo thỏa thuận cam kết.
+## 1. Phạm Vi
 
-### 2. Điều kiện Hạ tầng do Client (Aurora University) Cung cấp
-Phù hợp với các Giả định dự án (Assumptions), hạ tầng máy chủ và tên miền hoàn toàn do nhà trường bàn giao:
-- **Máy chủ Web/Database:** Máy chủ ảo (VPS) hoặc máy chủ vật lý chạy OS Linux (Ubuntu Server 20.04/22.04 LTS) hoặc Windows Server.
-- **Cấu hình tối thiểu đề xuất:** 
-  - CPU: 2 Core vCPU.
-  - RAM: 4 GB.
-  - Dung lượng đĩa cứng: Tối thiểu 50 GB SSD khả dụng (phục vụ lưu trữ dữ liệu và tệp đính kèm).
-- **Mạng & Tên miền:**
-  - Tên miền/Tên miền phụ chính thức (VD: `unisupport.aurora.edu.vn`).
-  - Cấu hình địa chỉ IP Public và chứng chỉ bảo mật SSL/TLS (HTTPS).
+UniSupport được triển khai dưới dạng Web Application lên hạ tầng do Aurora University cung cấp. Resource nội bộ đã dành hoạt động cấp dự án cho **môi trường, CI/CD, triển khai và bàn giao**; phạm vi này không bao gồm vận hành hạ tầng lâu dài.
 
-### 3. Phương án Triển khai (Deployment Strategy)
-- **Đóng gói ứng dụng:** Hệ thống được đóng gói chuẩn hóa bằng Docker / Docker Compose (bao gồm Frontend, Backend API, Database) giúp việc cài đặt lên hạ tầng của nhà trường diễn ra nhanh chóng, độc lập với môi trường.
-- **Môi trường:**
-  - **Staging/UAT Environment:** Phục vụ kiểm thử nghiệm thu 10 ngày với nhà trường.
-  - **Production Environment:** Môi trường vận hành chính thức sau khi ký nghiệm thu.
+## 2. Trách Nhiệm Hạ Tầng
 
-### 4. Tiêu chí Kiểm thử & Nghiệm thu
-- **NFR-DEP-01:** Hệ thống triển khai thành công trên hạ tầng của Aurora University và truy cập ổn định thông qua tên miền/HTTPS do nhà trường cung cấp.
-- **NFR-DEP-02:** Đội ngũ phát triển bàn giao đầy đủ Tài liệu hướng dẫn Cài đặt & Vận hành (Deployment Guide) giúp cán bộ IT nhà trường có thể chủ động khởi động lại service khi cần.
+Aurora University cung cấp theo thỏa thuận:
+- môi trường máy chủ phù hợp;
+- tên miền hoặc địa chỉ truy cập;
+- điều kiện mạng và quyền truy cập cần thiết để triển khai.
+
+Đội dự án chịu trách nhiệm:
+- chuẩn bị phiên bản triển khai;
+- cấu hình ứng dụng phù hợp môi trường được cung cấp;
+- triển khai và kiểm tra các chức năng chính;
+- bàn giao mã nguồn và hướng dẫn cài đặt/vận hành theo Proposal.
+
+## 3. Giới Hạn Phạm Vi
+
+- Không cam kết một hệ điều hành, cấu hình CPU/RAM hoặc công nghệ container cụ thể khi chưa được nhóm kỹ thuật chốt.
+- Không bao gồm thiết lập sao lưu tự động, giám sát vận hành máy chủ lâu dài hoặc hỗ trợ hạ tầng ngoài phạm vi bảo hành.
+- Không tích hợp hệ thống bên thứ ba ngoài phạm vi đã thống nhất.
+
+## 4. Nghiệm Thu
+
+- Hệ thống được triển khai và truy cập được trên môi trường Client cung cấp.
+- Các luồng chính của ba phân hệ hoạt động sau triển khai.
+- Tài liệu cài đặt/vận hành và mã nguồn được bàn giao theo Proposal.
