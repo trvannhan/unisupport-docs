@@ -17,7 +17,7 @@ Một số chức năng được áp dụng xuyên suốt các phân hệ và kh
 - **Notification:** tạo và hiển thị thông báo khi phát sinh các sự kiện Ticket liên quan.
 - **Authentication, RBAC & Security:** xác thực, kiểm soát quyền truy cập và bảo vệ dữ liệu theo vai trò/phạm vi trách nhiệm.
 
-Các năng lực dùng chung được đặc tả tại tài liệu Domain, Workflows, yêu cầu phi chức năng và thiết kế hệ thống; không tạo thêm phân hệ M04/M05 trong thư mục này.
+Các năng lực dùng chung được đặc tả tại Domain, Workflows, yêu cầu phi chức năng và thiết kế hệ thống, đồng thời được áp dụng xuyên suốt M01, M02 và M03.
 
 ## Cấu Trúc Đặc Tả
 
