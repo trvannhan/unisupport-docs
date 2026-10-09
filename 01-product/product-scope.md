@@ -10,14 +10,14 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Tra cứu hướng dẫn/FAQ.
 - Gửi yêu cầu hỗ trợ.
 - Chọn nhóm vấn đề và nhập nội dung yêu cầu.
-- Đính kèm file minh chứng theo rule đã chốt.
+- Đính kèm file minh chứng theo quy định của hệ thống.
 - Nhận mã Ticket sau khi gửi thành công.
 - Xem tiến độ xử lý và lịch sử cập nhật.
 - Xem đơn vị/người phụ trách theo thông tin hệ thống cung cấp.
 - Bổ sung thông tin hoặc giấy tờ khi nhân viên yêu cầu.
 - Nhận thông báo và xem kết quả xử lý.
-- Phản hồi khi kết quả chưa giải quyết vấn đề theo lifecycle đã chốt.
-- Đánh giá mức độ hài lòng theo rule CSAT đã chốt.
+- Phản hồi khi kết quả chưa giải quyết được vấn đề.
+- Đánh giá mức độ hài lòng sau khi yêu cầu được giải quyết.
 
 ### 1.2 Module Nhân viên (Staff Operations)
 
@@ -29,7 +29,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Yêu cầu sinh viên bổ sung thông tin hoặc giấy tờ.
 - Chuyển xử lý sang đúng người/phòng ban và thực hiện escalation khi cần.
 - Ghi nhận kết quả xử lý.
-- Đóng và mở lại Ticket theo lifecycle đã chốt.
+- Đóng và mở lại Ticket theo quy định về vòng đời Ticket.
 
 ### 1.3 Module Quản lý (Management Dashboard)
 
@@ -45,7 +45,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Tra soát các thao tác quan trọng.
 - Quản lý chính sách lưu trữ dữ liệu cơ bản theo phạm vi đã chốt.
 
-> **Admin không phải là phân hệ hoặc nhóm người dùng thứ tư.** Các chức năng quản trị trên thuộc phạm vi **Management** và được kiểm soát bằng quyền.
+> Các chức năng quản trị hệ thống thuộc phạm vi của phân hệ **Management** và được kiểm soát theo quyền của tài khoản Quản lý.
 
 ### 1.4 Năng lực dùng chung
 
@@ -59,7 +59,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - File đính kèm chỉ người liên quan và có quyền được truy cập.
 - Các thao tác quan trọng được ghi nhận để phục vụ tra soát.
 
-> Các rule chi tiết như trạng thái Ticket, mức ưu tiên, SLA/deadline, giới hạn file, CSAT, transfer, escalation, close/reopen và retention đã được team chốt thành baseline và được đặc tả tại Domain, Functional Requirements, Workflows và Acceptance.
+> Các quy tắc chi tiết về trạng thái Ticket, mức độ ưu tiên, thời hạn xử lý, file đính kèm, CSAT, chuyển xử lý, escalation, đóng/mở lại Ticket và lưu trữ dữ liệu được đặc tả tại Domain, Functional Requirements, Workflows và Acceptance.
 
 ---
 
@@ -68,7 +68,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Mobile App độc lập cho iOS/Android.
 - Tích hợp bên thứ ba ngoài phạm vi đã thống nhất.
 - Thiết lập sao lưu tự động, theo dõi vận hành máy chủ và hỗ trợ hạ tầng lâu dài.
-- Hệ thống phân quyền nhiều cấp hoặc permission builder phức tạp ngoài nhu cầu baseline.
+- Cơ chế phân quyền tùy biến nhiều cấp hoặc mô hình phân quyền phức tạp ngoài phạm vi đã xác định.
 - Hệ thống audit/kiểm toán chuyên sâu ngoài nhật ký thao tác cần thiết.
 - Chat trực tiếp hoặc gọi thoại trong hệ thống.
 - Tối ưu chịu tải lớn vượt quá quy mô khoảng 3.000 sinh viên.
