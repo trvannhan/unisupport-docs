@@ -12,10 +12,10 @@ Phân hệ bao phủ hai nhóm chức năng chính:
 ## 2. Đối Tượng Và Phạm Vi Dữ Liệu
 
 - **Đối tượng sử dụng:** Quản lý (Management).
-- **Phạm vi dữ liệu:** Người dùng chỉ xem và thao tác trên dữ liệu thuộc phạm vi quản lý được cấp.
-- **Quyền quản trị:** Các chức năng thay đổi tài khoản, quyền, phòng ban, Nhóm vấn đề hoặc chính sách hệ thống chỉ được sử dụng khi tài khoản Management có quyền tương ứng.
-- **Phạm vi Ticket:** Management có thể xem Ticket phục vụ giám sát/tra soát theo quyền nhưng không mặc định trở thành người phụ trách xử lý Ticket.
-- **Vai trò hệ thống:** UniSupport chỉ có ba nhóm người dùng chính: Student, Staff và Management; không tạo thêm một nhóm người dùng Admin độc lập.
+- **Phạm vi quản lý:** Mỗi tài khoản Quản lý được cấu hình ở một trong hai phạm vi: **toàn trường** hoặc **một phòng ban cụ thể**. Tất cả Dashboard, báo cáo, Ticket và dữ liệu tra soát phải giới hạn theo phạm vi này.
+- **Quyền quản trị:** Các chức năng thay đổi tài khoản, quyền, phòng ban, Nhóm vấn đề hoặc chính sách hệ thống chỉ được sử dụng khi tài khoản Quản lý có quyền tương ứng.
+- **Phạm vi Ticket:** Quản lý có thể xem Ticket để giám sát/tra soát theo quyền nhưng không mặc định trở thành người phụ trách xử lý Ticket.
+- **Vai trò hệ thống:** UniSupport sử dụng ba nhóm người dùng chính: Sinh viên, Nhân viên và Quản lý.
 
 ## 3. Functional Requirements
 
@@ -27,7 +27,7 @@ Phân hệ bao phủ hai nhóm chức năng chính:
 | **FR-MGT-03** | Tra soát lịch sử thao tác |
 | **FR-MGT-04** | Quản lý chính sách lưu trữ dữ liệu |
 | **FR-MGT-05** | Dashboard giám sát hoạt động hỗ trợ |
-| **FR-MGT-06** | Báo cáo, CSAT và xuất dữ liệu |
+| **FR-MGT-06** | Báo cáo, mức độ hài lòng (CSAT) và xuất dữ liệu |
 
 Chi tiết các yêu cầu chức năng được đặc tả tại [prd.md](./prd.md).
 
@@ -45,7 +45,7 @@ flowchart TD
     B --> G[Báo cáo]
     G --> H[Xu hướng Nhóm vấn đề]
     G --> I[Thời gian xử lý]
-    G --> J[CSAT]
+    G --> J[Mức độ hài lòng - CSAT]
 
     B --> K[Quản trị theo quyền]
     K --> L[Tài khoản và quyền]
