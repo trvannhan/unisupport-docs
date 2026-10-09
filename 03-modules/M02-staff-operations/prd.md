@@ -117,7 +117,7 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
   - Nếu nội dung thực tế không phù hợp với Category hiện tại, người có quyền xử lý có thể chọn lại một Category có sẵn.
   - Nếu Category mới thuộc phòng ban khác, thay đổi Category chỉ được xác nhận cùng với luồng **Transfer** sang phòng ban được cấu hình cho Category đó; hệ thống không được lưu Category mới nhưng vẫn giữ Ticket ở phòng ban cũ.
 - **Người phụ trách:** phải là nhân viên đang hoạt động và thuộc phòng ban đang phụ trách Ticket.
-- Một Ticket chỉ có **01 người phụ trách chính tại một thời điểm**.
+- Một Ticket có **tối đa 01 người phụ trách chính tại một thời điểm**. Ticket chưa được tiếp nhận/phân công có thể chưa có người phụ trách chính.
 - Danh sách nhân viên dùng cho thao tác Assign/Reassign chỉ hiển thị các nhân viên hợp lệ thuộc phòng ban hiện tại.
 
 #### 4. Luồng xử lý chi tiết
