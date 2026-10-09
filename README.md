@@ -74,21 +74,22 @@ UniSupport có đúng **03 phân hệ nghiệp vụ**:
 | **M02** | Staff Operations | Nhân viên |
 | **M03** | Management Dashboard | Quản lý |
 
-Thông báo, xác thực, phân quyền, bảo mật file và Audit là **năng lực dùng chung**, không phải phân hệ M04/M05 độc lập.
+Thông báo, xác thực, phân quyền, bảo mật file và Audit được triển khai như **các năng lực dùng chung** xuyên suốt ba phân hệ nghiệp vụ.
 
-## Nguồn Baseline
+## Project Baseline
 
-Các tài liệu trong repository phải bám theo hai baseline của nhóm:
+| Baseline | Vai trò |
+| :--- | :--- |
+| **UniSupport Project Proposal** | Xác định mục tiêu, phạm vi bàn giao, giả định, ràng buộc và tiêu chí nghiệm thu cấp dự án. |
+| **Internal Resource & Cost Plan** | Xác định Work Package, effort kế hoạch và cơ sở lập tiến độ nguồn lực. |
 
-- Project Proposal đã chốt với Aurora University.
-- Bảng Resource/chi phí nội bộ đã chốt của nhóm.
+Việc phân rã Work Package thành nhiều Functional Requirement hoặc workflow không làm thay đổi effort kế hoạch của Work Package. Quan hệ truy xuất được quản lý tại [Requirements Traceability Matrix](./06-acceptance/traceability-matrix.md).
 
-Khi PRD phân rã một Work Package thành nhiều FR hoặc Flow, tổng effort của Work Package vẫn giữ nguyên theo Resource. Quan hệ này được theo dõi tại [Requirements Traceability Matrix](./06-acceptance/traceability-matrix.md).
+## Documentation Conventions
 
-## Quy Tắc Tài Liệu
-
-- Product/Domain/PRD mô tả **hành vi nghiệp vụ**, không gắn cứng vào API, database hoặc framework.
-- Workflow sử dụng Mermaid để mô tả luồng xuyên chức năng/phân hệ.
-- NFR chỉ cam kết các yêu cầu chất lượng phù hợp Proposal và phạm vi dự án.
-- Architecture có thể lựa chọn giải pháp kỹ thuật nhưng không được thay đổi Business Rules hoặc mở rộng scope.
-- Project documents giữ nguyên các ràng buộc đã chốt về thời gian, chi phí và effort.
+- **Product, Domain và PRD** là nguồn mô tả hành vi nghiệp vụ và không phụ thuộc vào công nghệ triển khai.
+- **Workflows** thể hiện luồng phối hợp giữa các chức năng và phân hệ bằng Mermaid.
+- **Non-Functional Requirements** xác định các thuộc tính chất lượng áp dụng toàn hệ thống.
+- **Architecture** mô tả giải pháp kỹ thuật phục vụ các yêu cầu đã xác định và không thay đổi Business Rules.
+- **Acceptance & RTM** duy trì truy xuất từ Work Package đến yêu cầu, workflow và kịch bản UAT.
+- **Project documents** quản lý các giả định, ràng buộc, tiến độ và quyết định cấp dự án.
