@@ -65,6 +65,11 @@ Cung cấp danh sách công việc để nhân viên xem Ticket mới, Ticket đ
 #### 3. Quy tắc Dữ liệu & Validation
 - Tìm kiếm theo **Mã Ticket**.
 - Bộ lọc hỗ trợ tối thiểu: **Trạng thái, Nhóm vấn đề, Mức độ ưu tiên, Người phụ trách**.
+- Hàng chờ được hiểu là các nhóm Ticket phục vụ xử lý công việc, tối thiểu gồm:
+  - **Ticket mới/chưa có người phụ trách:** Ticket thuộc phòng ban nhưng chưa được tiếp nhận hoặc phân công.
+  - **Ticket của tôi:** Ticket mà nhân viên hiện là người phụ trách chính.
+  - **Chờ sinh viên bổ sung:** Ticket trong phạm vi phòng ban đang ở `WAITING_STUDENT`.
+  - **Sắp quá hạn / Quá hạn:** Ticket đạt ngưỡng cảnh báo hoặc đã vượt thời hạn xử lý theo Business Rules.
 - Nhân viên chỉ nhận kết quả thuộc phạm vi dữ liệu được phép truy cập.
 - Ticket được mở lại từ `RESOLVED` về `IN_PROGRESS` phải xuất hiện lại trong danh sách xử lý phù hợp.
 
@@ -97,7 +102,7 @@ Cung cấp danh sách công việc để nhân viên xem Ticket mới, Ticket đ
 ### [FR-STF-02] Phân loại, tiếp nhận và phân công Ticket
 
 #### 1. Mô tả & Phạm vi
-Cho phép nhân viên kiểm tra Category của Ticket, tiếp nhận Ticket chưa có người phụ trách và cho phép người dùng có quyền phân công hoặc phân công lại Ticket cho nhân viên phù hợp.
+Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được sinh viên chọn từ danh mục có sẵn, điều chỉnh Category khi nội dung thực tế được phân loại khác, tiếp nhận Ticket chưa có người phụ trách và cho phép người dùng có quyền phân công hoặc phân công lại Ticket cho nhân viên phù hợp.
 
 #### 2. Actors & Điều kiện tiên quyết
 - **Actor:** Nhân viên đã đăng nhập.
@@ -105,11 +110,15 @@ Cho phép nhân viên kiểm tra Category của Ticket, tiếp nhận Ticket ch�
 - **Preconditions:** Ticket thuộc phạm vi phòng ban được phép xử lý.
 
 #### 3. Quy tắc Dữ liệu & Validation
-- **Category:** phải là một giá trị đang hoạt động trong danh mục Category của hệ thống.
-- Nếu Category hiện tại không phù hợp, người có quyền xử lý có thể chọn lại Category từ danh mục có sẵn.
-- Nếu Category mới thuộc phòng ban khác, Ticket phải được xử lý theo luồng **Transfer** thay vì chỉ thay đổi phòng ban ngầm.
-- **Người phụ trách:** phải là nhân viên hợp lệ thuộc phòng ban đang phụ trách Ticket.
+- **Nhóm vấn đề (Category):**
+  - Phải là một giá trị đang hoạt động trong danh mục Category có sẵn của hệ thống.
+  - Nhân viên không được nhập tự do hoặc tạo Category mới trong màn hình xử lý Ticket.
+  - Mỗi Category được cấu hình với một phòng ban tiếp nhận phù hợp.
+  - Nếu nội dung thực tế không phù hợp với Category hiện tại, người có quyền xử lý có thể chọn lại một Category có sẵn.
+  - Nếu Category mới thuộc phòng ban khác, Ticket phải đi qua luồng **Transfer**; hệ thống không được tự đổi phòng ban một cách ngầm định.
+- **Người phụ trách:** phải là nhân viên đang hoạt động và thuộc phòng ban đang phụ trách Ticket.
 - Một Ticket chỉ có **01 người phụ trách chính tại một thời điểm**.
+- Danh sách nhân viên dùng cho thao tác Assign/Reassign chỉ hiển thị các nhân viên hợp lệ thuộc phòng ban hiện tại.
 
 #### 4. Luồng A — Tiếp nhận Ticket
 1. Nhân viên mở Ticket chưa có người phụ trách trong hàng chờ phòng ban.
@@ -155,8 +164,8 @@ Cho phép nhân viên kiểm tra Category của Ticket, tiếp nhận Ticket ch�
 Cho phép người dùng có quyền thiết lập mức độ ưu tiên của Ticket và theo dõi thời hạn xử lý tương ứng.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** Nhân viên hoặc người dùng có quyền điều chỉnh Priority.
-- **Preconditions:** Ticket thuộc phạm vi xử lý của người dùng.
+- **Actor:** Nhân viên phụ trách Ticket hoặc người dùng có quyền điều phối/điều chỉnh mức độ ưu tiên.
+- **Preconditions:** Ticket thuộc phạm vi xử lý của người dùng và chưa ở trạng thái `CLOSED`.
 
 #### 3. Quy tắc Dữ liệu & Validation
 - Priority chỉ nhận một trong bốn giá trị: `LOW`, `MEDIUM`, `HIGH`, `URGENT`.
@@ -166,7 +175,8 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
   - `MEDIUM`: 03 ngày làm việc.
   - `HIGH`: 02 ngày làm việc.
   - `URGENT`: 01 ngày làm việc.
-- Ticket được xem là sắp quá hạn khi đã sử dụng từ 80% thời gian xử lý mục tiêu trở lên.
+- Ticket được xem là **sắp quá hạn** khi đã sử dụng từ 80% thời gian xử lý mục tiêu trở lên nhưng chưa vượt thời hạn.
+- Ticket được xem là **quá hạn** khi đã vượt thời hạn xử lý và chưa ở `RESOLVED` hoặc `CLOSED`.
 
 #### 4. Luồng xử lý chi tiết
 1. Người dùng mở Ticket thuộc phạm vi xử lý.
@@ -206,9 +216,9 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 - **Preconditions:** Ticket đang ở `IN_PROGRESS` và thuộc phạm vi của nhân viên.
 
 #### 3. Quy tắc Dữ liệu & Validation
-- Nội dung cập nhật tiến độ: nếu được ghi nhận, không được chỉ chứa khoảng trắng.
-- Yêu cầu bổ sung: bắt buộc có nội dung mô tả rõ thông tin hoặc tài liệu cần cung cấp.
-- Nội dung yêu cầu bổ sung: từ **10 đến 1.000 ký tự**.
+- **Nội dung cập nhật tiến độ:** nếu được ghi nhận, phải từ **10 đến 1.000 ký tự** và không được chỉ chứa khoảng trắng.
+- Cập nhật tiến độ được ghi vào lịch sử xử lý nội bộ của Ticket; Student Portal chỉ hiển thị các sự kiện được phép công khai theo quy tắc của M01.
+- **Yêu cầu bổ sung:** bắt buộc có nội dung mô tả rõ thông tin hoặc tài liệu cần cung cấp, từ **10 đến 1.000 ký tự**.
 - Nhân viên chỉ được yêu cầu bổ sung khi Ticket đang ở `IN_PROGRESS`.
 
 #### 4. Luồng A — Cập nhật tiến độ
@@ -253,19 +263,23 @@ Cho phép chuyển Ticket sang người/phòng ban phù hợp khác hoặc thự
 
 #### 2. Actors & Điều kiện tiên quyết
 - **Actor:** Nhân viên có quyền xử lý Ticket.
-- **Preconditions:** Ticket thuộc phạm vi xử lý hiện tại và chưa ở `CLOSED`.
+- **Preconditions:** Ticket thuộc phạm vi xử lý hiện tại và đang ở một trong các trạng thái `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT`.
 
 #### 3. Quy tắc Dữ liệu & Validation
-- **Transfer sang phòng ban khác:** bắt buộc chọn phòng ban đích khác phòng ban hiện tại.
-- **Lý do Transfer:** bắt buộc, tối thiểu 10 ký tự.
-- **Escalation:** bắt buộc có lý do mô tả nguyên nhân cần chuyển cấp xử lý.
+- **Transfer sang phòng ban khác:**
+  - Phòng ban đích phải được chọn từ danh sách phòng ban đang hoạt động do hệ thống cung cấp.
+  - Phòng ban đích phải khác phòng ban hiện tại.
+  - Lý do Transfer bắt buộc, từ **10 đến 1.000 ký tự**.
+- **Escalation:**
+  - Đích Escalation phải được chọn từ danh sách phạm vi/cấp xử lý hợp lệ đã được cấu hình cho phòng ban hiện tại.
+  - Lý do Escalation bắt buộc, từ **10 đến 1.000 ký tự**.
 - Transfer và Escalation không tạo trạng thái Ticket mới.
 
 #### 4. Luồng A — Transfer
 1. Nhân viên mở Ticket.
 2. Nhân viên chọn **Chuyển xử lý**.
-3. Hệ thống hiển thị các phòng ban đích hợp lệ.
-4. Nhân viên chọn phòng ban và nhập lý do.
+3. Hệ thống hiển thị danh sách phòng ban đang hoạt động mà người dùng được phép chuyển Ticket tới.
+4. Nhân viên chọn phòng ban đích và nhập lý do Transfer.
 5. Hệ thống kiểm tra quyền, trạng thái và dữ liệu.
 6. Hệ thống thay đổi phòng ban phụ trách.
 7. Người phụ trách hiện tại được gỡ khỏi Ticket nếu không còn thuộc phạm vi phù hợp.
@@ -274,14 +288,17 @@ Cho phép chuyển Ticket sang người/phòng ban phù hợp khác hoặc thự
 
 #### 5. Luồng B — Escalation
 1. Nhân viên xác định Ticket vượt thẩm quyền hiện tại, cần hỗ trợ hoặc có nguy cơ quá hạn.
-2. Nhân viên chọn **Escalation** và nhập lý do.
-3. Hệ thống kiểm tra quyền và dữ liệu.
-4. Hệ thống ghi nhận sự kiện Escalation và chuyển Ticket đến phạm vi xử lý phù hợp theo quyền được cấu hình.
-5. Ticket giữ trạng thái nghiệp vụ phù hợp.
-6. Các bên liên quan nhận thông báo trong hệ thống.
+2. Nhân viên chọn **Escalation**.
+3. Hệ thống hiển thị các phạm vi/cấp xử lý hợp lệ đã được cấu hình.
+4. Nhân viên chọn đích Escalation và nhập lý do.
+5. Hệ thống kiểm tra quyền, trạng thái và dữ liệu.
+6. Hệ thống ghi nhận sự kiện Escalation và chuyển Ticket đến phạm vi/cấp xử lý đã chọn.
+7. Ticket giữ trạng thái nghiệp vụ hiện tại phù hợp.
+8. Các bên liên quan nhận thông báo trong hệ thống.
 
 #### 6. Luồng ngoại lệ
-- Transfer không có lý do hoặc lý do dưới 10 ký tự: từ chối.
+- Transfer không có lý do, lý do dưới 10 ký tự hoặc vượt 1.000 ký tự: từ chối.
+- Escalation không có đích hợp lệ hoặc lý do không hợp lệ: từ chối.
 - Chọn chính phòng ban hiện tại làm đích Transfer: từ chối.
 - Người dùng không đủ quyền: từ chối thao tác.
 - Ticket đã thay đổi phạm vi/trạng thái không còn phù hợp trước khi xác nhận: từ chối và hiển thị dữ liệu mới nhất.
@@ -335,15 +352,16 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 - Tuân thủ `BR-LIFE-01`, `BR-FILE-01` và `BR-FILE-02`.
 - `RESOLVED` chưa phải trạng thái kết thúc vòng đời.
 - Sinh viên có 03 ngày làm việc để chấp nhận kết quả hoặc yêu cầu mở lại.
-- M02 không tự mở form CSAT tại `RESOLVED`; CSAT chỉ áp dụng khi Ticket đã `CLOSED`.
-- Nếu Ticket được mở lại hợp lệ, Ticket quay về `IN_PROGRESS` và tiếp tục quá trình xử lý.
+- M02 không mở chức năng CSAT tại `RESOLVED`; CSAT chỉ áp dụng khi Ticket đã `CLOSED`.
+- Khi Ticket được mở lại hợp lệ, Ticket quay về `IN_PROGRESS`.
+- Nếu người phụ trách trước đó vẫn đang hoạt động và còn thuộc phòng ban phụ trách Ticket, Ticket tiếp tục được giao cho người đó; nếu không, Ticket quay về hàng chờ chưa có người phụ trách của phòng ban hiện tại để được tiếp nhận/phân công lại.
 
 #### 7. Tiêu chí nghiệm thu
 - **AC-06-01:** Kết quả hợp lệ chuyển Ticket từ `IN_PROGRESS` sang `RESOLVED`.
 - **AC-06-02:** Sinh viên nhận thông báo và xem được nội dung/tài liệu kết quả thuộc Ticket của mình.
 - **AC-06-03:** Thiếu nội dung kết quả không làm Ticket chuyển trạng thái.
 - **AC-06-04:** Ghi nhận kết quả không làm mất lịch sử xử lý trước đó.
-- **AC-06-05:** Ticket được mở lại hợp lệ quay về `IN_PROGRESS` và xuất hiện lại trong phạm vi xử lý phù hợp.
+- **AC-06-05:** Ticket được mở lại hợp lệ quay về `IN_PROGRESS`; hệ thống giữ người phụ trách cũ nếu vẫn hợp lệ, nếu không Ticket quay về hàng chờ chưa có người phụ trách của phòng ban hiện tại.
 
 ---
 
