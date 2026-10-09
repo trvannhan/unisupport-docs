@@ -65,4 +65,3 @@ Student Portal sử dụng các quy tắc nghiệp vụ dùng chung đã đượ
 - [State Transition](../../02-domain/state-transition.md)
 - [Business Rules](../../02-domain/business-rules.md)
 
-Các chi tiết triển khai kỹ thuật như API, cơ chế lưu phiên, cấu trúc database, mã lỗi hệ thống và thiết kế giao diện chi tiết được đặc tả ở các tài liệu kỹ thuật tương ứng.
