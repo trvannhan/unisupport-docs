@@ -29,13 +29,12 @@ Người dùng gửi yêu cầu hỗ trợ và theo dõi quá trình xử lý c�
 - Đăng nhập hệ thống.
 - Tra cứu hướng dẫn/FAQ.
 - Tạo và gửi Ticket hỗ trợ.
-- Chọn nhóm vấn đề và nhập nội dung yêu cầu.
-- Đính kèm file minh chứng theo rule đã chốt.
+- Chọn nhóm vấn đề và cung cấp nội dung, tài liệu liên quan.
 - Xem trạng thái, lịch sử cập nhật và đơn vị/người phụ trách.
 - Bổ sung thông tin hoặc giấy tờ khi được yêu cầu.
 - Nhận thông báo và xem kết quả xử lý.
-- Phản hồi khi kết quả chưa giải quyết vấn đề theo lifecycle đã chốt.
-- Đánh giá mức độ hài lòng sau khi yêu cầu được giải quyết theo rule CSAT đã chốt.
+- Phản hồi nếu kết quả chưa giải quyết được vấn đề.
+- Đánh giá mức độ hài lòng sau khi yêu cầu được giải quyết.
 
 **Phạm vi dữ liệu**
 - Chỉ được truy cập các Ticket và dữ liệu thuộc chính tài khoản sinh viên đó.
@@ -48,13 +47,15 @@ Nhân viên thuộc các phòng ban chịu trách nhiệm tiếp nhận và xử
 **Khả năng chính**
 - Đăng nhập hệ thống.
 - Xem, tìm kiếm và lọc các yêu cầu trong phạm vi được phép.
-- Tiếp nhận, phân loại và phân công Ticket theo quyền được cấp.
+- Tiếp nhận và phân loại Ticket.
+- Xử lý các Ticket được giao.
 - Xác định mức độ ưu tiên và theo dõi thời hạn xử lý.
-- Cập nhật tiến độ/trạng thái xử lý.
+- Cập nhật trạng thái và ghi nhận hoạt động xử lý.
 - Yêu cầu sinh viên bổ sung thông tin hoặc giấy tờ.
-- Chuyển Ticket sang người/phòng ban phù hợp hoặc thực hiện escalation theo rule đã chốt.
-- Ghi nhận kết quả xử lý.
-- Đóng/mở lại Ticket theo điều kiện lifecycle đã chốt.
+- Phân công hoặc chuyển Ticket sang người/phòng ban phù hợp khi được cấp quyền.
+- Thực hiện escalation khi cần thiết.
+- Ghi nhận kết quả và hoàn tất/đóng Ticket.
+- Mở lại Ticket khi đáp ứng điều kiện nghiệp vụ đã quy định.
 
 **Phạm vi dữ liệu**
 - Chỉ được truy cập và thao tác trên Ticket trong phạm vi phòng ban, nhiệm vụ và quyền được cấp.
@@ -62,43 +63,46 @@ Nhân viên thuộc các phòng ban chịu trách nhiệm tiếp nhận và xử
 ### 2.3 Quản lý (Management)
 
 **Mô tả**  
-Người dùng có trách nhiệm giám sát hoạt động hỗ trợ và thực hiện các chức năng quản lý/quản trị được cấp quyền.
+Người dùng chịu trách nhiệm giám sát hoạt động hỗ trợ và thực hiện các chức năng quản lý/quản trị được cấp quyền.
 
 **Khả năng chính**
 - Đăng nhập hệ thống.
 - Xem Dashboard và số liệu tổng hợp trong phạm vi được cấp.
+- Theo dõi số lượng Ticket mới, đang xử lý, sắp quá hạn và đã quá hạn.
 - Theo dõi khối lượng công việc theo phòng ban hoặc nhân viên.
-- Theo dõi Ticket sắp/quá hạn và các chỉ số thời gian xử lý.
-- Xem báo cáo về xu hướng yêu cầu, hiệu quả xử lý và phản hồi/CSAT.
-- Phân công hoặc điều phối công việc khi được cấp quyền.
-- Tạo/chỉnh sửa/khóa tài khoản và gán quyền/phòng ban khi được cấp quyền quản trị.
-- Quản lý phòng ban, danh mục và các cấu hình nghiệp vụ thuộc phạm vi được cấp.
-- Tra soát các thao tác quan trọng và quản lý các chính sách hệ thống được giao.
+- Xem báo cáo về loại yêu cầu, thời gian xử lý và mức độ hài lòng.
+- Quản lý tài khoản, vai trò và quyền khi được cấp quyền quản trị.
+- Quản lý phòng ban và danh mục Ticket.
+- Tra soát Audit Trail và các thay đổi quan trọng.
+- Quản lý thời hạn lưu trữ dữ liệu theo chính sách đã chốt.
+- Xuất dữ liệu/báo cáo theo chức năng được cung cấp.
 
 **Phạm vi dữ liệu**
 - Truy cập dữ liệu và chức năng theo phạm vi quyền được cấp.
-- Một tài khoản Management không mặc định có toàn quyền; các quyền quản trị chỉ khả dụng khi được cấu hình/cấp quyền.
+- Các chức năng quản trị chỉ được sử dụng bởi tài khoản Management có quyền phù hợp.
 
 ---
 
-## 3. Ma Trận Quyền Ở Mức Sản Phẩm
+## 3. Bảng Tổng Hợp Quyền Theo Nhóm Người Dùng
 
 | Chức năng / Hành động | Sinh viên | Nhân viên | Quản lý |
 | :--- | :---: | :---: | :---: |
 | Đăng nhập hệ thống | ✅ | ✅ | ✅ |
-| Tra cứu FAQ/hướng dẫn | ✅ | ❌ | Theo quyền |
+| Tra cứu FAQ/hướng dẫn | ✅ | ❌ | ❌ |
 | Tạo Ticket hỗ trợ | ✅ | ❌ | ❌ |
-| Xem Ticket của chính sinh viên | ✅ | Theo quyền | Theo quyền |
+| Xem Ticket theo phạm vi được cấp | Ticket của mình | ✅ | Theo quyền |
 | Tiếp nhận / xử lý Ticket | ❌ | ✅ | Theo quyền |
 | Phân loại / xác định ưu tiên | ❌ | ✅ | Theo quyền |
 | Phân công / chuyển xử lý / escalation | ❌ | Theo quyền | Theo quyền |
 | Yêu cầu sinh viên bổ sung | ❌ | ✅ | Theo quyền |
 | Bổ sung thông tin theo yêu cầu | ✅ | ❌ | ❌ |
-| Ghi nhận kết quả / đóng / mở lại Ticket | ❌ | Theo quyền | Theo quyền |
+| Ghi nhận kết quả / đóng / mở lại Ticket | ❌ | ✅ | Theo quyền |
 | Gửi đánh giá hài lòng | ✅ | ❌ | ❌ |
 | Xem Dashboard / báo cáo | ❌ | ❌ | ✅ |
 | Quản lý tài khoản / phân quyền | ❌ | ❌ | Theo quyền quản trị |
 | Quản lý phòng ban / danh mục | ❌ | ❌ | Theo quyền quản trị |
-| Tra soát thao tác quan trọng | ❌ | Theo quyền | Theo quyền quản trị |
+| Xem Audit Trail / tra soát thay đổi | ❌ | ❌ | Theo quyền quản trị |
+| Quản lý thời hạn lưu trữ dữ liệu | ❌ | ❌ | Theo quyền quản trị |
+| Xuất báo cáo / dữ liệu | ❌ | ❌ | Theo quyền |
 
 > Chi tiết quyền theo dữ liệu, trạng thái Ticket và từng hành động được đặc tả trong phần Domain, Functional Requirements, Workflows và Security.
