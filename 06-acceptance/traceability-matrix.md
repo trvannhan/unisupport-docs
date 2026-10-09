@@ -1,29 +1,54 @@
-# Ma trận Truy xuất Yêu cầu (Requirements Traceability Matrix - RTM)
+# Ma Trận Truy Xuất Yêu Cầu (RTM)
 
-### 1. Mục đích
-Tài liệu này dùng để truy xuất và đối chiếu mối quan hệ giữa các Yêu cầu Nghiệp vụ (Requirements / Features), Quy trình Thực hiện (Workflows), Phân hệ Phần mềm (Modules) và các Kịch bản Kiểm thử (Test Scenarios) nhằm đảm bảo tất cả các cam kết trong Proposal dự án UniSupport đều được phát triển và kiểm thử đầy đủ.
+## 1. Mục Đích
 
-### 2. Ma trận Truy xuất Chi tiết
+RTM liên kết **Resource WP → Functional Requirement/Flow → Workflow → UAT** để bảo đảm PRD và kế hoạch triển khai không vượt hoặc bỏ sót phạm vi đã chốt.
 
-| Mã Yêu cầu (Req ID) | Tên Yêu cầu / Tính năng theo scope đã chốt | Phân hệ / Năng lực | Quy trình (Workflow) | Mã Test Scenario | Trạng thái Nghiệm thu |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **REQ-STU-01** | Tra cứu hướng dẫn & FAQ | M01-student-portal | WF-01 | TS-STU-01 | Chờ UAT |
-| **REQ-STU-02** | Tạo & gửi yêu cầu hỗ trợ, chọn nhóm vấn đề, đính kèm file ảnh/PDF và nhận mã Ticket | M01-student-portal | WF-01 | TS-STU-02 | Chờ UAT |
-| **REQ-STU-03** | Xem & theo dõi yêu cầu, trạng thái, người/phòng ban phụ trách và lịch sử cập nhật | M01-student-portal | WF-01, WF-03 | TS-STU-03 | Chờ UAT |
-| **REQ-STU-04** | Nhận thông báo trạng thái trong hệ thống | Notification dùng chung cho M01-M03 | WF-01, WF-03, WF-05 | TS-NTF-01 | Chờ UAT |
-| **REQ-STU-05** | Bổ sung thông tin & phản hồi, xem kết quả và đánh giá | M01-student-portal | WF-03, WF-06 | TS-STU-04 | Chờ UAT |
-| **REQ-STF-01** | Tiếp nhận, tìm kiếm & lọc yêu cầu | M02-staff-operations | WF-02 | TS-STF-01 | Chờ UAT |
-| **REQ-STF-02** | Phân loại & phân công xử lý | M02-staff-operations | WF-02 | TS-STF-02 | Chờ UAT |
-| **REQ-STF-03** | Quản lý ưu tiên & thời hạn SLA | M02-staff-operations | WF-02, WF-05 | TS-STF-03 | Chờ UAT |
-| **REQ-STF-04** | Xử lý, cập nhật tiến độ và yêu cầu sinh viên bổ sung hồ sơ | M02-staff-operations | WF-03, WF-05 | TS-STF-04 | Chờ UAT |
-| **REQ-STF-05** | Chuyển xử lý, escalation & hoàn tất | M02-staff-operations | WF-04, WF-05 | TS-STF-05 | Chờ UAT |
-| **REQ-STF-06** | Đóng & mở lại yêu cầu trong thời hạn cho phép | M02-staff-operations | WF-06 | TS-STF-06 | Chờ UAT |
-| **REQ-SEC-01** | Xác thực & Đăng nhập hệ thống (Sinh viên, Nhân viên, Quản lý) | M05-rbac-security | N/A | TS-SEC-01 | Chờ UAT |
-| **REQ-MNG-01** | Quản lý tài khoản, vai trò & RBAC | M03-management-dashboard | N/A | TS-MNG-01 | Chờ UAT |
-| **REQ-MNG-02** | Quản lý phòng ban & danh mục | M03-management-dashboard | N/A | TS-MNG-02 | Chờ UAT |
-| **REQ-MNG-03** | Kiểm soát quyền truy cập & Audit Trail | Security dùng chung cho M01-M03 | N/A | TS-SEC-01 | Chờ UAT |
-| **REQ-MNG-04** | Quản lý thời hạn lưu trữ | M03-management-dashboard | N/A | TS-MNG-03 | Chờ UAT |
-| **REQ-MNG-05** | Dashboard & thống kê quản trị | M03-management-dashboard | N/A | TS-MNG-04 | Chờ UAT |
-| **REQ-MNG-06** | Báo cáo, mức độ hài lòng & xuất dữ liệu | M03-management-dashboard | N/A | TS-MNG-05 | Chờ UAT |
+## 2. M01 - Student
 
----
+| Resource WP | Effort | FR / Flow | Workflow | UAT |
+| :--- | ---: | :--- | :--- | :--- |
+| WP-STU-01 - Tra cứu hướng dẫn & FAQ | 14h | FR-STU-01 | - | TS-STU-01 |
+| WP-STU-02 - Tạo & gửi yêu cầu hỗ trợ | 37h | FR-STU-02 | WF-01 | TS-STU-02 |
+| WP-STU-03 - Xem & theo dõi yêu cầu | 33h | FR-STU-03 | WF-01, WF-03, WF-06 | TS-STU-03 |
+| WP-STU-04 - Nhận thông báo trạng thái | 19h | FR-STU-04 | WF-01, WF-03, WF-04, WF-05, WF-06 | TS-STU-04 |
+| WP-STU-05 - Bổ sung thông tin & phản hồi | 25h | FR-STU-05, FR-STU-06, FR-STU-07 | WF-03, WF-06 | TS-STU-05, TS-STU-06, TS-STU-07 |
+
+**Tổng M01: 128h.**
+
+## 3. M02 - Staff
+
+| Resource WP | Effort | FR / Flow | Workflow | UAT |
+| :--- | ---: | :--- | :--- | :--- |
+| WP-STF-01 - Tiếp nhận, tìm kiếm & lọc | 33h | FR-STF-01 | WF-02, WF-06 | TS-STF-01, TS-STF-08 |
+| WP-STF-02 - Phân loại & phân công | 38h | FR-STF-02 | WF-02 | TS-STF-02 |
+| WP-STF-03 - Quản lý ưu tiên & thời hạn | 29h | FR-STF-03 | WF-02 | TS-STF-03 |
+| WP-STF-04 - Xử lý & cập nhật yêu cầu | 39h | FR-STF-04 | WF-03 | TS-STF-04 |
+| WP-STF-05 - Chuyển xử lý, Escalation & hoàn tất | 32h | FR-STF-05 + luồng ghi nhận kết quả của FR-STF-06 | WF-04, WF-05, WF-07 | TS-STF-05, TS-STF-06, TS-STF-07 |
+| WP-STF-06 - Đóng & mở lại yêu cầu | 26h | FR-STF-01 + Luồng B của FR-STF-06 | WF-06 | TS-STF-08 |
+
+**Tổng M02: 197h.**
+
+> WP-STF-06 không tạo quyền Staff tự đóng/mở lại. Việc chuyển `RESOLVED → IN_PROGRESS/CLOSED` tuân theo lifecycle; phần Staff là nhận lại và tiếp tục xử lý Ticket được mở lại.
+
+## 4. M03 - Management
+
+| Resource WP | Effort | FR / Flow | Workflow | UAT |
+| :--- | ---: | :--- | :--- | :--- |
+| WP-MGT-01 - Tài khoản, vai trò & RBAC | 64h | FR-MGT-00, FR-MGT-01 + xác thực dùng chung | - | TS-MGT-01 |
+| WP-MGT-02 - Phòng ban & danh mục | 26h | FR-MGT-02 | WF-01, WF-02, WF-04 | TS-MGT-02 |
+| WP-MGT-03 - Kiểm soát quyền truy cập & Audit Trail | 40h | FR-MGT-03 + kiểm soát quyền xuyên M01-M03 | Tất cả workflow liên quan | TS-MGT-03 + kiểm tra quyền dùng chung |
+| WP-MGT-04 - Quản lý thời hạn lưu trữ | 15h | FR-MGT-04 | - | TS-MGT-04 |
+| WP-MGT-05 - Dashboard & thống kê quản trị | 33h | FR-MGT-05 | - | TS-MGT-05 |
+| WP-MGT-06 - Báo cáo, mức độ hài lòng & xuất dữ liệu | 37h | FR-MGT-06 | WF-06 | TS-MGT-06 |
+
+**Tổng M03: 215h.**
+
+> Nhãn **M3 - Admin** trong bảng Resource chỉ là tên nhóm công việc quản trị. Product/PRD vẫn sử dụng vai trò **Management** và hệ thống không có role `ADMIN` độc lập.
+
+## 5. Năng Lực Dùng Chung Và Hoạt Động Cấp Dự Án
+
+- FR-STU-00 và FR-STF-00 mô tả hành vi truy cập của từng phân hệ nhưng cơ chế xác thực dùng chung được truy xuất về WP-MGT-01, không cộng effort riêng.
+- Thông báo cho Staff/Management trong các workflow vận hành là thông báo tối thiểu của nghiệp vụ liên quan; không tạo một module Notification riêng.
+- Resource còn **100h hoạt động cấp dự án**: 70h quản lý dự án & điều phối + 30h môi trường, CI/CD, triển khai & bàn giao. Phần này không được phân bổ lại vào effort chức năng M01-M03.
+- Tổng effort kế hoạch theo Resource: **640h**.
