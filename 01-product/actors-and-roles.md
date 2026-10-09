@@ -74,7 +74,7 @@ Người dùng chịu trách nhiệm giám sát hoạt động hỗ trợ và th
 - Quản lý tài khoản, vai trò và quyền khi được cấp quyền quản trị.
 - Quản lý phòng ban và danh mục Ticket.
 - Tra soát Audit Trail và các thay đổi quan trọng.
-- Quản lý thời hạn lưu trữ dữ liệu theo chính sách đã chốt.
+- Quản lý thời hạn lưu trữ dữ liệu theo chính sách của hệ thống.
 - Xuất dữ liệu/báo cáo theo chức năng được cung cấp.
 
 **Phạm vi dữ liệu**
