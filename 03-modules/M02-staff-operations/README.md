@@ -4,7 +4,7 @@
 
 **Staff Operations** là không gian làm việc dành cho nhân viên các phòng ban của Aurora University để tiếp nhận, phân loại, phân công, xử lý và theo dõi các Ticket hỗ trợ sinh viên.
 
-Phân hệ tập trung vào hoạt động vận hành Ticket từ khi Ticket được đưa vào hàng chờ của phòng ban cho đến khi nhân viên ghi nhận kết quả xử lý ở trạng thái `RESOLVED`.
+Phân hệ tập trung vào hoạt động vận hành Ticket từ khi Ticket được đưa vào hàng chờ của phòng ban đến khi nhân viên ghi nhận kết quả ở `RESOLVED`. Ticket `RESOLVED`/`CLOSED` vẫn có thể được tra cứu trong phạm vi quyền; Ticket được mở lại hợp lệ sẽ quay về `IN_PROGRESS` để tiếp tục xử lý.
 
 ## 2. Đối Tượng Và Phạm Vi Dữ Liệu
 
@@ -46,7 +46,8 @@ flowchart TD
 
     H -->|Không| K{Cần chuyển / Escalation?}
     K -->|Có| L[Transfer / Escalation]
-    L --> E
+    L --> O[Giữ trạng thái nghiệp vụ phù hợp]
+    O --> G
 
     K -->|Không| M[Ghi nhận kết quả]
     M --> N[RESOLVED]
