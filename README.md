@@ -2,7 +2,7 @@
 
 Kho tài liệu này mô tả phạm vi, nghiệp vụ, yêu cầu chức năng, workflow, yêu cầu phi chức năng, nghiệm thu, kiến trúc và các ràng buộc dự án của **UniSupport – Student Support Management System** tại Aurora University.
 
-Tài liệu được tổ chức theo hướng: **Proposal/Resource → Product → Domain → PRD → Workflow → NFR → Acceptance/RTM → Architecture → Project**.
+Tài liệu được tổ chức theo chuỗi: **Phạm vi dự án → Sản phẩm → Nghiệp vụ → PRD → Workflow → Yêu cầu phi chức năng → Nghiệm thu/RTM → Kiến trúc → Quản lý dự án**.
 
 ## Cấu Trúc Tài Liệu
 
@@ -76,20 +76,20 @@ UniSupport có đúng **03 phân hệ nghiệp vụ**:
 
 Thông báo, xác thực, phân quyền, bảo mật file và Audit được triển khai như **các năng lực dùng chung** xuyên suốt ba phân hệ nghiệp vụ.
 
-## Project Baseline
+## Tài Liệu Nền Tảng
 
-| Baseline | Vai trò |
+| Tài liệu | Vai trò |
 | :--- | :--- |
-| **UniSupport Project Proposal** | Xác định mục tiêu, phạm vi bàn giao, giả định, ràng buộc và tiêu chí nghiệm thu cấp dự án. |
-| **Internal Resource & Cost Plan** | Xác định Work Package, effort kế hoạch và cơ sở lập tiến độ nguồn lực. |
+| **Đề xuất dự án UniSupport** | Xác định mục tiêu, phạm vi bàn giao, giả định, ràng buộc và tiêu chí nghiệm thu cấp dự án. |
+| **Kế hoạch nguồn lực và chi phí** | Xác định gói công việc, effort kế hoạch và cơ sở lập tiến độ nguồn lực. |
 
-Việc phân rã Work Package thành nhiều Functional Requirement hoặc workflow không làm thay đổi effort kế hoạch của Work Package. Quan hệ truy xuất được quản lý tại [Requirements Traceability Matrix](./06-acceptance/traceability-matrix.md).
+Việc phân rã một gói công việc thành nhiều yêu cầu chức năng hoặc workflow không làm thay đổi effort kế hoạch của gói công việc. Quan hệ truy xuất được quản lý tại [Ma trận truy xuất yêu cầu](./06-acceptance/traceability-matrix.md).
 
-## Documentation Conventions
+## Quy Ước Tài Liệu
 
-- **Product, Domain và PRD** là nguồn mô tả hành vi nghiệp vụ và không phụ thuộc vào công nghệ triển khai.
+- **Product, Domain và PRD** mô tả hành vi nghiệp vụ và không phụ thuộc vào công nghệ triển khai.
 - **Workflows** thể hiện luồng phối hợp giữa các chức năng và phân hệ bằng Mermaid.
-- **Non-Functional Requirements** xác định các thuộc tính chất lượng áp dụng toàn hệ thống.
-- **Architecture** mô tả giải pháp kỹ thuật phục vụ các yêu cầu đã xác định và không thay đổi Business Rules.
-- **Acceptance & RTM** duy trì truy xuất từ Work Package đến yêu cầu, workflow và kịch bản UAT.
-- **Project documents** quản lý các giả định, ràng buộc, tiến độ và quyết định cấp dự án.
+- **Yêu cầu phi chức năng** xác định các thuộc tính chất lượng áp dụng toàn hệ thống.
+- **Kiến trúc** mô tả giải pháp kỹ thuật phục vụ các yêu cầu đã xác định và không làm thay đổi quy tắc nghiệp vụ.
+- **Nghiệm thu và RTM** duy trì truy xuất từ gói công việc đến yêu cầu, workflow và kịch bản UAT.
+- **Tài liệu dự án** quản lý các giả định, ràng buộc, tiến độ và quyết định cấp dự án.
